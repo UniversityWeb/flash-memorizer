@@ -1,0 +1,31 @@
+version: '3'
+services:
+  flash-memorizer-db:
+    container_name: flash-memorizer-db
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=FlashMemorizer
+      - MYSQL_ROOT_HOST=%
+    ports:
+      - 3307:3306
+    volumes:
+      - flash-memorizer-data:/var/lib/mysql
+
+  flash-memorizer-app:
+    container_name: flash-memorizer-app
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - flash-memorizer-db
+    ports:
+      - 8000:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://flash-memorizer-db:3306/FlashMemorizer?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+
+volumes:
+  flash-memorizer-data:

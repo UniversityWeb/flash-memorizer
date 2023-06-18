@@ -68,6 +68,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>flash-memorizer</finalName>
 	</build>
 
 </project>

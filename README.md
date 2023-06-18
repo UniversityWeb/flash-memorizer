@@ -25,5 +25,28 @@ git clone https://github.com/AnhAnNek/flash-memorizer.git
 4. UI: bootstrap.
 5. Concepts: JPA, MVC, S and O in SOLID, Design pattern.
 
+## **Run With Docker**
+To Run
+```
+docker-compose up --build
+```
+
+To remove container
+```
+docker-compose down --volumes
+```
+
+
+## **Run With IntelliJ**
+Step 1:
+```
+docker run -d --name flash-memorizer-db -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=FlashMemorizer mysql:latest
+```
+
+Step 2:
+![img.png](img.png)
+1. To run
+2. To debug
+
 ## **Reference Documentation**
 ...comming soon...
