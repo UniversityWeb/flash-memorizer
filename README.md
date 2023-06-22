@@ -26,18 +26,45 @@ git clone https://github.com/AnhAnNek/flash-memorizer.git
 5. Concepts: JPA, MVC, S and O in SOLID, Design pattern.
 
 ## **Run With Docker**
+
+Setup
+```
+docker pull mysql:latest
+```
+
 To Run
 ```
 docker-compose up --build
 ```
 
-To remove container
+To stop
 ```
-docker-compose down --volumes
+Ctrl + C
 ```
 
+Remove container without deleting MySQL data
+```
+docker-compose down
+```
+
+To apply change
+
+*Step 1:*
+```
+docker-compose build
+```
+
+*Step 2:*
+```
+docker-compose up --force-recreate
+```
 
 ## **Run With IntelliJ**
+Setup
+```
+docker pull mysql:latest
+```
+
 Step 1:
 ```
 docker run -d --name flash-memorizer-db -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=FlashMemorizer mysql:latest
