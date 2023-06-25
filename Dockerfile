@@ -21,5 +21,5 @@ COPY --from=build /flash-memorizer/target/flash-memorizer.jar .
 # Expose the port on which the application will run
 EXPOSE 8080
 
-# Specify the command to run the application
-CMD ["java", "-jar", "flash-memorizer.jar"]
+ENTRYPOINT ["java", "-jar", "flash-memorizer.jar"]
+
