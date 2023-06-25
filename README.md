@@ -1,15 +1,18 @@
 # **Flash memorizer**
 *This application provides an immersive learning experience, allowing users to enhance their English language skills effortlessly.*
 
+### Sections
+- [Clone repository](#clone-repository)
+- [Access Path (URL)](#access-path-url)
+- [Run With Docker](#run-with-docker)
+- [Documentation](#documentation)
+
 ## **Clone repository**
 ```terminal
 git clone https://github.com/AnhAnNek/flash-memorizer.git
 ```
 
-## **Access Path (URL)**
-```
-..comming soon..
-```
+## **[Access Path (URL)](http://localhost:8000/)**
 
 ## **Features**
 1. Show Review Cards.
@@ -23,57 +26,66 @@ git clone https://github.com/AnhAnNek/flash-memorizer.git
 2. SQL: MySql.
 3. Framework: spring boot.
 4. UI: bootstrap.
-5. Concepts: JPA, MVC, S and O in SOLID, Design pattern.
+5. Concepts: JPA, MVC, SOLID, Design pattern.
 
 ## **Run With Docker**
 
-Setup
+#### Setup
 ```
 docker pull mysql:latest
 ```
 
-To Run
-```
-docker-compose up --build
-```
-
-To stop
-```
-Ctrl + C
-```
-
-Remove container without deleting MySQL data
+#### Remove container without deleting MySQL data
 ```
 docker-compose down
 ```
 
-To apply change
+### To Run 
 
-*Step 1:*
+#### **Step 1:**
 ```
 docker-compose build
 ```
 
-*Step 2:*
+#### **Step 2:**
+
 ```
 docker-compose up --force-recreate
 ```
-
-## **Run With IntelliJ**
-Setup
+###### *To stop*
 ```
-docker pull mysql:latest
+Ctrl + C
 ```
-
-Step 1:
+#### *or*
 ```
-docker run -d --name flash-memorizer-db -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=FlashMemorizer mysql:latest
+docker-compose up --force-recreate -d
 ```
 
-Step 2:
+## **Debug**
+### Setup
+
+*Step 1: Click "Edit Configurations"*
+
 ![img.png](img.png)
-1. To run
-2. To debug
 
-## **Reference Documentation**
-...comming soon...
+*Step 2: Click "+" -> "Remote JVM Debug"*
+
+![img_1.png](img_1.png)
+
+*Step 3:*
+
+![img_2.png](img_2.png)
+
+1. Set Name: remote-debugging (or any name)
+2. Set Host: localhost
+3. Set Port: 5005
+4. Click "Ok"
+
+### Perform debugging on the running app
+
+![img_3.png](img_3.png)
+
+Set a breakpoint and click <1> to start debugging
+
+## **Documentations**
+...coming soon...
