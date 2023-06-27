@@ -19,18 +19,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String username;
 
-    @Column(name = "pass_hash")
+    @Column(name = "pass_hash", nullable = false)
     private String pass;
 
+    @Column(nullable = false)
     private String email;
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", nullable = false)
     private String fullName;
 
+    @Column(nullable = false)
     private Date registration;
 
-    @Column(name = "last_login")
+    @Column(name = "last_login", nullable = false)
     private Date lastLogin;
 }

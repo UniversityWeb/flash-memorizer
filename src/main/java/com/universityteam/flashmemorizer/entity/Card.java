@@ -19,20 +19,23 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "card_term")
+    @Column(name = "card_term", nullable = false)
     private String term;
 
-    @Column(name = "card_desc")
+    @Column(name = "card_desc", nullable = false)
     private String desc;
 
+    @Column(nullable = false)
     private Date creation;
 
-    @Column(name = "last_modified")
+    @Column(name = "last_modified", nullable = false)
     private Date modified;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
 
-    @Column(name = "deck_id")
-    private Long deckId;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="deck_id", nullable = false)
+    private Deck deck;
 }

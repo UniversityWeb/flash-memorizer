@@ -19,14 +19,15 @@ public class Deck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "deck_name")
+    @Column(name = "deck_name", nullable = false)
     private String name;
 
-    @Column(name = "deck_desc")
+    @Column(name = "deck_desc", nullable = false)
     private String desc;
 
+    @Column(nullable = false)
     private Date creation;
 
-    @Column(name = "last_modified")
+    @Column(name = "last_modified", nullable = false)
     private Date modified;
 }
