@@ -3,12 +3,12 @@ package com.universityteam.flashmemorizer.repository;
 import com.universityteam.flashmemorizer.entity.Card;
 import com.universityteam.flashmemorizer.entity.Deck;
 import com.universityteam.flashmemorizer.entity.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Description;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.Date;
@@ -30,9 +30,44 @@ class CardRepositoryTest {
     @Autowired
     private DeckRepository deckRepo;
 
+    private User exitsUser;
+
+    private Deck exitsDeck;
+
+    private Card exitsCard;
+
+    @BeforeEach
+    public void setupBeforeEachTest() {
+        exitsUser = addNewUser();
+        exitsDeck = addNewDeck(exitsUser);
+        exitsCard = cardRepo.save( createCard(exitsUser, exitsDeck) );
+    }
+
+    private User addNewUser() {
+        User user = User.builder()
+                .username("test")
+                .pass("test")
+                .email("test123@gmail.com")
+                .fullName("Hoang Long")
+                .registration(new Date(2023, 1, 1))
+                .lastLogin(new Date())
+                .build();
+        return userRepo.save(user);
+    }
+
+    private Deck addNewDeck(User user) {
+        Deck deck = Deck.builder()
+                .name("Writing set")
+                .desc("Some vocabulary for task 1")
+                .creation(new Date(2023, 1, 1, 1, 1, 1))
+                .modified(new Date())
+                .user(user)
+                .build();
+        return deckRepo.save(deck);
+    }
+
     @Test
     @Order(0)
-    @Description("foreign key constraint error")
     public void testSaveFailure() {
         // Arrange
         Card card = createCard(new User(), new Deck());
@@ -53,38 +88,12 @@ class CardRepositoryTest {
     @Order(1)
     @Rollback(false)
     public void testSaveSuccess() {
-        // Arrange
-        User user = createUser();
-        Deck deck = createDeck();
-
         // Act
-        Card card = createCard(user, deck);
+        Card card = createCard(exitsUser, exitsDeck);
         Card savedCard = cardRepo.save(card);
 
         // Assert
         assertNotNull(savedCard.getId());
-    }
-
-    private User createUser() {
-        User user = User.builder()
-                .username("test")
-                .pass("test")
-                .email("test123@gmail.com")
-                .fullName("Hoang Long")
-                .registration(new Date(2023, 1, 1))
-                .lastLogin(new Date())
-                .build();
-        return userRepo.save(user);
-    }
-
-    private Deck createDeck() {
-        Deck deck = Deck.builder()
-                .name("Writing set")
-                .desc("Some vocabulary for task 1")
-                .creation(new Date(2023, 1, 1, 1, 1, 1))
-                .modified(new Date())
-                .build();
-        return deckRepo.save(deck);
     }
 
     private Card createCard(User user, Deck deck) {
@@ -102,39 +111,27 @@ class CardRepositoryTest {
     @Order(2)
     @Rollback(value = false)
     public void testUpdateSuccess() {
-        // Arrange
-        Long exitId = 1L;
-        Optional<Card> optCard = cardRepo.findById(exitId);
-        if (optCard.isEmpty()) {
-            assertTrue(false);
-            return;
-        }
-        Card cardExpected = optCard.get();
-
         // Act
-        cardExpected.setTerm("Exchanged");
-        cardExpected.setDesc("Changed");
-        cardExpected.setModified(new Date(2023, 2, 2));
+        exitsCard.setTerm("Exchanged");
+        exitsCard.setDesc("Changed");
+        exitsCard.setModified(new Date(2023, 2, 2));
 
-        Card cardActual = cardRepo.save(cardExpected);
+        Card cardActual = cardRepo.save(exitsCard);
 
         // Assert
-        assertEquals(cardActual.getTerm(), cardExpected.getTerm());
-        assertEquals(cardActual.getDesc(), cardExpected.getDesc());
-        assertEquals(cardActual.getModified(), cardExpected.getModified());
+        assertEquals(cardActual.getTerm(), exitsCard.getTerm());
+        assertEquals(cardActual.getDesc(), exitsCard.getDesc());
+        assertEquals(cardActual.getModified(), exitsCard.getModified());
     }
 
     @Test
     @Order(3)
-    @Rollback(value = false)
+    @Rollback
     public void testDelete() {
-        // Arrange
-        Long exitId = 1L;
-        Optional<Card> optBeforeDelete = cardRepo.findById(exitId);
-
         // Act
-        cardRepo.delete(optBeforeDelete.get());
-        Optional<Card> optAfterDelete = cardRepo.findById(exitId);
+        Optional<Card> optBeforeDelete = cardRepo.findById(exitsCard.getId());
+        cardRepo.delete(exitsCard);
+        Optional<Card> optAfterDelete = cardRepo.findById(exitsCard.getId());
 
         // Assert
         assertTrue(optBeforeDelete.isPresent());
@@ -143,13 +140,10 @@ class CardRepositoryTest {
 
     @Test
     public void testFindByDeckIdExits() {
-        // Arrange
-        Long deckId = 1L;
-
         // Act
-        List<Card> actualCards = cardRepo.findByDeckId(deckId);
+        List<Card> actualCards = cardRepo.findByDeckId(exitsDeck.getId());
 
         // Assert
-        assertNotNull(actualCards);
+        assertEquals(1, actualCards.size());
     }
 }
