@@ -3,6 +3,7 @@ package com.universityteam.flashmemorizer.repository;
 import com.universityteam.flashmemorizer.entity.Deck;
 import com.universityteam.flashmemorizer.entity.User;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +26,17 @@ class DeckRepositoryTest {
     @Autowired
     private UserRepository userRepo;
 
-    @Test
-    @Order(1)
-    @Rollback(false)
-    public void testSaveSuccess() {
-        // Arrange
-        User user = createUser();
+    private User exitsUser;
 
-        // Act
-        Deck deck = createDeck(user);
-        Deck savedDeck = deckRepo.save(deck);
+    private Deck exitsDeck;
 
-        // Assert
-        assertNotNull(savedDeck.getId());
+    @BeforeEach
+    public void setupBeforeEachTest() {
+        exitsUser = addNewUser();
+        exitsDeck = deckRepo.save(createDeck(exitsUser));
     }
 
-    private User createUser() {
+    private User addNewUser() {
         User user = User.builder()
                 .username("test")
                 .pass("test")
@@ -50,6 +46,18 @@ class DeckRepositoryTest {
                 .lastLogin(new Date())
                 .build();
         return userRepo.save(user);
+    }
+
+    @Test
+    @Order(1)
+    @Rollback(false)
+    public void testSaveSuccess() {
+        // Act
+        Deck deck = createDeck(exitsUser);
+        Deck savedDeck = deckRepo.save(deck);
+
+        // Assert
+        assertNotNull(savedDeck.getId());
     }
 
     private Deck createDeck(User user) {
@@ -67,37 +75,25 @@ class DeckRepositoryTest {
     @Order(2)
     @Rollback(value = false)
     public void testUpdateSuccess() {
-        // Arrange
-        Long exitId = 1L;
-        Optional<Deck> optDeck = deckRepo.findById(exitId);
-        if (optDeck.isEmpty()) {
-            assertTrue(false);
-            return;
-        }
-        Deck deckExpected = optDeck.get();
-
         // Act
-        deckExpected.setDesc("Changed");
-        deckExpected.setModified(new Date(2023, 2, 2));
+        exitsDeck.setDesc("Changed");
+        exitsDeck.setModified(new Date(2023, 2, 2));
 
-        Deck deckActual = deckRepo.save(deckExpected);
+        Deck deckActual = deckRepo.save(exitsDeck);
 
         // Assert
-        assertEquals(deckActual.getDesc(), deckExpected.getDesc());
-        assertEquals(deckActual.getModified(), deckExpected.getModified());
+        assertEquals(deckActual.getDesc(), exitsDeck.getDesc());
+        assertEquals(deckActual.getModified(), exitsDeck.getModified());
     }
 
     @Test
     @Order(3)
     @Rollback(value = false)
     public void testDelete() {
-        // Arrange
-        Long exitId = 1L;
-        Optional<Deck> optBeforeDelete = deckRepo.findById(exitId);
-
         // Act
-        deckRepo.delete(optBeforeDelete.get());
-        Optional<Deck> optAfterDelete = deckRepo.findById(exitId);
+        Optional<Deck> optBeforeDelete = deckRepo.findById(exitsDeck.getId());
+        deckRepo.delete(exitsDeck);
+        Optional<Deck> optAfterDelete = deckRepo.findById(exitsDeck.getId());
 
         // Assert
         assertTrue(optBeforeDelete.isPresent());
@@ -105,12 +101,10 @@ class DeckRepositoryTest {
     }
 
     @Test
+    @Order(3)
     public void testFindByUserIdExits() {
-        // Arrange
-        Long userId = 1L;
-
         // Act
-        List<Deck> actualDecks = deckRepo.findByUserId(userId);
+        List<Deck> actualDecks = deckRepo.findByUserId(exitsUser.getId());
 
         // Assert
         Assertions.assertThat(actualDecks.size()).isGreaterThan(0);
