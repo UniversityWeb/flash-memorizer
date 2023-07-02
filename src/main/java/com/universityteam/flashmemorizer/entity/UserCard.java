@@ -4,6 +4,7 @@ import com.universityteam.flashmemorizer.enums.ERating;
 import com.universityteam.flashmemorizer.keys.UserCardId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -17,6 +18,7 @@ import java.util.Date;
 @EnableAutoConfiguration
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserCard {
     @Id
     @Column(name = "card_id")
