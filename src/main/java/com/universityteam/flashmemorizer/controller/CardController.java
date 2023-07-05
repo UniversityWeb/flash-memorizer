@@ -23,8 +23,11 @@ public class CardController {
     @Autowired
     private CardService cardService;
 
-    @GetMapping("/review/{deckId}")
-    public String getCardsToReview(@PathVariable Long deckId, Model m) {
+    @Autowired
+    private CardReviewService reviewService;
+
+    @GetMapping("/{deckId}")
+    public String getByDeckId(@PathVariable Long deckId, Model m) {
         List<CardDTO> cards = cardService.getByDeckId(deckId);
         m.addAttribute("cards", cards);
         return "review-card";

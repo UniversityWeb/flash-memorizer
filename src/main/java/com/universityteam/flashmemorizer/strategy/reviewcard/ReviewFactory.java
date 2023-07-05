@@ -1,9 +1,11 @@
 package com.universityteam.flashmemorizer.strategy.reviewcard;
 
 import com.universityteam.flashmemorizer.enums.EReview;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+@Component
 public class ReviewFactory {
 
     public static Map<EReview, ReviewStrategy> reviewStrategies = Map.of(

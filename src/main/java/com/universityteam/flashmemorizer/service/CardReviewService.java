@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface CardReviewService {
     List<CardReview> generateTest(EReview eReview, List<Card> cards);
-    String getHtmlFile(EReview eReview);
 }

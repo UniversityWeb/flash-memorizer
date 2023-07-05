@@ -17,14 +17,9 @@ public class CardReviewServiceImpl implements CardReviewService {
     @Autowired
     private ReviewFactory reviewFactory;
 
+    @Override
     public List<CardReview> generateTest(EReview eReview, List<Card> cards) {
         ReviewStrategy strategy = reviewFactory.create(eReview);
         return strategy.generateTest(cards);
-    }
-
-    @Override
-    public String getHtmlFile(EReview eReview) {
-        ReviewStrategy strategy = reviewFactory.create(eReview);
-        return strategy.getHtmlFile();
     }
 }
