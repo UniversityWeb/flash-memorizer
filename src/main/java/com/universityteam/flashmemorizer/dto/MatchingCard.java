@@ -5,9 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class MatchingCard extends CardReview {
-    private String userChoose;
+    private String displayPart;
+    private String hiddenPart;
+    private boolean isVanished;
 }

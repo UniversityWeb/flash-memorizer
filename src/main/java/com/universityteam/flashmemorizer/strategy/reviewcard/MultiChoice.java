@@ -11,36 +11,35 @@ import java.util.stream.Collectors;
 public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
     @Override
     public List<MultiChoiceCard> generateTest(List<Card> cards) {
-        List<String> choices = cards.stream()
-                .map(Card::getTerm)
-                .collect(Collectors.toList());
-
+        List<String> terms = createTerms(cards);
         return cards.stream()
                 .map(card -> {
                     MultiChoiceCard multiChoiceCard = new MultiChoiceCard();
-
                     String term = card.getTerm();
-                    List<String> options = generateOptions(choices, term);
+                    List<String> options = createOptions(terms, term);
                     int indexChoose = findAnswer(options, term);
-
                     multiChoiceCard.setDesc(card.getDesc());
                     multiChoiceCard.setOptions(options);
                     multiChoiceCard.setIndexAnswer(indexChoose);
-
                     return multiChoiceCard;
                 })
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public boolean checkAnswer(MultiChoiceCard card) {
+    public boolean isAnswer(MultiChoiceCard card) {
         boolean isCorrect = card.getIndexAnswer() == card.getIndexChoose();
         card.setCorrect(isCorrect);
         return isCorrect;
     }
 
-    private List<String> generateOptions(List<String> choices, String term) {
-        List<String> options = new ArrayList<>(choices);
+    private List<String> createTerms(List<Card> cards) {
+        return cards.stream()
+                .map(Card::getTerm)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> createOptions(List<String> terms, String term) {
+        List<String> options = new ArrayList<>(terms);
         options.removeIf(choice -> choice.equals(term));
         Collections.shuffle(options);
         options = options.subList(0, Math.min(3, options.size()));
