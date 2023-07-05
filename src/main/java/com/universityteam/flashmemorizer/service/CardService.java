@@ -8,5 +8,5 @@ public interface CardService {
     Card add(Card card);
     boolean delete(Long id);
     Card update(Card card);
-    List<Card> getByDeck(Long deckId);
+    List<Card> getByDeckId(Long deckId);
 }

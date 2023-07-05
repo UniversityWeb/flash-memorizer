@@ -52,7 +52,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<Card> getByDeck(Long deckId) {
+    public List<Card> getByDeckId(Long deckId) {
         return cardRepo.findByDeckId(deckId);
     }
 }
