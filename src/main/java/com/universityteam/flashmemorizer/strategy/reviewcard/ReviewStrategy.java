@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ReviewStrategy<T extends CardReview> {
     List<T> generateTest(List<Card> cards);
+    boolean checkAnswer(T card);
 }
