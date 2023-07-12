@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.com">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,9 +21,19 @@
 </header>
 
 <body class = "container">
+    <form th:controller = "Card" th:action="@{/review-card}" method="post">
+
+        <div class="form-group">
+            <label>Enter id Dick</label> <input type="text" class="form-control" name="deckId">
+        </div>
+        <button class="btn btn-primary btn-block">Submit</button>
+    </form>
     <div class ="d-flex justify-content-center align-items-center ">
         <h2>LESSON 15- LISTENING</h2>
     </div>
+    <script>
+        console.log(cards);
+    </script>
     <div class = "h-70 w-70 ">
         <form>
             <div class = "form-group d-flex justify-content-center align-items-center ">
@@ -44,52 +54,33 @@
         <div class="carousel-container">
             <div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="false">
                 <div class=" carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="card-group d-flex justify-content-center align-items-center">
-                            <div class="flip-card shadow-lg">
-                                <div class="flip-card-inner">
-                                    <div class="flip-card-front">
-                                        <div class = "row">
-                                            <div class = "col w-50">
-                                                <p class="hint" data-toggle="tooltip" data-placement="top" title="Hint text">Get a hint</p>
+                    <div th:each="card : ${cards} ">
+                        <div class="carousel-item active">
+                            <div class="card-group d-flex justify-content-center align-items-center">
+                                <div class="flip-card shadow-lg">
+                                    <div class="flip-card-inner">
+                                        <div class="flip-card-front">
+                                            <div class = "row">
+                                                <div class = "col w-50">
+                                                    <p class="hint" data-toggle="tooltip" data-placement="top" title="Hint text">Get a hint</p>
+                                                </div>
+                                                <div class = "col w-50">
+                                                    <i class="fa-light fa-volume"></i>
+                                                </div>
                                             </div>
-                                            <div class = "col w-50">
-                                                <i class="fa-light fa-volume"></i>
-                                            </div>
+                                            <h3 th:text = "${card.term}"></h3>
+                                            <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" alt="Avatar" style="width:70%;height:70%;">
                                         </div>
-                                        <h3>Từ vựng</h3>
-                                        <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" alt="Avatar" style="width:70%;height:70%;">
-                                    </div>
-                                    <div class="flip-card-back">
-                                        <p class = "h5">Nghĩa</p>
+                                        <div class="flip-card-back">
+                                            <h4>Nghĩa</h4>
+                                            <h5 th:text="${card.desc}"></h5>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
-                        <div class="card-group d-flex justify-content-center align-items-center">
-                            <div class="flip-card shadow-lg">
-                                <div class="flip-card-inner">
-                                    <div class="flip-card-front">
-                                        <div class = "row">
-                                            <div class = "col w-50">
-                                                <p class="hint" data-toggle="tooltip" data-placement="top" title="Hint text">Get a hint</p>
-                                            </div>
-                                            <div class = "col w-50">
-                                                <p>volume</p>
-                                            </div>
-                                        </div>
-                                        <h3>Từ vựng</h3>
-                                        <img src="https://mdbootstrap.com/img/new/avatars/7.jpg" alt="Avatar" style="width:70%;height:70%;">
-                                    </div>
-                                    <div class="flip-card-back">
-                                        <p class = "h5">Nghĩa</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                   <!--
                     <div class="carousel-item">
                         <div class="card-group d-flex justify-content-center align-items-center">
                             <div class="flip-card shadow-lg">
@@ -112,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class = "carousel-controls">
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -138,9 +129,6 @@
     });
 </script>
 <script>
-
-
-
     var carousel = document.getElementById('carouselExampleCaptions');
     carousel.addEventListener('slide.bs.carousel', function (event) {
         var currentSlide = event.to +1;
