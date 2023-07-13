@@ -1,82 +1,48 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <title>Multi Choice</title>
-
-    <style>
-        .btn-group-spacing .btn {
-            margin-right: 10px;
-        }
-        .custom-border {
-            border: 2px solid #dfe6e9;
-            border-radius: 15px;
-        }
-        .btn-wide {
-            width: 100%;
-            padding: 15px 20px;
-        }
-        .des-height {
-        height: 180px;
-        }
-        .big-title-color {
-        color: #586380!important;
-        }
-        .small-title-color {
-        color: #939BB4!important;
-        }
-        .body-color {
-        color: #2E3856!important;
-        }
-        .lang-vi {
-            font-family: Lucida Grande,Arial,sans-serif!important;
-            font-size: 1.1em;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../static/css/multi-choice-review.css" />
+    <title>Multi Choice Review</title>
 </head>
 <body>
 <div class="container-fluid">
     <!--Start Navbar -->
-    <nav class="navbar navbar-brand navbar-expand-lg navbar navbar-light mb-1">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-bg">
         <div class="container-fluid">
-            <div class="nav nav-item dropdown navbar-nav navbar-right">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                    Multi choices
-                </a>
-                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Fill blank</a></li>
+            <div class="nav-item dropdown">
+                <div class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Fill Blank
+                </div>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Multi choices</a></li>
                     <li><a class="dropdown-item" href="#">Matching</a></li>
-                    <div class="dropdown-divider"></div>
+                    <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Home</a></li>
                 </ul>
             </div>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Test 1 - Part 1</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Print test</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Options</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <button type="button" class="btn-close" aria-label="Close"></button>
-                    </a>
-                </li>
-            </ul>
+            <div class="navbar-right">
+                <a class="nav-link disabled justify-content-center" href="#" tabindex="-1" aria-disabled="true">Test 1 - Part 1</a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Print test</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <button type="button" class="btn-close" aria-label="Close"></button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <!--End Navbar-->
@@ -102,22 +68,22 @@
                     <form action="">
                         <div class="form-group">
                             <h5 class="card-title mb-4 big-title-color lang-vi font-weight-bold">Choose matching term</h5>
-                            <div class="row mb-4">
-                                <div class="col-sm-12 col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 mb-2">
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
                                     <label class="btn btn-outline-primary btn-wide" for="btnradio1">mistake</label>
                                 </div>
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-sm-12 col-md-6 mb-2">
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
                                     <label class="btn btn-outline-primary btn-wide" for="btnradio2">display</label>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-sm-12 col-md-6 mb-2">
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
                                     <label class="btn btn-outline-primary btn-wide" for="btnradio3">risk</label>
                                 </div>
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-sm-12 col-md-6 mb-2">
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
                                     <label class="btn btn-outline-primary btn-wide" for="btnradio4">revise</label>
                                 </div>
@@ -127,23 +93,12 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
     <!--End card-->
 </div>
-        <!-- Optional JavaScript; choose one of the two! -->
-
-        <!-- Option 1: Bootstrap Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-                crossorigin="anonymous"></script>
-
-        <!-- Option 2: Separate Popper and Bootstrap JS -->
-        <!--
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-          integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-          integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-          crossorigin="anonymous"></script>
-        -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="/static/multi-choice-review.js"></script>
 </body>
 </html>

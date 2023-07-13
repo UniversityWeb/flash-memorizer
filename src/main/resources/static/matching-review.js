@@ -1,39 +1,4 @@
-// Generate random positions within the board area
-
-function getRandomPosition(boardSize, cardSize) {
-    const minLeft = cardSize / 2;
-    const maxLeft = boardSize - cardSize / 2;
-    const minTop = cardSize / 2;
-    const maxTop = (boardSize - cardSize) / 3;
-
-    const randomLeft = Math.floor(Math.random() * (maxLeft - minLeft + 1)) + minLeft;
-    const randomTop = Math.floor(Math.random() * (maxTop - minTop + 1)) + minTop;
-
-    return { left: randomLeft, top: randomTop };
-}
-
-function createCard(content) {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.draggable = true;
-    card.textContent = content;
-    return card;
-}
-
 const board = document.getElementById('board');
-
-function positionCardsRandomly() {
-    const cards = board.querySelectorAll('.card');
-    const boardSize = board.offsetWidth;
-
-    cards.forEach(card => {
-        const cardSize = card.offsetWidth;
-        const { left, top } = getRandomPosition(boardSize, cardSize);
-        card.style.left = `${left}px`;
-        card.style.top = `${top}px`;
-  });
-}
-
 const cardData = [
     { content: 'Card 1' },
     { content: 'Card 2' },
@@ -44,19 +9,56 @@ const cardData = [
     { content: 'Card 7' },
     { content: 'Card 8' },
     { content: 'Card 9' },
-    { content: 'Card 10' },
+    { content: 'Card 10' }
 ];
-
 cardData.forEach((data) => {
     const card = createCard(data.content);
     board.appendChild(card);
 });
 
-positionCardsRandomly();
 
+positionCardsRandomly();
 window.addEventListener('resize', positionCardsRandomly);
 
-// Move cards
+board.addEventListener('mousedown', startDrag);
+board.addEventListener('mousemove', drag);
+board.addEventListener('mouseup', stopDrag);
+board.addEventListener('touchstart', startDrag);
+board.addEventListener('touchmove', drag);
+board.addEventListener('touchend', stopDrag);
+
+updateElapsedTime();
+setInterval(updateElapsedTime, 1);
+
+
+function createCard(content) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.draggable = true;
+    card.textContent = content;
+    return card;
+}
+
+function positionCardsRandomly() {
+    const cards = board.querySelectorAll('.card');
+    const boardSize = board.offsetWidth;
+    cards.forEach(card => {
+        const cardSize = card.offsetWidth;
+        const { left, top } = getRandomPosition(boardSize, cardSize);
+        card.style.left = `${left}px`;
+        card.style.top = `${top}px`;
+  });
+}
+
+function getRandomPosition(boardSize, cardSize) {
+    const minLeft = cardSize / 2;
+    const maxLeft = boardSize - cardSize / 2;
+    const minTop = cardSize / 2;
+    const maxTop = cardSize * 3;
+    const randomLeft = Math.floor(Math.random() * (maxLeft - minLeft + 1)) + minLeft;
+    const randomTop = Math.floor(Math.random() * (maxTop - minTop + 1)) + minTop;
+    return { left: randomLeft, top: randomTop };
+}
 
 let isDragging = false;
 let offset = [0, 0];
@@ -95,16 +97,6 @@ function stopDrag() {
     activeCard = null;
 }
 
-board.addEventListener('mousedown', startDrag);
-board.addEventListener('mousemove', drag);
-board.addEventListener('mouseup', stopDrag);
-
-board.addEventListener('touchstart', startDrag);
-board.addEventListener('touchmove', drag);
-board.addEventListener('touchend', stopDrag);
-
-// Initialize timer for drag
-
 function updateElapsedTime() {
     const elapsedTimeElement = document.getElementById('elapsed-time');
     const currentTime = new Date().getTime();
@@ -117,18 +109,12 @@ function formatTime(milliseconds) {
     const seconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
-
     const remainingMilliseconds = milliseconds % 1000;
     const remainingSeconds = seconds % 60;
     const remainingMinutes = minutes % 60;
-
     return `${padZero(hours)}:${padZero(remainingMinutes)}:${padZero(remainingSeconds)}.${padZero(remainingMilliseconds, 3)}`;
 }
 
 function padZero(num, size = 2) {
     return String(num).padStart(size, '0');
 }
-
-updateElapsedTime();
-
-setInterval(updateElapsedTime, 1);

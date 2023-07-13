@@ -1,108 +1,50 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <title>Matching</title>
-
-    <style>
-        .board-height {
-            height: 770px!important;
-        }
-
-        .big-title-color {
-            color: #586380!important;
-        }
-
-        .small-title-color {
-            color: #939BB4!important;
-        }
-
-        .body-color {
-            color: #2E3856!important;
-        }
-
-        .lang-vi {
-            font-family: Lucida Grande, Arial, sans-serif!important;
-            font-size: 1.1em;
-        }
-
-        .card {
-            width: 200px;
-            height: 200px;
-            background-color: #F8F9FA;
-            border: 1px solid #CED4DA;
-            border-radius: 10px;
-            padding: 10px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-             text-align: center;
-            }
-
-        .card[draggable="true"] {
-            cursor: move;
-        }
-
-        .card[draggable="true"]:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .time-value {
-            font-weight: bold;
-            font-size: 32px;
-            color: #4255FF;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../static/css/matching-review.css" />
+    <title>Matching Review</title>
 </head>
-
 <body>
+<div class="wrapper">
+</div>
 <div class="container-fluid">
     <!--Start Navbar -->
-    <nav class="navbar navbar-brand navbar-expand-lg navbar navbar-light mb-1">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-bg">
         <div class="container-fluid">
-            <div class="nav nav-item dropdown navbar-nav navbar-right">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                    Matching
-                </a>
-                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Fill blank</a></li>
+            <div class="nav-item dropdown">
+                <div class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Fill Blank
+                </div>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#">Multi choices</a></li>
-                    <div class="dropdown-divider"></div>
+                    <li><a class="dropdown-item" href="#">Matching</a></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Home</a></li>
                 </ul>
             </div>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Test 1 - Part 1</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Print test</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Options</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <button type="button" class="btn-close" aria-label="Close"></button>
-                    </a>
-                </li>
-            </ul>
+            <div class="navbar-right">
+                <a class="nav-link disabled justify-content-center" href="#" tabindex="-1" aria-disabled="true">Test 1 - Part 1</a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Print test</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <button type="button" class="btn-close" aria-label="Close"></button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <!--End Navbar-->
@@ -115,13 +57,10 @@
         <h6>TIME: <span id="elapsed-time" class="time-value"></span></h6>
     </div>
 </div>
-
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-
-<script src="/static/matching-review.js">
-</script>
+<script src="/static/matching-review.js"></script>
 </body>
-
 </html>
