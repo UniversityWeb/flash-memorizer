@@ -1,5 +1,7 @@
 package com.universityteam.flashmemorizer.service.impl;
 
+import com.universityteam.flashmemorizer.converter.CardConverter;
+import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.entity.Card;
 import com.universityteam.flashmemorizer.repository.CardRepository;
 import com.universityteam.flashmemorizer.service.CardService;
@@ -15,10 +17,15 @@ public class CardServiceImpl implements CardService {
     @Autowired
     private CardRepository cardRepo;
 
+    @Autowired
+    private CardConverter cardConverter;
+
     @Override
-    public Card add(Card card) {
+    public CardDTO add(CardDTO cardDTO) {
+        Card card = cardConverter.convertDtoToEntity(cardDTO);
         try {
-            return cardRepo.save(card);
+            Card added = cardRepo.save(card);
+            return cardConverter.convertEntityToDto(added);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -30,7 +37,18 @@ public class CardServiceImpl implements CardService {
         Optional<Card> optCard = cardRepo.findById(id);
         if (optCard.isEmpty()) return false;
         try {
-            Card card = optCard.get();
+            cardRepo.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean delete(CardDTO cardDTO) {
+        Card card = cardConverter.convertDtoToEntity(cardDTO);
+        try {
             cardRepo.delete(card);
             return true;
         } catch (Exception e) {
@@ -40,11 +58,12 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Card update(Card card) {
-        Optional<Card> optCard = cardRepo.findById(card.getId());
+    public CardDTO update(CardDTO cardDTO) {
+        Optional<Card> optCard = cardRepo.findById(cardDTO.getId());
         if (optCard.isEmpty()) return null;
         try {
-            return cardRepo.save(card);
+            Card updated = cardRepo.save(optCard.get());
+            return cardConverter.convertEntityToDto(updated);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -52,7 +71,8 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<Card> getByDeck(Long deckId) {
-        return cardRepo.findByDeckId(deckId);
+    public List<CardDTO> getByDeckId(Long deckId) {
+        List<Card> cards = cardRepo.findByDeckId(deckId);
+        return cardConverter.convertEntityToDto(cards);
     }
 }

@@ -1,5 +1,7 @@
 package com.universityteam.flashmemorizer.service.impl;
 
+import com.universityteam.flashmemorizer.converter.DeckConverter;
+import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.entity.Deck;
 import com.universityteam.flashmemorizer.repository.DeckRepository;
 import com.universityteam.flashmemorizer.service.DeckService;
@@ -14,17 +16,21 @@ public class DeckServiceImpl implements DeckService {
     @Autowired
     private DeckRepository deckRepo;
 
+    @Autowired
+    private DeckConverter deckConverter;
+
     @Override
-    public Deck add(Deck deck)
-    {
+    public DeckDTO add(DeckDTO deckDTO) {
+        Deck deck = deckConverter.convertDtoToEntity(deckDTO);
         try {
-            return deckRepo.save(deck);
-        } catch (Exception e)
-        {
+             Deck added = deckRepo.save(deck);
+             return deckConverter.convertEntityToDto(added);
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
     @Override
     public boolean delete(Long id) {
         Optional<Deck> optDeck = deckRepo.findById(id);
@@ -34,16 +40,17 @@ public class DeckServiceImpl implements DeckService {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
-    public Deck update(Deck deck) {
+    public DeckDTO update(DeckDTO deck) {
         Optional<Deck> optDeck = deckRepo.findById(deck.getId());
         if (optDeck.isEmpty()) return null;
         try {
-            return deckRepo.save(deck);
+            Deck updated = deckRepo.save(optDeck.get());
+            return deckConverter.convertEntityToDto(updated);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -51,7 +58,8 @@ public class DeckServiceImpl implements DeckService {
     }
 
     @Override
-    public List<Deck> getByUser(Long userId) {
-        return deckRepo.findByUserId(userId);
+    public List<DeckDTO> getByUser(Long userId) {
+        List<Deck> decks = deckRepo.findByUserId(userId);
+        return deckConverter.convertEntityToDto(decks);
     }
 }
