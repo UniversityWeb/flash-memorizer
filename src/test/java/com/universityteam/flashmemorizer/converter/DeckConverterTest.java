@@ -2,7 +2,6 @@ package com.universityteam.flashmemorizer.converter;
 
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.entity.Deck;
-import com.universityteam.flashmemorizer.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +27,7 @@ class DeckConverterTest {
                 .desc("This is web application which can help people improve ability to memory")
                 .creation(new Date())
                 .modified(new Date())
-                .user(new User())
+                .user(null)
                 .build();
 
         // Act
@@ -60,7 +59,7 @@ class DeckConverterTest {
         // Arrange
         DeckDTO deckDTO = new DeckDTO(1L, "Spring boot application",
                 "This is web application which can help people improve ability to memory",
-                new Date(), new Date(), new User());
+                new Date(), new Date(), null);
 
         // Act
         Deck deck = deckConverter.convertDtoToEntity(deckDTO);

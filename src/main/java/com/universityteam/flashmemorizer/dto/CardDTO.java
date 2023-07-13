@@ -1,6 +1,5 @@
 package com.universityteam.flashmemorizer.dto;
 
-import com.universityteam.flashmemorizer.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +15,6 @@ public class CardDTO {
     private String desc;
     private Date creation;
     private Date modified;
-    private User user;
+    private UserDTO user;
     private DeckDTO deck;
 }

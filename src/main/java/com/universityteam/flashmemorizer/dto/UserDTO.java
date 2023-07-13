@@ -9,11 +9,12 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeckDTO {
+public class UserDTO {
     private Long id;
-    private String name;
-    private String desc;
-    private Date creation;
-    private Date modified;
-    private UserDTO user;
+    private String username;
+    private String pass;
+    private String email;
+    private String fullName;
+    private Date registration;
+    private Date lastLogin;
 }
