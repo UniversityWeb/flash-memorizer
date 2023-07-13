@@ -40,8 +40,8 @@ public class DeckServiceImpl implements DeckService {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override

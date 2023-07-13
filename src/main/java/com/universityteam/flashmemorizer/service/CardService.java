@@ -1,12 +1,13 @@
 package com.universityteam.flashmemorizer.service;
 
-import com.universityteam.flashmemorizer.entity.Card;
+import com.universityteam.flashmemorizer.dto.CardDTO;
 
 import java.util.List;
 
 public interface CardService {
-    Card add(Card card);
+    CardDTO add(CardDTO cardDTO);
     boolean delete(Long id);
-    Card update(Card card);
-    List<Card> getByDeckId(Long deckId);
+    boolean delete(CardDTO cardDTO);
+    CardDTO update(CardDTO cardDTO);
+    List<CardDTO> getByDeckId(Long deckId);
 }
