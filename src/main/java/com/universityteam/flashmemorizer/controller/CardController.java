@@ -30,9 +30,9 @@ public class CardController {
     @GetMapping("/delete/")
     public String delete(@ModelAttribute CardDTO card, HttpSession session) {
         if (cardService.delete(card)) {
-            session.setAttribute("msg", "Deck Delete Successfully...");
+            session.setAttribute("msg", "Card Delete Successfully...");
         } else {
-            session.setAttribute("msg", "Deck Delete Unsuccessfully...");
+            session.setAttribute("msg", "Card Delete Unsuccessfully...");
         }
         return "redirect:/cards/" + card.getDeck().getId();
     }
