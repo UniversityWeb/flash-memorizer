@@ -1,6 +1,11 @@
 package com.universityteam.flashmemorizer.controller;
 
+import com.universityteam.flashmemorizer.converter.CardConverter;
 import com.universityteam.flashmemorizer.dto.CardDTO;
+import com.universityteam.flashmemorizer.dto.CardReview;
+import com.universityteam.flashmemorizer.entity.Card;
+import com.universityteam.flashmemorizer.enums.EReview;
+import com.universityteam.flashmemorizer.service.CardReviewService;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.service.CardService;
@@ -94,5 +99,13 @@ public class CardController {
             ra.addFlashAttribute("errorMsg", e.getMessage());
         }
         return "redirect:/decks/edit/" + deckId;
+    }
+
+    @GetMapping("/review")
+    public String review(@RequestParam EReview reviewType, @RequestParam Long deckId, Model m) {
+        List<CardDTO> cards = cardService.getByDeckId(deckId);
+        List<CardReview> cardReviews = reviewService.generateTest(reviewType, cards);
+        m.addAttribute("cardReviews", cardReviews);
+        return reviewType.getHtmlFile();
     }
 }

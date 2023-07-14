@@ -1,5 +1,6 @@
 package com.universityteam.flashmemorizer.service.impl;
 
+import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.CardReview;
 import com.universityteam.flashmemorizer.entity.Card;
 import com.universityteam.flashmemorizer.enums.EReview;
@@ -18,7 +19,7 @@ public class CardReviewServiceImpl implements CardReviewService {
     private ReviewFactory reviewFactory;
 
     @Override
-    public List<CardReview> generateTest(EReview eReview, List<Card> cards) {
+    public List<CardReview> generateTest(EReview eReview, List<CardDTO> cards) {
         ReviewStrategy strategy = reviewFactory.create(eReview);
         return strategy.generateTest(cards);
     }

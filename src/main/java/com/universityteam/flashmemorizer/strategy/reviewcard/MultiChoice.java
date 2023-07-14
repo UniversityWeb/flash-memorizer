@@ -1,5 +1,6 @@
 package com.universityteam.flashmemorizer.strategy.reviewcard;
 
+import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.MultiChoiceCard;
 import com.universityteam.flashmemorizer.entity.Card;
 
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
     @Override
-    public List<MultiChoiceCard> generateTest(List<Card> cards) {
+    public List<MultiChoiceCard> generateTest(List<CardDTO> cards) {
         List<String> terms = createTerms(cards);
         return cards.stream()
                 .map(card -> {
@@ -32,9 +33,9 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
         return isCorrect;
     }
 
-    private List<String> createTerms(List<Card> cards) {
+    private List<String> createTerms(List<CardDTO> cards) {
         return cards.stream()
-                .map(Card::getTerm)
+                .map(CardDTO::getTerm)
                 .collect(Collectors.toList());
     }
 

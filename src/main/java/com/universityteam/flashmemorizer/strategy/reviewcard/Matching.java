@@ -1,5 +1,6 @@
 package com.universityteam.flashmemorizer.strategy.reviewcard;
 
+import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.MatchingCard;
 import com.universityteam.flashmemorizer.entity.Card;
 
@@ -10,7 +11,7 @@ import java.util.stream.Stream;
 
 public class Matching implements ReviewStrategy<MatchingCard> {
     @Override
-    public List<MatchingCard> generateTest(List<Card> cards) {
+    public List<MatchingCard> generateTest(List<CardDTO> cards) {
         List<String> words = createRandomWords(cards);
         return words.stream()
                 .map(word -> {
@@ -32,7 +33,7 @@ public class Matching implements ReviewStrategy<MatchingCard> {
         return isCorrect;
     }
 
-    private List<String> createRandomWords(List<Card> cards) {
+    private List<String> createRandomWords(List<CardDTO> cards) {
         List<String> words = cards.stream()
                 .flatMap(card -> Stream.of(card.getTerm(), card.getDesc()))
                 .collect(Collectors.toList());
@@ -40,8 +41,8 @@ public class Matching implements ReviewStrategy<MatchingCard> {
         return words;
     }
 
-    private String findHiddenPart(List<Card> cards, String word) {
-        for (Card card : cards) {
+    private String findHiddenPart(List<CardDTO> cards, String word) {
+        for (CardDTO card : cards) {
             if (word.equals(card.getTerm())) {
                 return card.getDesc();
             }

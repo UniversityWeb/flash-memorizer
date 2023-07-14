@@ -1,5 +1,6 @@
 package com.universityteam.flashmemorizer.strategy.reviewcard;
 
+import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.FillBlankCard;
 import com.universityteam.flashmemorizer.entity.Card;
 
@@ -8,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class FillBlank implements ReviewStrategy<FillBlankCard> {
     @Override
-    public List<FillBlankCard> generateTest(List<Card> cards) {
+    public List<FillBlankCard> generateTest(List<CardDTO> cards) {
         return cards.stream()
                 .map(card -> {
                     FillBlankCard fillBlankCard = new FillBlankCard();
