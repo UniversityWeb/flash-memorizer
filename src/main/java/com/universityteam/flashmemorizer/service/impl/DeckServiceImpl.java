@@ -62,4 +62,12 @@ public class DeckServiceImpl implements DeckService {
         List<Deck> decks = deckRepo.findByUserId(userId);
         return deckConverter.convertEntityToDto(decks);
     }
+
+    @Override
+    public DeckDTO getById(Long id) {
+        Optional<Deck> optDeck = deckRepo.findById(id);
+        if (optDeck.isEmpty())
+            return null;
+        return deckConverter.convertEntityToDto(optDeck.get());
+    }
 }

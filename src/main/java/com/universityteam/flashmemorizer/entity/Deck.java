@@ -33,7 +33,7 @@ public class Deck {
     @Column(name = "last_modified", nullable = false)
     private Date modified;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 }

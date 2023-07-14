@@ -59,8 +59,15 @@ class UserConverterTest {
     @Test
     public void testConvertDtoToEntity() {
         // Arrange
-        UserDTO userDTO = new UserDTO(1L, "hihihi", "hihi1234", "hihi@gmail.com",
-                "Hi Tran", new Date(), new Date());
+        UserDTO userDTO = UserDTO.builder()
+                .id(1L)
+                .username("hihihi")
+                .pass("hihi124")
+                .email("hihi@gmail.com")
+                .fullName("Hi Tran")
+                .registration(new Date())
+                .lastLogin(new Date())
+                .build();
 
         // Act
         User user = userConverter.convertDtoToEntity(userDTO);

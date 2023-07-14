@@ -59,9 +59,15 @@ class CardConverterTest {
     @Test
     public void testConvertDtoToEntity() {
         // Arrange
-        CardDTO cardDTO = new CardDTO(1L, "Spring boot application",
-                "This is web application which can help people improve ability to memory",
-                new Date(), new Date(), null, null);
+        CardDTO cardDTO = CardDTO.builder()
+                .id(1L)
+                .term("Spring boot application")
+                .desc("This is web application which can help people improve ability to memory")
+                .creation(new Date())
+                .modified(new Date())
+                .user(null)
+                .deck(null)
+                .build();
 
         // Act
         Card card = cardConverter.convertDtoToEntity(cardDTO);

@@ -57,9 +57,14 @@ class DeckConverterTest {
     @Test
     public void testConvertDtoToEntity() {
         // Arrange
-        DeckDTO deckDTO = new DeckDTO(1L, "Spring boot application",
-                "This is web application which can help people improve ability to memory",
-                new Date(), new Date(), null);
+        DeckDTO deckDTO = DeckDTO.builder()
+                .id(1L)
+                .name("Spring boot application")
+                .desc("This is web application which can help people improve ability to memory")
+                .creation(new Date())
+                .modified(new Date())
+                .user(null)
+                .build();
 
         // Act
         Deck deck = deckConverter.convertDtoToEntity(deckDTO);
