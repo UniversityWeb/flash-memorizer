@@ -9,5 +9,6 @@ public interface CardService {
     boolean delete(Long id);
     boolean delete(CardDTO cardDTO);
     CardDTO update(CardDTO cardDTO);
+    List<CardDTO> addOrUpdate(List<CardDTO> cardDTOs);
     List<CardDTO> getByDeckId(Long deckId);
 }

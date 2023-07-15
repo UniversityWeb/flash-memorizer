@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <h4 class="text-center text-primary">Deck</h4>
 
-                        <form th:action="@{/deck/update1}" method="post" th:object="${deck}">
+                        <form th:action="@{/deck/update}" method="post" th:object="${deck}">
                             <input type="hidden" th:value="${deck.id}" name="id">
 
                             <div class="form-group">

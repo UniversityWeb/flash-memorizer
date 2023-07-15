@@ -71,6 +71,13 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    public List<CardDTO> addOrUpdate(List<CardDTO> cardDTOs) {
+        List<Card> carts = cardConverter.convertDtoToEntity(cardDTOs);
+        List<Card> updatedList = cardRepo.saveAll(carts);
+        return cardConverter.convertEntityToDto(updatedList);
+    }
+
+    @Override
     public List<CardDTO> getByDeckId(Long deckId) {
         List<Card> cards = cardRepo.findByDeckId(deckId);
         return cardConverter.convertEntityToDto(cards);

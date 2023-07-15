@@ -44,12 +44,19 @@ public class DeckController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute DeckDTO deck, HttpSession session) {
+    public String update(@ModelAttribute DeckDTO deck, @ModelAttribute List<CardDTO> cards, HttpSession session) {
         if (deckService.update(deck) != null) {
+            cardService.addOrUpdate(cards);
             session.setAttribute("msg", "Deck Update Successfully...");
         } else {
             session.setAttribute("msg", "Deck Update Unsuccessfully...");
         }
         return "redirect:/card";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam Long cardId, @RequestParam Long deckId) {
+        deckService.delete(cardId);
+        return "redirect:/deck/edit/" + deckId;
     }
 }
