@@ -10,14 +10,13 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 
+    <link rel="stylesheet" href="../static/css/edit-deck.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/edit-deck.css}" />
+
+
     <title>Deck Input</title>
 </head>
 <body>
-    <div th:if="${session.msg}">
-        <div class="alert alert-success" role="alert" th:text="${session.msg}"></div>
-        <th:block th:text="${#session.removeAttribute('msg')}"></th:block>
-    </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -25,7 +24,7 @@
                     <div class="card-body">
                         <h4 class="text-center text-primary">Deck</h4>
 
-                        <form th:action="@{/deck/update}" method="post" th:object="${deck}">
+                        <form th:action="@{/deck/update1}" method="post" th:object="${deck}">
                             <input type="hidden" th:value="${deck.id}" name="id">
 
                             <div class="form-group">
@@ -37,10 +36,10 @@
                                 <input type="text" class="form-control" name="desc" th:value="${deck.desc}">
                             </div>
 
-                            <button class="btn btn-primary btn-block">Submit</button>
+                            <button class="btn btn-primary btn-block">Update All</button>
+                            <p class="card-text"><small class="text-body-secondary" th:text="'Last updated ' + ${#dates.format(deck.modified, 'dd/MM/yyyy HH:mm')}"></small></p>
                         </form>
 
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
                     </div>
                 </div>
 
@@ -49,19 +48,26 @@
 
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <ul class="list-group">
+                <ul id="cardList" class="list-group">
                     <li class="list-group-item" th:each="card : ${cards}">
-                        <div class="card-body position-relative">
-                            <div class="format-bar">
-                                <!-- Add formatting buttons here -->
-                                <button type="button" class="btn btn-secondary btn-sm">Bold</button>
-                                <button type="button" class="btn btn-secondary btn-sm">Italic</button>
-                                <!-- Add more formatting buttons as needed -->
+                        <div class="card-body mb-3 position-relative">
+                            <div class="format-bar d-flex justify-content-between">
+                                <div>
+                                    <!-- Add formatting buttons here -->
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Bold</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Italic</button>
+                                    <!-- Add more formatting buttons as needed -->
+                                </div>
+                                <button class="btn btn-outline-danger btn-sm delete-button"
+                                        th:href="@{/delete(cardId=${card.id}, deckId=${card.deck.id})}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </div>
-                            <div class="form-row">
+
+                            <div class="form-row mt-3">
                                 <div class="col">
                                     <label>Term</label>
                                     <textarea class="form-control" name="Term" rows="3" th:text="${card.term}"></textarea>
@@ -78,5 +84,17 @@
         </div>
     </div>
 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <button id="addCardBtn" class="btn btn-primary btn-block mb-5">
+                    <i class="fas fa-plus-circle"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/edit-deck.js}"></script>
+    <script src="../static/js/edit-deck.js"></script>
 </body>
 </html>
