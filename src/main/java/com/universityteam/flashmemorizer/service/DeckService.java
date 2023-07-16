@@ -9,4 +9,5 @@ public interface DeckService {
     boolean delete(Long id);
     DeckDTO update(DeckDTO deckDTO);
     List<DeckDTO> getByUser(Long userId);
+    DeckDTO getById(Long id);
 }

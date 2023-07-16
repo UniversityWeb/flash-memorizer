@@ -1,5 +1,6 @@
 package com.universityteam.flashmemorizer.converter;
 
+import com.universityteam.flashmemorizer.config.AppConfig;
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.entity.Card;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-@SpringBootTest
+@SpringBootTest(classes = AppConfig.class)
 @ContextConfiguration(classes = CardConverter.class)
 class CardConverterTest {
     @Autowired
@@ -59,9 +60,15 @@ class CardConverterTest {
     @Test
     public void testConvertDtoToEntity() {
         // Arrange
-        CardDTO cardDTO = new CardDTO(1L, "Spring boot application",
-                "This is web application which can help people improve ability to memory",
-                new Date(), new Date(), null, null);
+        CardDTO cardDTO = CardDTO.builder()
+                .id(1L)
+                .term("Spring boot application")
+                .desc("This is web application which can help people improve ability to memory")
+                .creation(new Date())
+                .modified(new Date())
+                .user(null)
+                .deck(null)
+                .build();
 
         // Act
         Card card = cardConverter.convertDtoToEntity(cardDTO);

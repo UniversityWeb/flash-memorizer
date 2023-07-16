@@ -11,11 +11,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DeckDTO {
+public class SharedDeckDTO {
     private Long id;
-    private String name;
-    private String desc;
+    private UserDTO sender;
+    private UserDTO recipient;
+    private DeckDTO deck;
     private Date creation;
-    private Date modified;
-    private UserDTO user;
 }

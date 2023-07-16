@@ -1,5 +1,6 @@
 package com.universityteam.flashmemorizer.dto;
 
+import com.universityteam.flashmemorizer.enums.ERating;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,14 +9,14 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class DeckDTO {
-    private Long id;
-    private String name;
-    private String desc;
-    private Date creation;
-    private Date modified;
+public class UserCardDTO {
+    private Date lastReview;
+    private Long reviewCount;
+    private Long interval;
+    private ERating rating;
+    private CardDTO card;
     private UserDTO user;
 }

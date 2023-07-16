@@ -3,36 +3,35 @@ package com.universityteam.flashmemorizer.converter;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.entity.Deck;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class DeckConverter {
 
+    @Autowired
+    private ModelMapper mapper;
+
     public List<DeckDTO> convertEntityToDto(List<Deck> decks) {
         return decks.stream()
-                .map(deck -> convertEntityToDto(deck))
-                .toList();
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
     }
 
     public DeckDTO convertEntityToDto(Deck deck) {
-        if (deck == null) return null;
-        ModelMapper modelMapper = new ModelMapper();
-        DeckDTO deckDTO = modelMapper.map(deck, DeckDTO.class);
-        return deckDTO;
+        return (deck == null) ? null : mapper.map(deck, DeckDTO.class);
     }
 
     public List<Deck> convertDtoToEntity(List<DeckDTO> deckDTOs) {
         return deckDTOs.stream()
-                .map(deck -> convertDtoToEntity(deck))
-                .toList();
+                .map(this::convertDtoToEntity)
+                .collect(Collectors.toList());
     }
 
     public Deck convertDtoToEntity(DeckDTO deckDTO) {
-        if (deckDTO == null) return null;
-        ModelMapper modelMapper = new ModelMapper();
-        Deck deck = modelMapper.map(deckDTO, Deck.class);
-        return deck;
+        return (deckDTO == null) ? null : mapper.map(deckDTO, Deck.class);
     }
 }

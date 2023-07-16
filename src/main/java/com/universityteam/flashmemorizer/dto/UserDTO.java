@@ -1,14 +1,13 @@
 package com.universityteam.flashmemorizer.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserDTO {
     private Long id;
     private String username;
