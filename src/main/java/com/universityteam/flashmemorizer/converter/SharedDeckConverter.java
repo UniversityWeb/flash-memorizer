@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class SharedDeckConverter {
@@ -17,24 +18,20 @@ public class SharedDeckConverter {
     public List<SharedDeckDTO> convertEntityToDto(List<SharedDeck> sharedDecks) {
         return sharedDecks.stream()
                 .map(this::convertEntityToDto)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public SharedDeckDTO convertEntityToDto(SharedDeck shareDeck) {
-        if (shareDeck == null) return null;
-        SharedDeckDTO sharedDTO = mapper.map(shareDeck, SharedDeckDTO.class);
-        return sharedDTO;
+        return (shareDeck == null) ? null : mapper.map(shareDeck, SharedDeckDTO.class);
     }
 
     public List<SharedDeck> convertDtoToEntity(List<SharedDeckDTO> sharedDeckDTOs) {
         return sharedDeckDTOs.stream()
                 .map(this::convertDtoToEntity)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public SharedDeck convertDtoToEntity(SharedDeckDTO cardDTO) {
-        if (cardDTO == null) return null;
-        SharedDeck card = mapper.map(cardDTO, SharedDeck.class);
-        return card;
+        return (cardDTO == null) ? null : mapper.map(cardDTO, SharedDeck.class);
     }
 }

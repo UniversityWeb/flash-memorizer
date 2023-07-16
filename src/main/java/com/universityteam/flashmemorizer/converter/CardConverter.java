@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CardConverter {
@@ -17,24 +18,20 @@ public class CardConverter {
     public List<CardDTO> convertEntityToDto(List<Card> cards) {
         return cards.stream()
                 .map(this::convertEntityToDto)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public CardDTO convertEntityToDto(Card card) {
-        if (card == null) return null;
-        CardDTO cardDTO = mapper.map(card, CardDTO.class);
-        return cardDTO;
+        return (card == null) ? null : mapper.map(card, CardDTO.class);
     }
 
     public List<Card> convertDtoToEntity(List<CardDTO> cardDTOs) {
         return cardDTOs.stream()
                 .map(this::convertDtoToEntity)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public Card convertDtoToEntity(CardDTO cardDTO) {
-        if (cardDTO == null) return null;
-        Card card = mapper.map(cardDTO, Card.class);
-        return card;
+        return (cardDTO == null) ? null : mapper.map(cardDTO, Card.class);
     }
 }

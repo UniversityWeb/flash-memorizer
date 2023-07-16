@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserConverter {
@@ -17,24 +18,20 @@ public class UserConverter {
     public List<UserDTO> convertEntityToDto(List<User> users) {
         return users.stream()
                 .map(this::convertEntityToDto)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public UserDTO convertEntityToDto(User user) {
-        if (user == null) return null;
-        UserDTO userDTO = mapper.map(user, UserDTO.class);
-        return userDTO;
+        return (user == null) ? null : mapper.map(user, UserDTO.class);
     }
 
     public List<User> convertDtoToEntity(List<UserDTO> userDTOs) {
         return userDTOs.stream()
                 .map(this::convertDtoToEntity)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public User convertDtoToEntity(UserDTO userDTO) {
-        if (userDTO == null) return null;
-        User user = mapper.map(userDTO, User.class);
-        return user;
+        return (userDTO == null) ? null : mapper.map(userDTO, User.class);
     }
 }
