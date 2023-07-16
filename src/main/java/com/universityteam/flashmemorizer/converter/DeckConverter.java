@@ -3,12 +3,16 @@ package com.universityteam.flashmemorizer.converter;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.entity.Deck;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class DeckConverter {
+
+    @Autowired
+    private ModelMapper mapper;
 
     public List<DeckDTO> convertEntityToDto(List<Deck> decks) {
         return decks.stream()
@@ -18,8 +22,7 @@ public class DeckConverter {
 
     public DeckDTO convertEntityToDto(Deck deck) {
         if (deck == null) return null;
-        ModelMapper modelMapper = new ModelMapper();
-        DeckDTO deckDTO = modelMapper.map(deck, DeckDTO.class);
+        DeckDTO deckDTO = mapper.map(deck, DeckDTO.class);
         return deckDTO;
     }
 
@@ -31,8 +34,7 @@ public class DeckConverter {
 
     public Deck convertDtoToEntity(DeckDTO deckDTO) {
         if (deckDTO == null) return null;
-        ModelMapper modelMapper = new ModelMapper();
-        Deck deck = modelMapper.map(deckDTO, Deck.class);
+        Deck deck = mapper.map(deckDTO, Deck.class);
         return deck;
     }
 }

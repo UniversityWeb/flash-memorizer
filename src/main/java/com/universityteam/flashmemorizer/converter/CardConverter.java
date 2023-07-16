@@ -3,35 +3,38 @@ package com.universityteam.flashmemorizer.converter;
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.entity.Card;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class CardConverter {
+
+    @Autowired
+    private ModelMapper mapper;
+
     public List<CardDTO> convertEntityToDto(List<Card> cards) {
         return cards.stream()
-                .map(card -> convertEntityToDto(card))
+                .map(this::convertEntityToDto)
                 .toList();
     }
 
     public CardDTO convertEntityToDto(Card card) {
         if (card == null) return null;
-        ModelMapper modelMapper = new ModelMapper();
-        CardDTO cardDTO = modelMapper.map(card, CardDTO.class);
+        CardDTO cardDTO = mapper.map(card, CardDTO.class);
         return cardDTO;
     }
 
     public List<Card> convertDtoToEntity(List<CardDTO> cardDTOs) {
         return cardDTOs.stream()
-                .map(card -> convertDtoToEntity(card))
+                .map(this::convertDtoToEntity)
                 .toList();
     }
 
     public Card convertDtoToEntity(CardDTO cardDTO) {
         if (cardDTO == null) return null;
-        ModelMapper modelMapper = new ModelMapper();
-        Card card = modelMapper.map(cardDTO, Card.class);
+        Card card = mapper.map(cardDTO, Card.class);
         return card;
     }
 }

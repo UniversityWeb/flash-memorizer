@@ -3,35 +3,38 @@ package com.universityteam.flashmemorizer.converter;
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.entity.User;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class UserConverter {
+
+    @Autowired
+    private ModelMapper mapper;
+
     public List<UserDTO> convertEntityToDto(List<User> users) {
         return users.stream()
-                .map(user -> convertEntityToDto(user))
+                .map(this::convertEntityToDto)
                 .toList();
     }
 
     public UserDTO convertEntityToDto(User user) {
         if (user == null) return null;
-        ModelMapper modelMapper = new ModelMapper();
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        UserDTO userDTO = mapper.map(user, UserDTO.class);
         return userDTO;
     }
 
     public List<User> convertDtoToEntity(List<UserDTO> userDTOs) {
         return userDTOs.stream()
-                .map(user -> convertDtoToEntity(user))
+                .map(this::convertDtoToEntity)
                 .toList();
     }
 
     public User convertDtoToEntity(UserDTO userDTO) {
         if (userDTO == null) return null;
-        ModelMapper modelMapper = new ModelMapper();
-        User user = modelMapper.map(userDTO, User.class);
+        User user = mapper.map(userDTO, User.class);
         return user;
     }
 }

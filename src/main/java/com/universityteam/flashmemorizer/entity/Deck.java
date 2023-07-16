@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -36,4 +37,7 @@ public class Deck {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "deck", cascade = CascadeType.REMOVE)
+    private List<SharedDeck> sharedDecks;
 }

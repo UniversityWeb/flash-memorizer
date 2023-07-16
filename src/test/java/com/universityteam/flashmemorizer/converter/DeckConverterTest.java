@@ -1,5 +1,6 @@
 package com.universityteam.flashmemorizer.converter;
 
+import com.universityteam.flashmemorizer.config.AppConfig;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.entity.Deck;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-@SpringBootTest
+@SpringBootTest(classes = AppConfig.class)
 @ContextConfiguration(classes = DeckConverter.class)
 class DeckConverterTest {
     @Autowired

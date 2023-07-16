@@ -1,5 +1,6 @@
 package com.universityteam.flashmemorizer.converter;
 
+import com.universityteam.flashmemorizer.config.AppConfig;
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.entity.User;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-@SpringBootTest
+@SpringBootTest(classes = AppConfig.class)
 @ContextConfiguration(classes = UserConverter.class)
 class UserConverterTest {
     @Autowired
