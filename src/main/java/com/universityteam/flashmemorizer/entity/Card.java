@@ -34,10 +34,6 @@ public class Card {
     private Date modified;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id", nullable = false)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="deck_id", nullable = false)
     private Deck deck;
 }

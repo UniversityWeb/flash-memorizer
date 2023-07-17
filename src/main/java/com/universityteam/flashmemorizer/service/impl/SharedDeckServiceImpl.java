@@ -6,10 +6,12 @@ import com.universityteam.flashmemorizer.entity.SharedDeck;
 import com.universityteam.flashmemorizer.repository.SharedDeckRepository;
 import com.universityteam.flashmemorizer.service.SharedDeckService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class SharedDeckServiceImpl implements SharedDeckService {
 
     @Autowired

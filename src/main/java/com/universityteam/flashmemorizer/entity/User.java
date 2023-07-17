@@ -1,10 +1,14 @@
 package com.universityteam.flashmemorizer.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -35,4 +39,7 @@ public class User {
 
     @Column(name = "last_login", nullable = false)
     private Date lastLogin;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Deck> decks;
 }

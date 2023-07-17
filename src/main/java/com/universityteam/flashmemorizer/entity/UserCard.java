@@ -37,7 +37,6 @@ public class UserCard {
     @Column(name = "next_interval", nullable = false)
     private Long interval;
 
-    @Column(columnDefinition = "ENUM('LOW', 'BELOW_AVERAGE', 'AVERAGE', 'ABOVE_AVERAGE', 'HIGH')")
     @Enumerated(EnumType.STRING)
     private ERating rating;
 

@@ -17,6 +17,5 @@ public class CardDTO {
     private String desc;
     private Date creation;
     private Date modified;
-    private UserDTO user;
     private DeckDTO deck;
 }

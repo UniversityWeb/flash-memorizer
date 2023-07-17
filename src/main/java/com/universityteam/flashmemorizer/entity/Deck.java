@@ -38,6 +38,9 @@ public class Deck {
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "deck", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Card> cards;
+
+    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL)
     private List<SharedDeck> sharedDecks;
 }

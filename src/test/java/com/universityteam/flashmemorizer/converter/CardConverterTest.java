@@ -28,7 +28,6 @@ class CardConverterTest {
                 .desc("This is web application which can help people improve ability to memory")
                 .creation(new Date())
                 .modified(new Date())
-                .user(null)
                 .deck(null)
                 .build();
 
@@ -41,7 +40,6 @@ class CardConverterTest {
         assertEquals(cardDTO.getDesc(), card.getDesc());
         assertEquals(cardDTO.getCreation(), card.getCreation());
         assertEquals(cardDTO.getModified(), card.getModified());
-        assertEquals(cardDTO.getUser(), card.getUser());
         assertEquals(cardDTO.getDeck(), card.getDeck());
     }
 
@@ -66,7 +64,6 @@ class CardConverterTest {
                 .desc("This is web application which can help people improve ability to memory")
                 .creation(new Date())
                 .modified(new Date())
-                .user(null)
                 .deck(null)
                 .build();
 
@@ -79,7 +76,6 @@ class CardConverterTest {
         assertEquals(cardDTO.getDesc(), card.getDesc());
         assertEquals(cardDTO.getCreation(), card.getCreation());
         assertEquals(cardDTO.getModified(), card.getModified());
-        assertEquals(cardDTO.getUser(), card.getUser());
         assertEquals(cardDTO.getDeck(), card.getDeck());
     }
 

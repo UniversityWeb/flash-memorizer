@@ -102,7 +102,6 @@ class CardRepositoryTest {
                 .desc("The same meaning: rise quickly")
                 .creation(new Date())
                 .modified(new Date())
-                .user(user)
                 .deck(deck)
                 .build();
     }
