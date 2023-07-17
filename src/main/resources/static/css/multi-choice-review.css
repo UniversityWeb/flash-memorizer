@@ -1,3 +1,6 @@
+body {
+    background-color:#F8F9FA;
+}
 .navbar .nav-link {
     font-size: 25px;
 }
@@ -12,14 +15,30 @@
      align-items: center;
      flex-grow: 1;
 }
+.navbar-bg {
+    background-color: white;
+}
 
 .btn-wide {
     width: 100%;
     padding: 15px 20px;
 }
 
+.btn-height {
+    height: 100px;
+}
+.btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .btn-group-spacing .btn {
     margin-right: 10px;
+}
+
+.btn-submit {
+    width: 15%;
+    height: 100px;
 }
 
 .custom-border {
@@ -59,3 +78,4 @@
         justify-content: center;
     }
 }
+

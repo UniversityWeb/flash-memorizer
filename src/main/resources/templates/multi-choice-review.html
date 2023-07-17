@@ -11,7 +11,7 @@
 <body>
 <div class="container-fluid">
     <!--Start Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light navbar-bg">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-bg fixed-top">
         <div class="container-fluid">
             <div class="nav-item dropdown">
                 <div class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,56 +45,46 @@
             </div>
         </div>
     </nav>
-    <!--End Navbar-->
-    <!--Start card-->
-    <div class="p-5 mb-8 bg-light text-dark">
-        <div class="card custom-border d-flex align-items-center justify-content-center mx-auto" style="max-width: 920px;">
-            <div class="card-body m-3 card-height">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <p class="card-title small-title-color lang-vi">Definition</p>
-                    <p class="card-subtitle text-muted small-title-color lang-vi">1 of 10</p>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 body-color lang-vi">
-                        <p class="card-text des-height ">(n) yếu tố, cơ sở eg: The audience is an essential _____ of live theater.
-                        </p>
-                    </div>
-                    <div class="col-md-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp"
-                             class="img-fluid rounded" alt="Sunset Over the Sea">
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <form action="">
-                        <div class="form-group">
-                            <h5 class="card-title mb-4 big-title-color lang-vi font-weight-bold">Choose matching term</h5>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6 mb-2">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                    <label class="btn btn-outline-primary btn-wide" for="btnradio1">mistake</label>
-                                </div>
-                                <div class="col-sm-12 col-md-6 mb-2">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-wide" for="btnradio2">display</label>
-                                </div>
+<!--    start cards display -->
+            <div th:each="cardReview : ${cardReviews}">
+                <div class="outer-card bg-light text-dark" style="margin-top:150px">
+                <div class="card custom-border d-flex align-items-center justify-content-center mx-auto" style="max-width: 1100px;">
+                    <div class="card-body m-3 card-height">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="card-title small-title-color lang-vi">Definition</p>
+                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviews.size()}"></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 body-color lang-vi">
+                                <p class="card-text des-height" th:text="${cardReview.desc}"></p>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6 mb-2">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-wide" for="btnradio3">risk</label>
-                                </div>
-                                <div class="col-sm-12 col-md-6 mb-2">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-wide" for="btnradio4">revise</label>
-                                </div>
+                            <div class="col-md-2">
+                                <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp" class="img-fluid rounded" alt="">
                             </div>
                         </div>
-                    </form>
+                        <div class="mt-4">
+                            <form>
+                                <div class="form-group">
+                                    <h5 class="card-title mb-4 big-title-color lang-vi font-weight-bold">Choose matching term</h5>
+                                    <div class="row">
+                                        <div th:each="option, index : ${cardReview.options}" class="col-sm-12 col-md-6 mb-2">
+                                            <input type="radio" class="btn-check" name="btnradio" th:id="${'btnradio' + cardReview.indexAnswer + '_' + index}" autocomplete="off" th:checked="${index == cardReview.indexChoose}">
+                                            <label class="btn btn-outline-primary btn-wide btn-height btn-content" th:for="${'btnradio' + cardReview.indexAnswer + '_' + index}" th:text="${option}"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+<!--    end cards display -->
+    <div class="text-center mt-4 mb-4 p-5">
+        <form action="/submit-answers" method="post">
+            <button type="button" class="btn btn-primary btn-lg btn-block btn-submit">Submit test</button>
+        </form>
     </div>
-    <!--End card-->
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
