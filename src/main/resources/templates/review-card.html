@@ -31,9 +31,7 @@
     <div class ="d-flex justify-content-center align-items-center ">
         <h2>LESSON 15- LISTENING</h2>
     </div>
-    <script>
-        console.log(cards);
-    </script>
+
     <div class = "h-70 w-70 ">
         <form>
             <div class = "form-group d-flex justify-content-center align-items-center ">
@@ -54,8 +52,8 @@
         <div class="carousel-container">
             <div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="false">
                 <div class=" carousel-inner">
-                    <div th:each="card : ${cards} ">
-                        <div class="carousel-item active">
+                    <div th:each="card,iter : ${cards} ">
+                        <div class="carousel-item"  th:classappend="${iter.index} == 0? active : ''">
                             <div class="card-group d-flex justify-content-center align-items-center">
                                 <div class="flip-card shadow-lg">
                                     <div class="flip-card-inner">
@@ -80,30 +78,6 @@
                             </div>
                         </div>
                     </div>
-                   <!--
-                    <div class="carousel-item">
-                        <div class="card-group d-flex justify-content-center align-items-center">
-                            <div class="flip-card shadow-lg">
-                                <div class="flip-card-inner">
-                                    <div class="flip-card-front">
-                                        <div class = "row">
-                                            <div class = "col w-50">
-                                                <p class="hint" data-toggle="tooltip" data-placement="top" title="Hint text">Get a hint</p>
-                                            </div>
-                                            <div class = "col w-50">
-                                                <p>volume</p>
-                                            </div>
-                                        </div>
-                                        <h3>Từ vựng</h3>
-                                        <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="Avatar" style="width:70%;height:70%;">
-                                    </div>
-                                    <div class="flip-card-back">
-                                        <p class = "h5">Nghĩa</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
                 <div class = "carousel-controls">
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -132,7 +106,9 @@
     var carousel = document.getElementById('carouselExampleCaptions');
     carousel.addEventListener('slide.bs.carousel', function (event) {
         var currentSlide = event.to +1;
-        var totalSlides = event.relatedTarget.parentNode.children.length;
+        console.log(event.to);
+        var totalSlides = carousel.querySelectorAll('.carousel-item').length;
+        console.log(totalSlides);
         var progress = (currentSlide / totalSlides) * 100;
         var progressBarIndicator = document.getElementById('progress-indicator');
         var progressBar = document.getElementById('progress-bar');
