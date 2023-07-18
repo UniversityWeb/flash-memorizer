@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.com">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Flashcards</title>
-    <link rel="stylesheet" href="/src/main/resources/static/review-card.css">
+    <link rel="stylesheet" href="../static/css/review-card.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/review-card.css}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -21,13 +23,6 @@
 </header>
 
 <body class = "container">
-    <form th:controller = "Card" th:action="@{/review-card}" method="post">
-
-        <div class="form-group">
-            <label>Enter id Dick</label> <input type="text" class="form-control" name="deckId">
-        </div>
-        <button class="btn btn-primary btn-block">Submit</button>
-    </form>
     <div class ="d-flex justify-content-center align-items-center ">
         <h2>LESSON 15- LISTENING</h2>
     </div>
@@ -106,9 +101,7 @@
     var carousel = document.getElementById('carouselExampleCaptions');
     carousel.addEventListener('slide.bs.carousel', function (event) {
         var currentSlide = event.to +1;
-        console.log(event.to);
         var totalSlides = carousel.querySelectorAll('.carousel-item').length;
-        console.log(totalSlides);
         var progress = (currentSlide / totalSlides) * 100;
         var progressBarIndicator = document.getElementById('progress-indicator');
         var progressBar = document.getElementById('progress-bar');
