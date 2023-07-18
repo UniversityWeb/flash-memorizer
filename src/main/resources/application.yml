@@ -1,0 +1,19 @@
+server:
+  port: 8000
+
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3307/FlashMemorizer?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: root
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: true
