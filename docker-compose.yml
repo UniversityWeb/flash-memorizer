@@ -17,7 +17,7 @@ services:
     restart: on-failure
     build:
       context: .
-    image: vananne/flash-memorizer-image
+      dockerfile: Dockerfile
     depends_on:
       - flash-memorizer-db
     ports:
