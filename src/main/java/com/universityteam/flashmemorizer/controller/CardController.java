@@ -24,7 +24,7 @@ public class CardController {
     public String getByDeckId(@PathVariable Long deckId, Model m) {
         List<CardDTO> cards = cardService.getByDeckId(deckId);
         m.addAttribute("cards", cards);
-        return "";
+        return "review-card";
     }
 
     @GetMapping("/delete/")
