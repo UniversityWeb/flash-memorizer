@@ -12,7 +12,11 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+<<<<<<< HEAD
     background: url('../image/background.jpg') no-repeat;
+=======
+    background: url('../images/background.jpg') no-repeat;
+>>>>>>> 35abf7d (fix the issue of loading .css file using Thymeleaf)
     background-size: cover;
     background-position: center;
 }
@@ -66,7 +70,7 @@ header {
     width: 130px;
     height: 50px;
     background: transparent;
-    border: 2px solid, white;
+    border: 2px solid white;
     outline: none;
     border-radius: 6px;
     cursor: pointer;
@@ -226,7 +230,7 @@ header {
     border-radius: 6px;
     cursor: pointer;
     font-size: 1em;
-    columns: white;
+    color: white;
     font-weight: 500;
 }
 
