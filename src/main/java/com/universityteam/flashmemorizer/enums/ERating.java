@@ -1,19 +1,19 @@
 package com.universityteam.flashmemorizer.enums;
 
 public enum ERating {
-    LOW(1),
-    BELOW_AVERAGE(2),
-    AVERAGE(3),
-    ABOVE_AVERAGE(4),
-    HIGH(5);
+    LOW(1.3),
+    BELOW_AVERAGE(2.8),
+    AVERAGE(2.0),
+    ABOVE_AVERAGE(2.2),
+    HIGH(2.5);
 
-    private final int value;
+    private final double easeFactor;
 
-    ERating(int value) {
-        this.value = value;
+    ERating(double easeFactor) {
+        this.easeFactor = easeFactor;
     }
 
-    public int getValue() {
-        return value;
+    public double getEaseFactor() {
+        return easeFactor;
     }
 }
