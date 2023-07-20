@@ -7,3 +7,13 @@ var options = document.querySelectorAll('input[type="radio"]');
             window.scrollBy({ top: cardHeight, behavior: 'smooth' });
         });
     });
+
+const radioButtons = document.querySelectorAll('input[type="radio"]');
+radioButtons.forEach((radio) => {
+    radio.addEventListener('change', (event) => {
+        const selectedOptionText = event.target.nextElementSibling.textContent;
+        const cardReviewIndex = event.target.getAttribute('data-card-review-index');
+        const hiddenInput = document.getElementById('cardReviewIndexChoose' + cardReviewIndex);
+        hiddenInput.value = selectedOptionText;
+    });
+});

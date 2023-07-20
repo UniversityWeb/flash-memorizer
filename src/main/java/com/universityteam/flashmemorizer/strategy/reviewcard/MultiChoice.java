@@ -2,7 +2,6 @@ package com.universityteam.flashmemorizer.strategy.reviewcard;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.MultiChoiceCard;
-import com.universityteam.flashmemorizer.entity.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,19 +17,12 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
                     MultiChoiceCard multiChoiceCard = new MultiChoiceCard();
                     String term = card.getTerm();
                     List<String> options = createOptions(terms, term);
-                    int indexChoose = findAnswer(options, term);
+                    multiChoiceCard.setTerm(term);
                     multiChoiceCard.setDesc(card.getDesc());
                     multiChoiceCard.setOptions(options);
-                    multiChoiceCard.setIndexAnswer(indexChoose);
                     return multiChoiceCard;
                 })
                 .collect(Collectors.toList());
-    }
-
-    public boolean isAnswer(MultiChoiceCard card) {
-        boolean isCorrect = card.getIndexAnswer() == card.getIndexChoose();
-        card.setCorrect(isCorrect);
-        return isCorrect;
     }
 
     private List<String> createTerms(List<CardDTO> cards) {
@@ -47,9 +39,5 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
         options.add(term);
         Collections.shuffle(options);
         return options;
-    }
-
-    private int findAnswer(List<String> options, String cardDes) {
-        return options.indexOf(cardDes);
     }
 }

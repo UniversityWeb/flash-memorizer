@@ -2,7 +2,6 @@ package com.universityteam.flashmemorizer.service.impl;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.CardReview;
-import com.universityteam.flashmemorizer.entity.Card;
 import com.universityteam.flashmemorizer.enums.EReview;
 import com.universityteam.flashmemorizer.service.CardReviewService;
 import com.universityteam.flashmemorizer.strategy.reviewcard.ReviewFactory;

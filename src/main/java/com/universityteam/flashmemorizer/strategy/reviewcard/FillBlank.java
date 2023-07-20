@@ -2,7 +2,6 @@ package com.universityteam.flashmemorizer.strategy.reviewcard;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.FillBlankCard;
-import com.universityteam.flashmemorizer.entity.Card;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,7 +24,7 @@ public class FillBlank implements ReviewStrategy<FillBlankCard> {
                 .collect(Collectors.toList());
     }
 
-    public boolean isAnswer(FillBlankCard card) {
+    public boolean isCorrect(FillBlankCard card) {
         boolean isCorrect = card.getFillAnswers().equals(card.getUserFills());
         card.setCorrect(isCorrect);
         return isCorrect;

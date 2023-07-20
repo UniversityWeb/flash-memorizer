@@ -1,14 +1,15 @@
 package com.universityteam.flashmemorizer.controller;
 
-import com.universityteam.flashmemorizer.converter.CardConverter;
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.CardReview;
-import com.universityteam.flashmemorizer.entity.Card;
+import com.universityteam.flashmemorizer.dto.CardReviewForm;
 import com.universityteam.flashmemorizer.enums.EReview;
 import com.universityteam.flashmemorizer.service.CardReviewService;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.service.CardService;
+import com.universityteam.flashmemorizer.service.FormService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,10 @@ public class CardController {
     @Autowired
     private CardReviewService reviewService;
 
+    @Autowired
+    private FormService formService;
+
+    Boolean submitted = false;
     @GetMapping("/{deckId}")
     public String getByDeckId(@PathVariable Long deckId, Model m) {
         List<CardDTO> cards = cardService.getByDeckId(deckId);
@@ -103,9 +108,25 @@ public class CardController {
 
     @GetMapping("/review")
     public String review(@RequestParam EReview reviewType, @RequestParam Long deckId, Model m) {
+        submitted = false;
         List<CardDTO> cards = cardService.getByDeckId(deckId);
         List<CardReview> cardReviews = reviewService.generateTest(reviewType, cards);
+        CardReviewForm cardReviewForm = new CardReviewForm();
         m.addAttribute("cardReviews", cardReviews);
+        m.addAttribute("cardReviewForm", cardReviewForm);
         return reviewType.getHtmlFile();
+    }
+
+    @PostMapping("/review/submit-answers")
+    public String submitAnswers(@ModelAttribute("cardReviewForm") CardReviewForm cardReviewForm, Model m) {
+        if (!submitted) {
+            String score = formService.calScore(cardReviewForm);
+            cardReviewForm.setScore(score);
+            m.addAttribute("cardReviewForm", cardReviewForm);
+            submitted = true;
+        } else {
+            return "review-result-error";
+        }
+        return "review-result";
     }
 }

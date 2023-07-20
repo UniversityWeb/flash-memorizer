@@ -11,6 +11,4 @@ import java.util.List;
 @NoArgsConstructor
 public class MultiChoiceCard extends CardReview {
     private List<String> options;
-    private int indexChoose;
-    private int indexAnswer;
 }
