@@ -4,8 +4,7 @@
 ### Sections
 - [Clone repository](#clone-repository)
 - [Access Path (URL)](#access-path-url)
-- [Run With Docker](#run-with-docker)
-- [Debug](#debug)
+- [Run Database in Docker](#run-database-in-docker)
 - [Documentation](#documentation)
 
 ## **Clone repository**
@@ -29,47 +28,17 @@ git clone https://github.com/AnhAnNek/flash-memorizer.git
 4. UI: bootstrap.
 5. Concepts: JPA, Spring Security, MVC, SOLID, Design pattern.
 
-## **Run With Docker**
+## **Run Database in Docker**
 
 ### To Run
 ```
-docker-compose up --build
-```
-###### *To stop*
-```
-Ctrl + C
+docker-compose up -d 
 ```
 
 #### Remove container without deleting MySQL data
 ```
 docker-compose down
 ```
-
-## **Debug**
-### Setup
-
-*Step 1: Click "Edit Configurations"*
-
-![Edit Configurations](images/edit-configurations.png)
-
-*Step 2: Click "+" -> "Remote JVM Debug"*
-
-![Remote Debug](images/add-remote-debug.png)
-
-*Step 3:*
-
-![Config Remote Debug](images/config-remote-debug.png)
-
-1. Set Name: remote-debugging (or any name)
-2. Set Host: localhost
-3. Set Port: 5005
-4. Click "Ok"
-
-### Perform debugging on the running app
-
-![Run Remote Debug](images/run-remote-debug.png)
-
-Set a breakpoint and click <1> to start debugging
 
 ## **Documentations**
 ...coming soon...
