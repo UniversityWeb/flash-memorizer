@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.login;
+package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.service.UserService;
 import lombok.RequiredArgsConstructor;

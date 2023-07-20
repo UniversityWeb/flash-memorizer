@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.login.token;
+package com.universityteam.flashmemorizer.registration.token;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,7 +27,6 @@ public class VerificationToken {
     private Date expirationTime;
     private static final int EXPIRATION_TIME = 15;
 
-    @OneToOne
     @JoinColumn(name = "user_id")
     private UserDTO user;
     

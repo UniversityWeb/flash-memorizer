@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.login.security;
+package com.universityteam.flashmemorizer.registration.security;
 
 import com.universityteam.flashmemorizer.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

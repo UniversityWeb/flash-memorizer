@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.login.registration;
+package com.universityteam.flashmemorizer.registration;
 
 public record RegistrationRequest (
     String username,

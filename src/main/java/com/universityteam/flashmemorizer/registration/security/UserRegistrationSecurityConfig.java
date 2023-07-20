@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.login.security;
+package com.universityteam.flashmemorizer.registration.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

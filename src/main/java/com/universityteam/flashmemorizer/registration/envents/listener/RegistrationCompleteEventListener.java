@@ -1,9 +1,10 @@
-package com.universityteam.flashmemorizer.login.envents.listener;
+package com.universityteam.flashmemorizer.registration.envents.listener;
 
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
+import com.universityteam.flashmemorizer.registration.envents.RegistrationCompleteEvent;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.context.ApplicationListener;
@@ -12,7 +13,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import com.universityteam.flashmemorizer.entity.User;
-import com.universityteam.flashmemorizer.login.envents.RegistrationCompleteEvent;
 import com.universityteam.flashmemorizer.service.UserService;
 
 import lombok.RequiredArgsConstructor;

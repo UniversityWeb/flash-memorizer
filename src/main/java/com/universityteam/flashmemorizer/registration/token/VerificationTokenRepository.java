@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.login.token;
+package com.universityteam.flashmemorizer.registration.token;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -4,9 +4,9 @@ import com.universityteam.flashmemorizer.converter.UserConverter;
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.entity.User;
 import com.universityteam.flashmemorizer.exception.UserAlreadyExistsException;
-import com.universityteam.flashmemorizer.login.token.VerificationTokenRepository;
-import com.universityteam.flashmemorizer.login.token.VerificationToken;
-import com.universityteam.flashmemorizer.login.registration.RegistrationRequest;
+import com.universityteam.flashmemorizer.registration.token.VerificationTokenRepository;
+import com.universityteam.flashmemorizer.registration.token.VerificationToken;
+import com.universityteam.flashmemorizer.registration.RegistrationRequest;
 import com.universityteam.flashmemorizer.repository.UserRepository;
 import com.universityteam.flashmemorizer.service.UserService;
 

@@ -1,16 +1,15 @@
-package com.universityteam.flashmemorizer.login.registration;
+package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
-import com.universityteam.flashmemorizer.login.envents.listener.RegistrationCompleteEventListener;
-import com.universityteam.flashmemorizer.login.token.VerificationToken;
-import com.universityteam.flashmemorizer.login.token.VerificationTokenRepository;
+import com.universityteam.flashmemorizer.registration.RegistrationRequest;
+import com.universityteam.flashmemorizer.registration.envents.listener.RegistrationCompleteEventListener;
+import com.universityteam.flashmemorizer.registration.token.VerificationToken;
+import com.universityteam.flashmemorizer.registration.token.VerificationTokenRepository;
 import jakarta.mail.MessagingException;
-import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 
-import com.universityteam.flashmemorizer.entity.User;
-import com.universityteam.flashmemorizer.login.envents.RegistrationCompleteEvent;
+import com.universityteam.flashmemorizer.registration.envents.RegistrationCompleteEvent;
 import com.universityteam.flashmemorizer.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
