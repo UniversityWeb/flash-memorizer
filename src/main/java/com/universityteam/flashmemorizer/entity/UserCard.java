@@ -41,10 +41,10 @@ public class UserCard {
     private ERating rating;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "card_id", nullable = false)
+    @JoinColumn(name = "card_id", insertable = false, updatable = false, nullable = false)
     private Card card;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false, nullable = false)
     private User user;
 }

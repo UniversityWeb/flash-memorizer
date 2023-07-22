@@ -31,11 +31,11 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void clearAllData() {
-        userRepo.deleteAll();
-        deckRepo.deleteAll();
-        cardRepo.deleteAll();
-        userCardRepo.deleteAll();
         sharedDeckRepo.deleteAll();
+        userCardRepo.deleteAll();
+        cardRepo.deleteAll();
+        deckRepo.deleteAll();
+        userRepo.deleteAll();
     }
 
     private List<User> initUser() {
