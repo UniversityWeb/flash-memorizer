@@ -22,22 +22,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(unique = true, length = 50)
     private String username;
 
-    @Column(name = "pass_hash", nullable = false, length = 100)
+    @Column(name = "pass_hash", length = 100)
     private String pass;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(unique = true, length = 50)
     private String email;
 
-    @Column(name = "full_name", nullable = false, length = 100)
+    @Column(name = "full_name", length = 100)
     private String fullName;
 
-    @Column(nullable = false)
     private Date registration;
 
-    @Column(name = "last_login", nullable = false)
+    @Column(name = "last_login")
     private Date lastLogin;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

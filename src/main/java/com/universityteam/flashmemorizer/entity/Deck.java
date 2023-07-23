@@ -22,20 +22,19 @@ public class Deck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "deck_name", nullable = false, length = 50)
+    @Column(name = "deck_name", length = 50)
     private String name;
 
-    @Column(name = "deck_desc", nullable = false, length = 500)
+    @Column(name = "deck_desc", length = 500)
     private String desc;
 
-    @Column(nullable = false)
     private Date creation;
 
-    @Column(name = "last_modified", nullable = false)
+    @Column(name = "last_modified")
     private Date modified;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id", nullable = false)
+    @JoinColumn(name="user_id")
     private User user;
 
     @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, orphanRemoval = true)

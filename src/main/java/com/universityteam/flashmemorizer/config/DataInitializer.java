@@ -23,11 +23,7 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         clearAllData();
-        List<User> users = initUser();
-        List<Deck> decks = initDeck( users.get(0) );
-        List<Card> cards = initCard( decks.get(0) );
-        initUserCard( cards.get(0), users.get(0) );
-        initSharedDeck(users.get(0), users.get(1), decks.get(0) );
+        initData();
     }
 
     private void clearAllData() {
@@ -36,6 +32,14 @@ public class DataInitializer implements CommandLineRunner {
         cardRepo.deleteAll();
         deckRepo.deleteAll();
         userRepo.deleteAll();
+    }
+
+    private void initData() {
+        List<User> users = initUser();
+        List<Deck> decks = initDeck( users.get(0) );
+        List<Card> cards = initCard( decks.get(0) );
+        initUserCard( cards.get(0), users.get(0) );
+        initSharedDeck(users.get(0), users.get(1), decks.get(0) );
     }
 
     private List<User> initUser() {

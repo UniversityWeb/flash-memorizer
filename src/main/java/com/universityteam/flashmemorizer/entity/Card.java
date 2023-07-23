@@ -21,19 +21,18 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "card_term", nullable = false, length = 100)
+    @Column(name = "card_term", length = 100)
     private String term;
 
-    @Column(name = "card_desc", nullable = false, length = 1000)
+    @Column(name = "card_desc", length = 1000)
     private String desc;
 
-    @Column(nullable = false)
     private Date creation;
 
-    @Column(name = "last_modified", nullable = false)
+    @Column(name = "last_modified")
     private Date modified;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="deck_id", nullable = false)
+    @JoinColumn(name="deck_id")
     private Deck deck;
 }

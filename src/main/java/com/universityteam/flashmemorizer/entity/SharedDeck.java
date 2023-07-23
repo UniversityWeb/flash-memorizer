@@ -22,11 +22,11 @@ public class SharedDeck {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "sender_id", referencedColumnName = "id")
     private User sender;
 
     @ManyToOne
-    @JoinColumn(name = "recipient_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "recipient_id", referencedColumnName = "id")
     private User recipient;
 
     @ManyToOne
