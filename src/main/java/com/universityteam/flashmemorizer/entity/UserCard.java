@@ -7,15 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import java.util.Date;
 
 @Data
 @Entity
 @IdClass(UserCardId.class)
-@Table(name = "user_card")
-@EnableAutoConfiguration
+@Table(name = "user_cards")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

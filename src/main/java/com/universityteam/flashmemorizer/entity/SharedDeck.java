@@ -5,14 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "share_decks")
-@EnableAutoConfiguration
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
