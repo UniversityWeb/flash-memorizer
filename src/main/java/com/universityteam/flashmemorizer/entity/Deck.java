@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,18 +27,18 @@ public class Deck {
     @Column(name = "deck_desc", length = 500)
     private String desc;
 
-    private Date creation;
+    private Date creation = new Date();
 
     @Column(name = "last_modified")
-    private Date modified;
+    private Date modified = new Date();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="user_id")
-    private User user;
+    private User user = new User();
 
     @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
 
     @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL)
-    private List<SharedDeck> sharedDecks;
+    private List<SharedDeck> sharedDecks = new ArrayList<>();
 }

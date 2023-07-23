@@ -22,4 +22,10 @@ public class CardController {
         m.addAttribute("cards", cards);
         return "review-card";
     }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam Long cardId, @RequestParam Long deckId) {
+        cardService.delete(cardId);
+        return "redirect:/deck/edit/" + deckId;
+    }
 }

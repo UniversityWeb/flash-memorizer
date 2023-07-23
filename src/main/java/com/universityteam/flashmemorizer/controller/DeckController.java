@@ -2,19 +2,25 @@ package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
+import com.universityteam.flashmemorizer.exception.DeckNotFoundException;
 import com.universityteam.flashmemorizer.service.CardService;
 import com.universityteam.flashmemorizer.service.DeckService;
-import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/deck")
+@RequestMapping("/decks")
 public class DeckController {
+
+    private final Logger log = LoggerFactory.getLogger(DeckController.class);
 
     @Autowired
     private DeckService deckService;
@@ -23,8 +29,14 @@ public class DeckController {
     private CardService cardService;
 
     @GetMapping("/get")
-    public String getDeckByUserId(@RequestParam Long userId, Model m) {
-        List<DeckDTO> decks = deckService.getByUser(userId);
+    public String getDecksByUserId(@RequestParam Long userId, Model m) {
+        List<DeckDTO> decks;
+        try {
+            decks = deckService.getByUser(userId);
+        } catch (DeckNotFoundException e) {
+            log.error(e.getMessage());
+            decks = new ArrayList<>();
+        }
         m.addAttribute("decks", decks);
         return "deck";
     }
@@ -34,29 +46,51 @@ public class DeckController {
         return "input-deck";
     }
 
+    @PostMapping("/add")
+    public String add(DeckDTO deck, RedirectAttributes ra) {
+        DeckDTO added = deckService.add(deck);
+        String message = added != null ? "Deck added successfully!" : "Deck added unsuccessfully!";
+        ra.addFlashAttribute("message", message);
+        return "";
+    }
+
     @GetMapping("/edit/{deckId}")
     public String getDeckDetails(@PathVariable("deckId") Long deckId, Model m) {
-        DeckDTO deck = deckService.getById(deckId);
-        List<CardDTO> cards = cardService.getByDeckId(deckId);
+        DeckDTO deck;
+        try {
+            deck = deckService.getById(deckId);
+            List<CardDTO> cards = cardService.getByDeckId(deckId);
+            deck.setCards(cards);
+        } catch (DeckNotFoundException e) {
+            log.error(e.getMessage());
+            deck = new DeckDTO();
+        }
         m.addAttribute("deck", deck);
-        m.addAttribute("cards", cards);
         return "edit-deck";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute DeckDTO deck, @ModelAttribute List<CardDTO> cards, HttpSession session) {
-        if (deckService.update(deck) != null) {
-            cardService.addOrUpdate(cards);
-            session.setAttribute("msg", "Deck Update Successfully...");
-        } else {
-            session.setAttribute("msg", "Deck Update Unsuccessfully...");
+    public String update(DeckDTO deck, RedirectAttributes ra) {
+        try {
+            deckService.update(deck);
+            cardService.addOrUpdate( deck.getCards() );
+            ra.addFlashAttribute("message", "Deck updated successfully!");
+        } catch (DeckNotFoundException e) {
+            log.error(e.getMessage());
+            ra.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/card";
+        return "redirect:/cards";
     }
 
     @GetMapping("/delete")
-    public String delete(@RequestParam Long cardId, @RequestParam Long deckId) {
-        deckService.delete(cardId);
-        return "redirect:/deck/edit/" + deckId;
+    public String delete(@RequestParam Long userId, @RequestParam Long deckId, RedirectAttributes ra) {
+        try {
+            deckService.delete(deckId);
+            ra.addFlashAttribute("message", "The Deck Id=" + deckId + " has been deleted.");
+        } catch (DeckNotFoundException e) {
+            log.error(e.getMessage());
+            ra.addFlashAttribute("message", e.getMessage());
+        }
+        return "redirect:/decks/get?userId=" + userId;
     }
 }

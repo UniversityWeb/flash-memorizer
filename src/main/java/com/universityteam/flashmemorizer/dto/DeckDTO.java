@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +17,8 @@ public class DeckDTO {
     private Long id;
     private String name;
     private String desc;
-    private Date creation;
-    private Date modified;
+    private Date creation = new Date();
+    private Date modified = new Date();
     private UserDTO user;
+    private List<CardDTO> cards = new ArrayList<>();
 }
