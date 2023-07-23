@@ -7,15 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import java.util.Date;
 
 @Data
 @Entity
 @IdClass(UserCardId.class)
-@Table(name = "user_card")
-@EnableAutoConfiguration
+@Table(name = "user_cards")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -28,24 +26,23 @@ public class UserCard {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "last_review", nullable = false)
+    @Column(name = "last_review")
     private Date lastReview;
 
-    @Column(name = "review_count", nullable = false)
+    @Column(name = "review_count")
     private Long reviewCount;
 
-    @Column(name = "next_interval", nullable = false)
+    @Column(name = "next_interval")
     private Long interval;
 
-    @Column(columnDefinition = "ENUM('LOW', 'BELOW_AVERAGE', 'AVERAGE', 'ABOVE_AVERAGE', 'HIGH')")
     @Enumerated(EnumType.STRING)
     private ERating rating;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "card_id", nullable = false)
+    @JoinColumn(name = "card_id", insertable = false, updatable = false)
     private Card card;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 }

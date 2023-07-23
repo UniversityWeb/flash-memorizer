@@ -5,14 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "share_decks")
-@EnableAutoConfiguration
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,11 +20,11 @@ public class SharedDeck {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "sender_id", referencedColumnName = "id")
     private User sender;
 
     @ManyToOne
-    @JoinColumn(name = "recipient_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "recipient_id", referencedColumnName = "id")
     private User recipient;
 
     @ManyToOne

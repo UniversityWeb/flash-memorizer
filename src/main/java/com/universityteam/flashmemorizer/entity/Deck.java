@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "decks")
-@EnableAutoConfiguration
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,22 +20,24 @@ public class Deck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "deck_name", nullable = false)
+    @Column(name = "deck_name", length = 50)
     private String name;
 
-    @Column(name = "deck_desc", nullable = false)
+    @Column(name = "deck_desc", length = 500)
     private String desc;
 
-    @Column(nullable = false)
     private Date creation;
 
-    @Column(name = "last_modified", nullable = false)
+    @Column(name = "last_modified")
     private Date modified;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id", nullable = false)
+    @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(mappedBy = "deck", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Card> cards;
+
+    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL)
     private List<SharedDeck> sharedDecks;
 }

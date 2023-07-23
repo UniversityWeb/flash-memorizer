@@ -1,15 +1,17 @@
 package com.universityteam.flashmemorizer.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "users")
-@EnableAutoConfiguration
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,21 +20,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, length = 50)
     private String username;
 
-    @Column(name = "pass_hash", nullable = false)
+    @Column(name = "pass_hash", length = 100)
     private String pass;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, length = 50)
     private String email;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name", length = 100)
     private String fullName;
 
-    @Column(nullable = false)
     private Date registration;
 
-    @Column(name = "last_login", nullable = false)
+    @Column(name = "last_login")
     private Date lastLogin;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Deck> decks;
 }

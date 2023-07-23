@@ -2,6 +2,9 @@ server:
   port: 8000
 
 spring:
+  application:
+    name: flash-memorizer-app
+
   devtools:
     livereload:
       enabled: true
