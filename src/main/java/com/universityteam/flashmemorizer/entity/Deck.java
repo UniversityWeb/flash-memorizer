@@ -22,10 +22,10 @@ public class Deck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "deck_name", nullable = false)
+    @Column(name = "deck_name", nullable = false, length = 50)
     private String name;
 
-    @Column(name = "deck_desc", nullable = false)
+    @Column(name = "deck_desc", nullable = false, length = 500)
     private String desc;
 
     @Column(nullable = false)

@@ -21,10 +21,10 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "card_term", nullable = false)
+    @Column(name = "card_term", nullable = false, length = 100)
     private String term;
 
-    @Column(name = "card_desc", nullable = false)
+    @Column(name = "card_desc", nullable = false, length = 1000)
     private String desc;
 
     @Column(nullable = false)
