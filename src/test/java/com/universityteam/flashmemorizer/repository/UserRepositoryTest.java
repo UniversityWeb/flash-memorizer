@@ -1,20 +1,17 @@
 package com.universityteam.flashmemorizer.repository;
 
 import com.universityteam.flashmemorizer.entity.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepo;
@@ -23,36 +20,37 @@ class UserRepositoryTest {
 
     @BeforeEach
     public void setupBeforeEachTest() {
-        exitsUser = userRepo.save(createUser());
+        exitsUser = userRepo.save(
+                User.builder()
+                        .username("test")
+                        .pass("test")
+                        .email("test123@gmail.com")
+                        .fullName("Hoang Long")
+                        .registration(new Date(2023, 1, 1))
+                        .lastLogin(new Date())
+                        .build());
     }
 
     @Test
     @Order(1)
-    @Rollback(false)
     public void testSaveSuccess() {
         // Act
-        User user = createUser();
+        User user = User.builder()
+                .username("test123")
+                .pass("test1")
+                .email("test345@gmail.com")
+                .fullName("Hoang Dieu")
+                .registration(new Date(2023, 1, 1))
+                .lastLogin(new Date())
+                .build();
         User savedUser = userRepo.save(user);
 
         // Assert
         assertNotNull(savedUser.getId());
     }
 
-    private User createUser() {
-        User user = User.builder()
-                .username("test")
-                .pass("test")
-                .email("test123@gmail.com")
-                .fullName("Hoang Long")
-                .registration(new Date(2023, 1, 1))
-                .lastLogin(new Date())
-                .build();
-        return userRepo.save(user);
-    }
-
     @Test
     @Order(2)
-    @Rollback(value = false)
     public void testUpdateSuccess() {
         // Act
         exitsUser.setUsername("Changed");
@@ -66,6 +64,7 @@ class UserRepositoryTest {
     }
 
     @Test
+    @Order(3)
     public void testFindByIdExits() {
         // Act
         User actualUser = userRepo.findById(exitsUser.getId()).get();
