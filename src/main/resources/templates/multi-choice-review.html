@@ -35,14 +35,16 @@
                         </div>
                         <div class="mt-4">
                             <h5 class="card-title mb-4 big-title-color lang-vi font-weight-bold">Choose matching term</h5>
-                            <div class="row btn-group">
+                            <div class="row btn-group radio-group">
                                 <div th:each="option, index : ${cardReview.options}" class="form-check col-sm-12 col-md-6 mb-2">
-                                    <input type="radio" class="btn-check"
+                                    <input type="radio" class="form-check-input"
+                                           th:name="${'btnradio' + cardReviewIndex.index}"
                                            th:id="${'btnradio' + cardReviewIndex.index + '_' + index}"
                                            autocomplete="off"
                                            th:value="${index}"
                                            th:data-card-review-index="${cardReviewIndex.index}"/>
-                                    <label class="btn btn-outline-primary btn-wide btn-height btn-content"
+                                    <label class="form-check-label btn-wide btn-height btn-content"
+                                           th:name="${'btnradio' + cardReviewIndex.index}"
                                            th:for="${'btnradio' + cardReviewIndex.index + '_' + index}"
                                            th:text="${option}"></label>
                                     <input type="hidden"

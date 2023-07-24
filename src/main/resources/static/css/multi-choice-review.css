@@ -1,16 +1,20 @@
+.radio-group {
+    margin-left: 10px!important;
+    margin-top: 40px!important;
+}
+
 .btn-wide {
     width: 100%;
-    padding: 15px 20px;
 }
 
 .btn-height {
     height: 100px;
 }
+
 .btn-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 400px;
 }
+
 .btn-group-spacing .btn {
     margin-right: 10px;
 }
@@ -61,6 +65,12 @@
 }
 
 @media (max-width: 1023px) {
+    .btn-content {
+        width: 100%;
+    }
+    .btn-submit {
+        width: 100%;
+    }
     .navbar-right {
         justify-content: center;
     }
