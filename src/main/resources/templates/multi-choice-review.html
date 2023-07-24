@@ -14,7 +14,6 @@
 <body>
 <div class="container-fluid">
     <nav th:replace="~{review-navbar.html::(~{::navbar})}"></nav>
-    </div>
     <form id="reviewForm" action="#" th:action="@{/cards/review/submit-answers}" th:object=${cardReviewForm} method="post">
         <div th:each="cardReview, cardReviewIndex : ${cardReviews}">
             <input type="hidden" th:name="answers[__${cardReviewIndex.index}__]" th:value="${cardReview.term}" th:id="${'cardReviewAnswer' + cardReviewIndex.index}"/>
