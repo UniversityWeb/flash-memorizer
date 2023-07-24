@@ -16,8 +16,7 @@ import java.util.List;
 @Service
 public class ImportCardServiceImpl implements ImportCardService {
     @Override
-    public List<CardDTO> importCards(String filePath)
-    {
+    public List<CardDTO> importCards(String filePath){
         var results = new ArrayList<CardDTO>();
 
         try {
