@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}" />
+    <link rel="stylesheet" href="../static/css/import-card.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/import-card.css}" />
+    <link rel="stylesheet" href="./assets/fonts/fontawesome-free-6.4.0-web/fontawesome-free-6.4.0-web/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <title>CompanyManagement</title>
+</head>
+<body>
+<div class="import_feature_content" ">
+    <header class="title">
+        <h2 class="title_text">Cancel Import</h2>
+        <div class="title_line"></div>
+    </header>
+    <div class="content" >
+        <h3>Import your data. </h3>
+        
+        <p class="description">&nbsp;Copy and Paste your data here (from Word, Excel, Google Docs, etc.)</p>
+        <div class="box_input">
+            <div class="form-floating">
+                <textarea class="form-control input_import" placeholder="Leave a comment here" oninput="changeBorderColor(event)" ></textarea>
+            </div>
+            <div class="menu_content">
+                <div class="menu_op">
+                    <div class="between_term-des_menu">
+                        <h4>Between term and definition</h4>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions1" id="inlineRadio1" value="option1">
+                                <label class="form-check-label" for="inlineRadio1">Tab</label>
+                            </div>
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions1" id="inlineRadio2" value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Comma</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions1" id="inlineRadio3" value="option3">
+                                <label class="form-check-label" for="inlineRadio3">
+                                    <input class="Custom_input" placeholder="-" type="text"></input>
+                                    <p class="lable_under-input">Custom</p>
+                                </label>
+                            </div>
+                        </div>                      
+                    </div>
+                    <div class="between_cards_menu">
+                        <h4>Between cards</h4>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions2" id="inlineRadio1" value="option1">
+                                <label class="form-check-label" for="inlineRadio1">New line</label>
+                            </div>
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions2" id="inlineRadio2" value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Semicolon</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions2" id="inlineRadio3" value="option3">
+                                <label class="form-check-label" for="inlineRadio3">
+                                    <input class="Custom_input" placeholder="/n/n"  type="text"></input>
+                                    <p class="lable_under-input">Custom</p>
+                                </label>
+                            </div> 
+                        </div>
+                        
+                    </div>
+                </div>
+                <button class="btn btn_import">
+                    Import
+                </button>
+            </div>
+            <div class="prevlew_content">
+                <h3 class="title_prevlew">
+                    <span>Prevlew</span>
+                </h3>
+                <p class="none_import_notify">Nothing to preview yet.</p> 
+            </div>
+        </div>
+       
+    </div>
+    
+</div>
+<script src="../static/js/import-card.js"></script>
+<script th:src="@{/js/import-card.js}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
