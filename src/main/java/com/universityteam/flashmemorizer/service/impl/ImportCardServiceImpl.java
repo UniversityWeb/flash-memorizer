@@ -1,21 +1,22 @@
 package com.universityteam.flashmemorizer.service.impl;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
-import com.universityteam.flashmemorizer.service.ImportService;
+import com.universityteam.flashmemorizer.service.ImportCardService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImportServiceImpl implements ImportService {
+@Service
+public class ImportCardServiceImpl implements ImportCardService {
     @Override
-    public List<CardDTO> ImportExelFile(String filePath)
+    public List<CardDTO> importCards(String filePath)
     {
         var results = new ArrayList<CardDTO>();
 
@@ -34,25 +35,14 @@ public class ImportServiceImpl implements ImportService {
                     results.add(cart);
                 }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return results;
     }
 
     @Override
-    public List<CardDTO> ImportWithSpace(String inputString)
-    {
-        var results = new ArrayList<CardDTO>();
-        //Todo
-        return results;
-    }
-
-    @Override
-    public List<CardDTO> ImportWithEnter(String inputString)
-    {
-        var results = new ArrayList<CardDTO>();
-        //Todo
-        return results;
+    public List<CardDTO> importCards(String content, String betweenTermAndDesc, String betweenCards) {
+        return null;
     }
 }
