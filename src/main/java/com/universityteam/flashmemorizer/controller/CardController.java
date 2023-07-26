@@ -120,8 +120,8 @@ public class CardController {
     @PostMapping("/review/submit-answers")
     public String submitAnswers(@ModelAttribute("cardReviewForm") CardReviewForm cardReviewForm, Model m) {
         if (!submitted) {
-            String score = formService.calScore(cardReviewForm);
-            cardReviewForm.setScore(score);
+            String result = formService.getResult(cardReviewForm);
+            cardReviewForm.setResult(result);
             m.addAttribute("cardReviewForm", cardReviewForm);
             submitted = true;
         } else {

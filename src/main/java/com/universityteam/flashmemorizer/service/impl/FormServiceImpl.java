@@ -10,7 +10,7 @@ import java.util.List;
 public class FormServiceImpl implements FormService {
 
     @Override
-    public String calScore(CardReviewForm form) {
+    public String getResult(CardReviewForm form) {
         long score = 0;
         List<String> userChoices = form.getUserChoices();
         List<String> answers = form.getAnswers();

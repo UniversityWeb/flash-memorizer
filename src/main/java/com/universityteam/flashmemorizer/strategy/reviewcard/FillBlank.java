@@ -12,38 +12,44 @@ public class FillBlank implements ReviewStrategy<FillBlankCard> {
         return cards.stream()
                 .map(card -> {
                     FillBlankCard fillBlankCard = new FillBlankCard();
-                    String blank = "_____";
+
                     String desc = card.getDesc();
-                    List<String> answers = createAnswers(desc);
+                    String blankContext = createBlankContext(desc);
+                    List<String> descWithBlanks = createDescWithBlanks(blankContext, desc);
+
                     fillBlankCard.setTerm(card.getTerm());
-                    fillBlankCard.setFillAnswers(answers);
-                    fillBlankCard.setDesc(resetDesc(answers, desc, blank));
-                    fillBlankCard.setBlankContext(blank);
+                    fillBlankCard.setDesc(desc);
+                    fillBlankCard.setBlankContext(blankContext);
+                    fillBlankCard.setDescWithBlanks(descWithBlanks);
+
                     return fillBlankCard;
                 })
                 .collect(Collectors.toList());
     }
 
-    public boolean isCorrect(FillBlankCard card) {
-        boolean isCorrect = card.getFillAnswers().equals(card.getUserFills());
-        card.setCorrect(isCorrect);
-        return isCorrect;
+    private String createBlankContext(String desc) {
+        List<String> blanks = Arrays.asList(desc.split(" "));
+        Collections.shuffle(blanks);
+        blanks = blanks.subList(0, Math.min(2, blanks.size() - 1));
+
+        String sortedBlanks = Arrays.stream(desc.split(" "))
+                .filter(blanks::contains)
+                .collect(Collectors.joining());
+
+        return sortedBlanks;
     }
 
-    private List<String> createAnswers(String desc) {
-        List<String> answers = Arrays.asList(desc.split(" "));
-        Collections.shuffle(answers);
-        answers = answers.subList(0, Math.min(2, answers.size() - 1));
-        List<String> sortedAnswers = Arrays.stream(desc.split(" "))
-                .filter(answers::contains)
-                .collect(Collectors.toList());
-        return sortedAnswers;
-    }
+    private List<String> createDescWithBlanks(String blankContext, String desc) {
+        List<String> descWithBlanks = new ArrayList<>();
+        String[] blanks = blankContext.split(" ");
 
-    private String resetDesc(List<String> answers, String desc, String blank) {
-        for (String answer : answers) {
-            desc = desc.replaceFirst(answer, blank);
+        for (String blank : blanks) {
+            desc = desc.replaceFirst(blank, "blank-context-for-input");
         }
-        return desc;
+
+        String[] words = desc.split("[\\s.,;!?]+");
+        Collections.addAll(descWithBlanks, words);
+
+        return descWithBlanks;
     }
 }

@@ -11,6 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class FillBlankCard extends CardReview {
     private String blankContext;
-    private List<String> fillAnswers;
-    private List<String> userFills;
+    private List<String> descWithBlanks;
 }

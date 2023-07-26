@@ -5,5 +5,5 @@ import com.universityteam.flashmemorizer.dto.CardReviewForm;
 
 
 public interface FormService {
-    String calScore(CardReviewForm form);
+    String getResult(CardReviewForm form);
 }

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../static/css/review-result.css">
     <link rel="stylesheet" th:href="@{/css/review-navbar.css}">
     <link rel="stylesheet" href="../static/css/review-navbar.css">
-    <title>Multi Choice Review Result</title>
+    <title>Review Result</title>
 </head>
 <body>
 <div class="container-fluid">
@@ -20,7 +20,7 @@
                 <h3 class="bg-primary text-light text-center mb-3 p-3">Test Results</h3>
                 <p class="text-muted text-center mb-3"><em>Be kind to yourself, and keep practicing!</em></p>
                 <div class="d-flex justify-content-center">
-                    <h4>Your score is: <span th:text="${cardReviewForm.score}" class="badge badge-secondary bg-primary ">14/20</span></h4>
+                    <h4>Your score is: <span th:text="${cardReviewForm.result}" class="badge badge-secondary bg-primary ">14/20</span></h4>
                 </div>
                 <div class="d-flex justify-content-center mt-4">
                     <button type="button" th:onclick="window.location.href='/score'"

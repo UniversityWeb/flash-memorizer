@@ -15,5 +15,5 @@ public class CardReviewForm {
     private Long id;
     private List<String> answers = new ArrayList<String>();
     private List<String> userChoices = new ArrayList<String>();
-    private String score;
+    private String result;
 }
