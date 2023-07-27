@@ -92,27 +92,27 @@ public class DataInitializer implements CommandLineRunner {
         List<Card> cards = List.of(
                 Card.builder()
                         .term("Term 1")
-                        .desc("Description 1")
+                        .desc("Description 1; this is a long description to test for our flashcards project.")
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 2")
-                        .desc("Description 2")
+                        .desc("Description 2; this is a long description to test for our flashcards project.")
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 3")
-                        .desc("Description 3")
+                        .desc("Description 3; this is a long description to test for our flashcards project.")
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 4")
-                        .desc("Description 4")
+                        .desc("Description 4; this is a long description to test for our flashcards project.")
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 5")
-                        .desc("Description 5")
+                        .desc("Description 5; this is a long description to test for our flashcards project.")
                         .deck(deck)
                         .build()
         );

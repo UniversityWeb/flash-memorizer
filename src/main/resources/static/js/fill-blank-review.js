@@ -10,4 +10,33 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    function updateUserChoices() {
+        var cards = document.querySelectorAll('.outer-card');
+
+        cards.forEach(function (card) {
+            var inputs = card.querySelectorAll('input[type="text"]');
+            var cardInputValue = "";
+
+            inputs.forEach(function (input) {
+                var inputValue = input.value.trim();
+                            if (inputValue === "") {
+                                cardInputValue += "null-input-value ";
+                            } else {
+                                cardInputValue += inputValue + " ";
+                            }
+            });
+
+            cardInputValue = cardInputValue.trim();
+            cardInputValue = cardInputValue.replace(/\s+/g, ' ');
+
+            var hiddenInput = card.querySelector('.hidden-user-choices');
+            hiddenInput.value = cardInputValue;
+        });
+    }
+
+    var submitButton = document.querySelector('.btn-submit');
+    submitButton.addEventListener("click", function () {
+        updateUserChoices();
+    });
 });

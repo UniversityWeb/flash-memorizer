@@ -14,6 +14,6 @@ radioButtons.forEach((radio) => {
         const selectedOptionText = event.target.nextElementSibling.textContent;
         const cardReviewIndex = event.target.getAttribute('data-card-review-index');
         const hiddenInput = document.getElementById('cardReviewIndexChoose' + cardReviewIndex);
-        hiddenInput.value = selectedOptionText;
+        hiddenInput.value = selectedOptionText.trim();
     });
 });

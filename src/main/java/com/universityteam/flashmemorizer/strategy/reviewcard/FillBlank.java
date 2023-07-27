@@ -28,13 +28,13 @@ public class FillBlank implements ReviewStrategy<FillBlankCard> {
     }
 
     private String createBlankContext(String desc) {
-        List<String> blanks = Arrays.asList(desc.split(" "));
+        List<String> blanks = Arrays.asList(desc.split("[\\s.,;!?]+"));
         Collections.shuffle(blanks);
-        blanks = blanks.subList(0, Math.min(2, blanks.size() - 1));
+        blanks = blanks.subList(0, Math.min(3, blanks.size() - 1));
 
         String sortedBlanks = Arrays.stream(desc.split(" "))
                 .filter(blanks::contains)
-                .collect(Collectors.joining());
+                .collect(Collectors.joining(" "));
 
         return sortedBlanks;
     }
@@ -44,12 +44,11 @@ public class FillBlank implements ReviewStrategy<FillBlankCard> {
         String[] blanks = blankContext.split(" ");
 
         for (String blank : blanks) {
-            desc = desc.replaceFirst(blank, "blank-context-for-input");
+            desc = desc.replaceAll("(?<!\\S)" + blank + "(?!\\S)", "blank-context-for-input");
         }
 
-        String[] words = desc.split("[\\s.,;!?]+");
+        String[] words = desc.split(" ");
         Collections.addAll(descWithBlanks, words);
-
         return descWithBlanks;
     }
 }
