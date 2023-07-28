@@ -37,9 +37,14 @@ public class Deck {
     @ToString.Exclude
     private User user;
 
-    @OneToMany(mappedBy = "deck", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "deck", cascade = {CascadeType.ALL, CascadeType.REMOVE}, orphanRemoval = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Card> cards;
 
-    @OneToMany(mappedBy = "deck", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "deck", cascade = {CascadeType.ALL, CascadeType.REMOVE})
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<SharedDeck> sharedDecks;
 }
