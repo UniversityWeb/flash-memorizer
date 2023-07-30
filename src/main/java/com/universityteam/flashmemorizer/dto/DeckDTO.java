@@ -19,11 +19,5 @@ public class DeckDTO {
     private Date creation = new Date();
     private Date modified = new Date();
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private UserDTO user = new UserDTO();
-
-    private List<CardDTO> cards = new ArrayList<>();
-
-    private List<SharedDeckDTO> sharedDecks = new ArrayList<>();
 }

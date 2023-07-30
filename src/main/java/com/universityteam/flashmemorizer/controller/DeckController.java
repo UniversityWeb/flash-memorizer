@@ -47,11 +47,19 @@ public class DeckController {
     }
 
     @PostMapping("/add")
-    public String add(DeckDTO deck, RedirectAttributes ra) {
-        DeckDTO added = deckService.add(deck);
-        String message = added != null ? "Deck added successfully!" : "Deck added unsuccessfully!";
-        ra.addFlashAttribute("message", message);
-        return "";
+    public String add(@ModelAttribute DeckDTO deck, RedirectAttributes ra) {
+        deck.setCreation(new Date());
+        deck.setModified(new Date());
+        try {
+            deckService.add(deck);
+            log.info("Deck added successfully!");
+            ra.addFlashAttribute("msg", "Deck added successfully!");
+            return "redirect:/decks/edit/" + deck.getId();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            ra.addFlashAttribute("msg", "Deck added unsuccessfully!");
+            return "redirect:/decks/new";
+        }
     }
 
     @GetMapping("/edit/{deckId}")
@@ -59,27 +67,30 @@ public class DeckController {
         DeckDTO deck;
         try {
             deck = deckService.getById(deckId);
-            List<CardDTO> cards = cardService.getByDeckId(deckId);
+            ArrayList<CardDTO> cards = (ArrayList<CardDTO>) cardService.getByDeckId(deckId);
             deck.setCards(cards);
+            log.info("get deck successfully!");
         } catch (DeckNotFoundException e) {
             log.error(e.getMessage());
             deck = new DeckDTO();
         }
         m.addAttribute("deck", deck);
+        m.addAttribute("cards", deck.getCards());
         return "edit-deck";
     }
 
     @PostMapping("/update")
-    public String update(DeckDTO deck, RedirectAttributes ra) {
+    public String update(@ModelAttribute DeckDTO deck, RedirectAttributes ra) {
         try {
             deckService.update(deck);
-            cardService.addOrUpdate( deck.getCards() );
-            ra.addFlashAttribute("message", "Deck updated successfully!");
+            cardService.saveInOnlyOneDeck(deck.getId(), deck.getCards());
+            log.info("Deck updated successfully!");
+            ra.addFlashAttribute("msg", "Deck updated successfully!");
         } catch (DeckNotFoundException e) {
             log.error(e.getMessage());
             ra.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/cards";
+        return "redirect:/cards/review/" + deck.getId();
     }
 
     @GetMapping("/delete")

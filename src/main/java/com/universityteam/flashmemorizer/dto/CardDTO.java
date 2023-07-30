@@ -16,8 +16,5 @@ public class CardDTO {
     private String desc;
     private Date creation = new Date();
     private Date modified = new Date();
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private DeckDTO deck = new DeckDTO();
 }

@@ -10,12 +10,7 @@ import java.util.Date;
 @Builder
 public class SharedDeckDTO {
     private Long id;
-
     private UserDTO recipient = new UserDTO();
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private DeckDTO deck = new DeckDTO();
-
     private Date creation = new Date();
 }

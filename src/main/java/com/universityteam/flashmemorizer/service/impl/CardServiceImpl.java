@@ -3,11 +3,13 @@ package com.universityteam.flashmemorizer.service.impl;
 import com.universityteam.flashmemorizer.converter.CardConverter;
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.entity.Card;
+import com.universityteam.flashmemorizer.entity.Deck;
 import com.universityteam.flashmemorizer.repository.CardRepository;
 import com.universityteam.flashmemorizer.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,10 +73,33 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<CardDTO> addOrUpdate(List<CardDTO> cardDTOs) {
-        List<Card> carts = cardConverter.convertDtoToEntity(cardDTOs);
-        List<Card> updatedList = cardRepo.saveAll(carts);
-        return cardConverter.convertEntityToDto(updatedList);
+    public List<CardDTO> saveInOnlyOneDeck(Long deckId, List<CardDTO> cardDTOS) {
+        List<Card> exitsCards = cardRepo.findByDeckId(deckId);
+
+        for (CardDTO card : cardDTOS) {
+            saveInOnlyOneDeck(exitsCards.get(0).getDeck(), card);
+        }
+        return new ArrayList<>();
+    }
+
+    private CardDTO saveInOnlyOneDeck(Deck deck, CardDTO cardDTO) {
+        Optional<Card> optCard = cardRepo.findById(cardDTO.getId());
+        Card card;
+        if (optCard.isPresent()) {
+            card = optCard.get();
+            card.setTerm(cardDTO.getTerm());
+            card.setDesc(cardDTO.getDesc());
+            card.setModified(cardDTO.getModified());
+        } else {
+            card = new Card();
+            card.setTerm(cardDTO.getTerm());
+            card.setDesc(cardDTO.getDesc());
+            card.setCreation(cardDTO.getCreation());
+            card.setModified(cardDTO.getModified());
+            card.setDeck(deck);
+        }
+        Card saved = cardRepo.save(card);
+        return cardConverter.convertEntityToDto(saved);
     }
 
     @Override

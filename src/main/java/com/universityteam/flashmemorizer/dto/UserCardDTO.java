@@ -14,10 +14,6 @@ public class UserCardDTO {
     private Long reviewCount;
     private Long interval;
     private ERating rating = ERating.AVERAGE;
-
     private CardDTO card = new CardDTO();
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private UserDTO user = new UserDTO();
 }

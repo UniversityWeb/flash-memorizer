@@ -20,78 +20,75 @@
                 <div class="card-body">
                     <h4 class="text-center text-primary">Deck</h4>
 
-                    <form th:action="@{/decks/update}" method="post" th:object="${deck}" id="updateForm">
-                        <input type="hidden" th:value="${deck.id}" name="id">
+                    <form th:action="@{/decks/update}" method="post" id="deckForm" th:object="${deck}">
+                        <input type="hidden" th:field="*{id}" />
 
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" name="name" th:value="${deck.name}">
+                            <input type="text" class="form-control" th:field="*{name}" maxlength="50"/>
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <input type="text" class="form-control" name="desc" th:value="${deck.desc}">
+                            <input type="text" class="form-control" th:field="*{desc}" maxlength="500"/>
                         </div>
 
                         <div class="form-group">
-                            <label>Creation</label>
-                            <input type="date" class="form-control" name="creation"
-                                   th:value="${#dates.format(deck.creation, 'yyyy-MM-dd')}" disabled readonly>
+                            <label>Creation Date</label>
+                            <input type="date" class="form-control" th:field="*{creation}" disabled readonly/>
                         </div>
 
                         <div class="form-group">
-                            <label>Modified</label>
-                            <input type="date" class="form-control" name="modified"
-                                   th:value="${#dates.format(deck.modified, 'yyyy-MM-dd')}" disabled readonly>
+                            <label>Modified Date</label>
+                            <input type="date" class="form-control" th:field="*{modified}" disabled readonly/>
                         </div>
 
-                        <!-- Save Card button and List of Cards here -->
-                        <div class="container-fluid mt-3">
-                            <div class="row">
-                                <div class="col-md-6 offset-md-3">
-                                    <button id="addCardBtn" class="btn btn-primary btn-block mb-5" onclick="addCard()">
-                                        <i class="fas fa-plus-circle"></i> Add Card
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
+                        <!-- Add card details -->
+                        <h4 class="text-center text-primary">Cards</h4>
                         <ul id="cardList" class="list-group">
-                            <li class="list-group-item" th:each="card, cardStatus : ${deck.cards}">
+                            <li class="list-group-item" th:each="curCard, stat : ${cards}">
                                 <div class="card-body mb-3 position-relative">
                                     <div class="format-bar d-flex justify-content-between">
                                         <div>
                                             <button type="button" class="btn btn-outline-primary btn-sm">Bold</button>
                                             <button type="button" class="btn btn-outline-primary btn-sm">Italic</button>
                                         </div>
+
                                         <button class="btn btn-outline-danger btn-sm delete-button"
-                                                th:href="@{/delete(cardId=${card.id}, deckId=${deck.id})}">
+                                                th:href="@{/delete(cardId=${curCard.id})}">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
 
-                                    <input type="hidden" th:name="deck.cards[__${cardStatus.index}__].id" th:value="${card.id}"/>
+                                    <!-- Use th:field for the hidden input field -->
+                                    <input type="hidden" th:field="*{cards[__${stat.index}__].id}" />
 
                                     <div class="form-row mt-3">
                                         <div class="col">
                                             <label>Term</label>
                                             <textarea class="form-control"
-                                                      name="deck.cards[__${cardStatus.index}__].term"
-                                                      rows="3"
-                                                      th:text="${card.term}"></textarea>
+                                                      th:field="*{cards[__${stat.index}__].term}"
+                                                      minlength="1"
+                                                      maxlength="100"
+                                                      required
+                                                      rows="3"></textarea>
                                         </div>
                                         <div class="col">
                                             <label>Description</label>
                                             <textarea class="form-control"
-                                                      name="deck.cards[__${cardStatus.index}__].desc"
-                                                      rows="3"
-                                                      th:text="${card.desc}"></textarea>
+                                                      th:field="*{cards[__${stat.index}__].desc}"
+                                                      minlength="1"
+                                                      maxlength="1000"
+                                                      required
+                                                      rows="3"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
 
-                        <button class="btn btn-primary btn-block" type="submit">Update All</button>
+                        <button type="button" class="btn btn-secondary btn-block" onclick="addCard()">Add Another Card</button>
+
+                        <button type="submit" class="btn btn-primary btn-block">Save Deck and Cards</button>
                     </form>
                 </div>
             </div>

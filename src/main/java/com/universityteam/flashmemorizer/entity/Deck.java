@@ -3,7 +3,6 @@ package com.universityteam.flashmemorizer.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +25,7 @@ public class Deck {
     @Column(name = "deck_desc", length = 500)
     private String desc;
 
+    @Column(updatable = false)
     private Date creation = new Date();
 
     @Column(name = "last_modified")
