@@ -36,9 +36,7 @@ public class User {
     @Column(name = "last_login")
     private Date lastLogin;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL, CascadeType.REMOVE}, orphanRemoval = true)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<Deck> decks;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)

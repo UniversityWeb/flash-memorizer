@@ -1,9 +1,6 @@
 package com.universityteam.flashmemorizer.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -11,10 +8,13 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class CardDTO {
     private Long id;
     private String term;
     private String desc;
+<<<<<<< HEAD
     private DeckDTO deck;
 
     @Override
@@ -29,4 +29,12 @@ public class CardDTO {
     public int hashCode() {
         return Objects.hash(term, desc);
     }
+=======
+    private Date creation = new Date();
+    private Date modified = new Date();
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private DeckDTO deck = new DeckDTO();
+>>>>>>> ecca4ca (fix the recursive problem with @ToString.Exclude)
 }
