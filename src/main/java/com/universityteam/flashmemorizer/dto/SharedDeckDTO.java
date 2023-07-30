@@ -11,10 +11,6 @@ import java.util.Date;
 public class SharedDeckDTO {
     private Long id;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private UserDTO sender = new UserDTO();
-
     private UserDTO recipient = new UserDTO();
 
     @EqualsAndHashCode.Exclude

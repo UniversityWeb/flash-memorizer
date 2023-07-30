@@ -19,12 +19,6 @@ public class SharedDeck {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private User sender;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipient_id")
     private User recipient;
 

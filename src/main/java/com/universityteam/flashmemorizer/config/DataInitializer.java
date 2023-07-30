@@ -39,7 +39,7 @@ public class DataInitializer implements CommandLineRunner {
         List<Deck> decks = initDeck( users.get(0) );
         List<Card> cards = initCard( decks.get(0) );
         initUserCard( cards.get(0), users.get(0) );
-        initSharedDeck(users.get(0), users.get(1), decks.get(0) );
+        initSharedDeck( users.get(1), decks.get(0) );
     }
 
     private List<User> initUser() {
@@ -141,10 +141,9 @@ public class DataInitializer implements CommandLineRunner {
         return userCardRepo.saveAll(userCards);
     }
 
-    private List<SharedDeck> initSharedDeck(User sender, User recipient, Deck deck) {
+    private List<SharedDeck> initSharedDeck(User recipient, Deck deck) {
         List<SharedDeck> sharedDecks = List.of(
                 SharedDeck.builder()
-                        .sender(sender)
                         .recipient(recipient)
                         .deck(deck)
                         .creation(new Date(2023, 10, 10, 1, 3, 4))
