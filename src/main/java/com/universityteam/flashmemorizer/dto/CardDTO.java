@@ -1,9 +1,6 @@
 package com.universityteam.flashmemorizer.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -11,11 +8,16 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class CardDTO {
     private Long id;
     private String term;
     private String desc;
-    private Date creation;
-    private Date modified;
-    private DeckDTO deck;
+    private Date creation = new Date();
+    private Date modified = new Date();
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private DeckDTO deck = new DeckDTO();
 }

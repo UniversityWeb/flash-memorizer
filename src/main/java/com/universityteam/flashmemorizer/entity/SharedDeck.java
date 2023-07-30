@@ -1,10 +1,7 @@
 package com.universityteam.flashmemorizer.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -14,21 +11,27 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class SharedDeck {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User sender;
 
-    @ManyToOne
-    @JoinColumn(name = "recipient_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipient_id")
     private User recipient;
 
-    @ManyToOne
-    @JoinColumn(name = "deck_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "deck_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Deck deck;
 
     private Date creation;

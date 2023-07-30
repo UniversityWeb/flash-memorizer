@@ -13,6 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class Deck {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,13 +31,15 @@ public class Deck {
     @Column(name = "last_modified")
     private Date modified = new Date();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private User user = new User();
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private User user;
 
-    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Card> cards = new ArrayList<>();
+    @OneToMany(mappedBy = "deck", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<Card> cards;
 
-    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL)
-    private List<SharedDeck> sharedDecks = new ArrayList<>();
+    @OneToMany(mappedBy = "deck", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<SharedDeck> sharedDecks;
 }

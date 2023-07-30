@@ -1,10 +1,7 @@
 package com.universityteam.flashmemorizer.dto;
 
 import com.universityteam.flashmemorizer.enums.ERating;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -13,10 +10,14 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class UserCardDTO {
-    private Date lastReview;
+    private Date lastReview = new Date();
     private Long reviewCount;
     private Long interval;
-    private ERating rating;
-    private CardDTO card;
-    private UserDTO user;
+    private ERating rating = ERating.AVERAGE;
+
+    private CardDTO card = new CardDTO();
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private UserDTO user = new UserDTO();
 }
