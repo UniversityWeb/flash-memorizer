@@ -4,6 +4,7 @@ import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.exception.DeckNotFoundException;
+import com.universityteam.flashmemorizer.form.DeckForm;
 import com.universityteam.flashmemorizer.service.CardService;
 import com.universityteam.flashmemorizer.service.DeckService;
 import org.slf4j.Logger;
@@ -65,17 +66,18 @@ public class DeckController {
 
     @GetMapping("/edit/{deckId}")
     public String getDeckDetails(@PathVariable("deckId") Long deckId, Model m) {
+        DeckForm deckForm = new DeckForm();
         DeckDTO deck = getDeckById(deckId);
         if (deck == null) {
-            log.error("Deck not found with ID: {}", deckId);
+            log.error("Deck not found with Id: {}", deckId);
             deck = new DeckDTO();
         } else {
             ArrayList<CardDTO> cardDTOS = (ArrayList) cardService.getByDeckId(deckId);
-            deck.setCards(cardDTOS);
-            log.info("Deck details retrieved successfully for ID: {}", deckId);
+            deckForm.setCards(cardDTOS);
+            log.info("Deck details retrieved successfully for Id: {}", deckId);
         }
-        m.addAttribute("deck", deck);
-        m.addAttribute("cards", deck.getCards());
+        deckForm.setDeck(deck);
+        m.addAttribute("deckForm", deckForm);
         return "edit-deck";
     }
 
@@ -83,23 +85,25 @@ public class DeckController {
         try {
             return deckService.getById(deckId);
         } catch (DeckNotFoundException e) {
-            log.error("Error while fetching deck with ID: {}", deckId, e);
+            log.error("Error while fetching deck with Id: {}", deckId, e);
             return null;
         }
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute DeckDTO deck, RedirectAttributes ra) {
+    public String update(@ModelAttribute DeckForm deckForm, RedirectAttributes ra) {
+        final Long deckId = deckForm.getDeck().getId();
         try {
-            deckService.update(deck);
-            cardService.saveCardsByDeck(deck.getId(), deck.getCards());
-            log.info("Deck with ID {} updated successfully!", deck.getId());
+            deckForm.getDeck().setModified(new Date());
+            deckService.update(deckForm.getDeck());
+            cardService.saveCardsByDeck(deckId, deckForm.getCards());
+            log.info("Deck with Id {} updated successfully!", deckId);
             ra.addFlashAttribute("msg", "Deck updated successfully!");
         } catch (DeckNotFoundException | CardNotFoundException e) {
-            log.error("Error updating deck with ID {}: {}", deck.getId(), e.getMessage());
+            log.error("Error updating deckForm with Id {}: {}", deckId, e.getMessage());
             ra.addFlashAttribute("msg", e.getMessage());
         }
-        return "redirect:/cards/review/" + deck.getId();
+        return "redirect:/cards/review/" + deckId;
     }
 
     @GetMapping("/delete")

@@ -20,32 +20,32 @@
                 <div class="card-body">
                     <h4 class="text-center text-primary">Deck</h4>
 
-                    <form th:action="@{/decks/update}" method="post" id="deckForm" th:object="${deck}">
-                        <input type="hidden" th:field="*{id}" />
+                    <form th:action="@{/decks/update}" method="post" id="deckForm" th:object="${deckForm}">
+                        <input type="hidden" th:field="*{deck.id}" />
 
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" th:field="*{name}" maxlength="50"/>
+                            <input type="text" class="form-control" th:field="*{deck.name}" maxlength="50"/>
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <input type="text" class="form-control" th:field="*{desc}" maxlength="500"/>
+                            <input type="text" class="form-control" th:field="*{deck.desc}" maxlength="500"/>
                         </div>
 
                         <div class="form-group">
                             <label>Creation Date</label>
-                            <input type="date" class="form-control" th:field="*{creation}" disabled readonly/>
+                            <input type="date" class="form-control" th:field="*{deck.creation}" disabled readonly/>
                         </div>
 
                         <div class="form-group">
                             <label>Modified Date</label>
-                            <input type="date" class="form-control" th:field="*{modified}" disabled readonly/>
+                            <input type="date" class="form-control" th:field="*{deck.modified}" disabled readonly/>
                         </div>
 
                         <!-- Add card details -->
                         <h4 class="text-center text-primary">Cards</h4>
                         <ul id="cardList" class="list-group">
-                            <li class="list-group-item" th:each="curCard, stat : ${cards}">
+                            <li class="list-group-item" th:each="curCard, stat : ${deckForm.cards}">
                                 <div class="card-body mb-3 position-relative">
                                     <div class="format-bar d-flex justify-content-between">
                                         <div>
