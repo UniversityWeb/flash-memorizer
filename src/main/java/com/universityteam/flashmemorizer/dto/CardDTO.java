@@ -14,8 +14,7 @@ public class CardDTO {
     private Long id;
     private String term;
     private String desc;
-<<<<<<< HEAD
-    private DeckDTO deck;
+    private byte[] img;
 
     @Override
     public boolean equals(Object o) {
