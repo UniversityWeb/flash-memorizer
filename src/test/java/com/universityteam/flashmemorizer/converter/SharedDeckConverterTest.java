@@ -24,7 +24,6 @@ class SharedDeckConverterTest {
         // Arrange
         SharedDeck sharedDeck = SharedDeck.builder()
                 .id(1L)
-                .sender(null)
                 .recipient(null)
                 .deck(null)
                 .creation(new Date())
@@ -35,9 +34,8 @@ class SharedDeckConverterTest {
 
         // Assert
         assertEquals(sharedDeckDTO.getId(), sharedDeck.getId());
-        assertEquals(sharedDeckDTO.getSender(), sharedDeck.getSender());
-        assertEquals(sharedDeckDTO.getRecipient(), sharedDeck.getRecipient());
-        assertEquals(sharedDeckDTO.getDeck(), sharedDeck.getDeck());
+        assertNull(sharedDeckDTO.getRecipient().getId());
+        assertNull(sharedDeckDTO.getDeck().getId());
         assertEquals(sharedDeckDTO.getCreation(), sharedDeck.getCreation());
     }
 
@@ -58,7 +56,6 @@ class SharedDeckConverterTest {
         // Arrange
         SharedDeckDTO sharedDeckDTO = SharedDeckDTO.builder()
                 .id(1L)
-                .sender(null)
                 .recipient(null)
                 .deck(null)
                 .creation(new Date())
@@ -69,7 +66,6 @@ class SharedDeckConverterTest {
 
         // Assert
         assertEquals(sharedDeckDTO.getId(), sharedDeck.getId());
-        assertEquals(sharedDeckDTO.getSender(), sharedDeck.getSender());
         assertEquals(sharedDeckDTO.getRecipient(), sharedDeck.getRecipient());
         assertEquals(sharedDeckDTO.getDeck(), sharedDeck.getDeck());
         assertEquals(sharedDeckDTO.getCreation(), sharedDeck.getCreation());
