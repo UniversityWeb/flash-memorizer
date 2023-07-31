@@ -2,6 +2,7 @@ package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
+import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.exception.DeckNotFoundException;
 import com.universityteam.flashmemorizer.service.CardService;
 import com.universityteam.flashmemorizer.service.DeckService;
@@ -64,31 +65,39 @@ public class DeckController {
 
     @GetMapping("/edit/{deckId}")
     public String getDeckDetails(@PathVariable("deckId") Long deckId, Model m) {
-        DeckDTO deck;
-        try {
-            deck = deckService.getById(deckId);
-            ArrayList<CardDTO> cards = (ArrayList<CardDTO>) cardService.getByDeckId(deckId);
-            deck.setCards(cards);
-            log.info("get deck successfully!");
-        } catch (DeckNotFoundException e) {
-            log.error(e.getMessage());
+        DeckDTO deck = getDeckById(deckId);
+        if (deck == null) {
+            log.error("Deck not found with ID: {}", deckId);
             deck = new DeckDTO();
+        } else {
+            ArrayList<CardDTO> cardDTOS = (ArrayList) cardService.getByDeckId(deckId);
+            deck.setCards(cardDTOS);
+            log.info("Deck details retrieved successfully for ID: {}", deckId);
         }
         m.addAttribute("deck", deck);
         m.addAttribute("cards", deck.getCards());
         return "edit-deck";
     }
 
+    private DeckDTO getDeckById(Long deckId) {
+        try {
+            return deckService.getById(deckId);
+        } catch (DeckNotFoundException e) {
+            log.error("Error while fetching deck with ID: {}", deckId, e);
+            return null;
+        }
+    }
+
     @PostMapping("/update")
     public String update(@ModelAttribute DeckDTO deck, RedirectAttributes ra) {
         try {
             deckService.update(deck);
-            cardService.saveInOnlyOneDeck(deck.getId(), deck.getCards());
-            log.info("Deck updated successfully!");
+            cardService.saveCardsByDeck(deck.getId(), deck.getCards());
+            log.info("Deck with ID {} updated successfully!", deck.getId());
             ra.addFlashAttribute("msg", "Deck updated successfully!");
-        } catch (DeckNotFoundException e) {
-            log.error(e.getMessage());
-            ra.addFlashAttribute("message", e.getMessage());
+        } catch (DeckNotFoundException | CardNotFoundException e) {
+            log.error("Error updating deck with ID {}: {}", deck.getId(), e.getMessage());
+            ra.addFlashAttribute("msg", e.getMessage());
         }
         return "redirect:/cards/review/" + deck.getId();
     }

@@ -1,6 +1,7 @@
 package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
+import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.service.CardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,11 @@ public class CardController {
 
     @GetMapping("/delete")
     public String delete(@RequestParam Long cardId, @RequestParam Long deckId) {
-        cardService.delete(cardId);
+        try {
+            cardService.delete(cardId);
+        } catch (CardNotFoundException e) {
+            log.error(e.getMessage());
+        }
         return "redirect:/deck/edit/" + deckId;
     }
 }

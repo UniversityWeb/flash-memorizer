@@ -3,18 +3,22 @@ package com.universityteam.flashmemorizer.service.impl;
 import com.universityteam.flashmemorizer.converter.CardConverter;
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.entity.Card;
-import com.universityteam.flashmemorizer.entity.Deck;
+import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.repository.CardRepository;
 import com.universityteam.flashmemorizer.service.CardService;
+import com.universityteam.flashmemorizer.utility.Utils;
+import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CardServiceImpl implements CardService {
+
+    private final Logger log = LoggerFactory.getLogger(CardServiceImpl.class);
 
     @Autowired
     private CardRepository cardRepo;
@@ -29,77 +33,56 @@ public class CardServiceImpl implements CardService {
             Card added = cardRepo.save(card);
             return cardConverter.convertEntityToDto(added);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return null;
         }
     }
 
     @Override
-    public boolean delete(Long id) {
-        Optional<Card> optCard = cardRepo.findById(id);
-        if (optCard.isEmpty()) return false;
+    public boolean delete(Long id) throws CardNotFoundException {
+        Long count = cardRepo.countById(id);
+        if (count == null || count == 0)
+            throw new CardNotFoundException("Could not find any cards with Id=" + id);
         try {
             cardRepo.deleteById(id);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return false;
         }
     }
 
     @Override
-    public boolean delete(CardDTO cardDTO) {
-        Card card = cardConverter.convertDtoToEntity(cardDTO);
-        try {
-            cardRepo.delete(card);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+    public List<CardDTO> saveCardsByDeck(Long deckId, @NonNull List<CardDTO> afterChanged) throws CardNotFoundException {
+        List<CardDTO> beforeChanged = getByDeckId(deckId);
+        if (beforeChanged == null) {
+            throw new IllegalArgumentException("Invalid deckId: " + deckId);
         }
+        return saveWithBeforeAndAfter(deckId, beforeChanged, afterChanged);
     }
 
-    @Override
-    public CardDTO update(CardDTO cardDTO) {
-        Optional<Card> optCard = cardRepo.findById(cardDTO.getId());
-        if (optCard.isEmpty()) return null;
-        try {
-            Card updated = cardRepo.save(optCard.get());
-            return cardConverter.convertEntityToDto(updated);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    private List<CardDTO> saveWithBeforeAndAfter(
+            Long deckId,
+            @NonNull List<CardDTO> beforeChanged,
+            @NonNull List<CardDTO> afterChanged
+    ) throws CardNotFoundException {
+        List<CardDTO> addCards = Utils.getElementsInAWithoutB(afterChanged, beforeChanged);
+        addAll(addCards);
+
+        List<CardDTO> deleteCards = Utils.getElementsInAWithoutB(beforeChanged, afterChanged);
+        deleteAll(deleteCards);
+
+        return getByDeckId(deckId);
     }
 
-    @Override
-    public List<CardDTO> saveInOnlyOneDeck(Long deckId, List<CardDTO> cardDTOS) {
-        List<Card> exitsCards = cardRepo.findByDeckId(deckId);
-
-        for (CardDTO card : cardDTOS) {
-            saveInOnlyOneDeck(exitsCards.get(0).getDeck(), card);
-        }
-        return new ArrayList<>();
+    private void addAll(List<CardDTO> cards) {
+        cards.forEach(this::add);
     }
 
-    private CardDTO saveInOnlyOneDeck(Deck deck, CardDTO cardDTO) {
-        Optional<Card> optCard = cardRepo.findById(cardDTO.getId());
-        Card card;
-        if (optCard.isPresent()) {
-            card = optCard.get();
-            card.setTerm(cardDTO.getTerm());
-            card.setDesc(cardDTO.getDesc());
-            card.setModified(cardDTO.getModified());
-        } else {
-            card = new Card();
-            card.setTerm(cardDTO.getTerm());
-            card.setDesc(cardDTO.getDesc());
-            card.setCreation(cardDTO.getCreation());
-            card.setModified(cardDTO.getModified());
-            card.setDeck(deck);
+    private void deleteAll(List<CardDTO> cards) throws CardNotFoundException {
+        for (CardDTO card : cards) {
+            delete(card.getId());
         }
-        Card saved = cardRepo.save(card);
-        return cardConverter.convertEntityToDto(saved);
     }
 
     @Override
