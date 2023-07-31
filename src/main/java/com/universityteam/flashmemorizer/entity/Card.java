@@ -1,9 +1,12 @@
 package com.universityteam.flashmemorizer.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+
 import java.util.List;
 
 @Data
@@ -24,12 +27,6 @@ public class Card {
 
     @Column(name = "card_desc", length = 1000)
     private String desc;
-
-    private Date creation;
-
-    @Column(name = "last_modified")
-    private Date modified;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="deck_id")
     private Deck deck;

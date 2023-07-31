@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.util.Date;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -26,8 +24,6 @@ class CardConverterTest {
                 .id(1L)
                 .term("RESTFul API")
                 .desc("This is web application which can help people improve ability to memory")
-                .creation(new Date())
-                .modified(new Date())
                 .deck(null)
                 .build();
 
@@ -38,8 +34,6 @@ class CardConverterTest {
         assertEquals(cardDTO.getId(), card.getId());
         assertEquals(cardDTO.getTerm(), card.getTerm());
         assertEquals(cardDTO.getDesc(), card.getDesc());
-        assertEquals(cardDTO.getCreation(), card.getCreation());
-        assertEquals(cardDTO.getModified(), card.getModified());
         assertEquals(cardDTO.getDeck(), card.getDeck());
     }
 
@@ -62,8 +56,6 @@ class CardConverterTest {
                 .id(1L)
                 .term("Spring boot application")
                 .desc("This is web application which can help people improve ability to memory")
-                .creation(new Date())
-                .modified(new Date())
                 .deck(null)
                 .build();
 
@@ -74,8 +66,6 @@ class CardConverterTest {
         assertEquals(cardDTO.getId(), card.getId());
         assertEquals(cardDTO.getTerm(), card.getTerm());
         assertEquals(cardDTO.getDesc(), card.getDesc());
-        assertEquals(cardDTO.getCreation(), card.getCreation());
-        assertEquals(cardDTO.getModified(), card.getModified());
         assertEquals(cardDTO.getDeck(), card.getDeck());
     }
 

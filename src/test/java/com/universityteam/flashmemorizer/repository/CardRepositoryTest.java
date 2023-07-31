@@ -85,8 +85,6 @@ class CardRepositoryTest {
         return Card.builder()
                 .term("increased sharply")
                 .desc("The same meaning: rise quickly")
-                .creation(new Date())
-                .modified(new Date())
                 .deck(deck)
                 .build();
     }
@@ -97,14 +95,12 @@ class CardRepositoryTest {
         // Act
         exitsCard.setTerm("Exchanged");
         exitsCard.setDesc("Changed");
-        exitsCard.setModified(new Date(2023, 2, 2));
 
         Card cardActual = cardRepo.save(exitsCard);
 
         // Assert
         assertEquals(cardActual.getTerm(), exitsCard.getTerm());
         assertEquals(cardActual.getDesc(), exitsCard.getDesc());
-        assertEquals(cardActual.getModified(), exitsCard.getModified());
     }
 
     @Test
