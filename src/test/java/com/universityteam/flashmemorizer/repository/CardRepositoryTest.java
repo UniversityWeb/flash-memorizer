@@ -6,6 +6,7 @@ import com.universityteam.flashmemorizer.entity.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Date;
 import java.util.List;
@@ -54,20 +55,12 @@ class CardRepositoryTest {
 
     @Test
     @Order(0)
-    public void testSaveFailure() {
+    public void testSaveFailureForeignKeyDeckNotFound() {
         // Arrange
-        Card card = createCard(new Deck());
-        Card savedCard;
+        Card card = createCard( Deck.builder().id(-1L).build() );
 
-        // Act
-        try {
-            savedCard = cardRepo.save(card);
-        } catch (Exception e) {
-            savedCard = null;
-        }
-
-        // Assert
-        assertNull(savedCard);
+        // Act && Assert
+        assertThrows(DataIntegrityViolationException.class, () -> cardRepo.save(card));
     }
 
     @Test

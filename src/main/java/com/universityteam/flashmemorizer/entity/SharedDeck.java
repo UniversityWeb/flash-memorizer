@@ -11,8 +11,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode
-@ToString
 public class SharedDeck {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +22,8 @@ public class SharedDeck {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deck_id")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private Deck deck;
 
+    @Column(updatable = false)
     private Date creation;
 }
