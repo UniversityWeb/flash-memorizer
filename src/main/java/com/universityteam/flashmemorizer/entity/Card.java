@@ -25,6 +25,10 @@ public class Card {
     @Column(name = "card_desc", length = 1000)
     private String desc;
 
+    @Column(name = "card_img")
+    @Lob
+    private byte[] img;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="deck_id")
     @ToString.Exclude
