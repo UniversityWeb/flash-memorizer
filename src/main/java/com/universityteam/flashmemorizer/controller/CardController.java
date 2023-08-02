@@ -112,8 +112,11 @@ public class CardController {
         List<CardDTO> cards = cardService.getByDeckId(deckId);
         List<CardReview> cardReviews = reviewService.generateTest(reviewType, cards);
         CardReviewForm cardReviewForm = new CardReviewForm();
+
+        m.addAttribute("reviewType", reviewType);
         m.addAttribute("cardReviews", cardReviews);
         m.addAttribute("cardReviewForm", cardReviewForm);
+
         return reviewType.getHtmlFile();
     }
 
@@ -124,9 +127,8 @@ public class CardController {
             cardReviewForm.setResult(result);
             m.addAttribute("cardReviewForm", cardReviewForm);
             submitted = true;
-        } else {
-            return "review-result-error";
         }
+
         return "review-result";
     }
 }

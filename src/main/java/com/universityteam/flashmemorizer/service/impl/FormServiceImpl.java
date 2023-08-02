@@ -1,5 +1,6 @@
 package com.universityteam.flashmemorizer.service.impl;
 import com.universityteam.flashmemorizer.dto.CardReviewForm;
+import com.universityteam.flashmemorizer.enums.EReview;
 import com.universityteam.flashmemorizer.service.FormService;
 import org.springframework.stereotype.Service;
 
@@ -16,25 +17,27 @@ public class FormServiceImpl implements FormService {
         List<String> answers = form.getAnswers();
         long score = 0;
 
-        if (userChoices.get(0).endsWith(",,,")) {
-            normalizeUserInput(userChoices);
+        if (form.getReviewType() == EReview.MULTI_CHOICE) {
+            normalizeMultiChoiceOptions(userChoices);
         }
-        else {
-            userChoices = convertToListIndividual(userChoices);
-            answers = convertToListIndividual(answers);
+
+        else if (form.getReviewType() == EReview.FILL_BLANK) {
+            userChoices = flattenList(userChoices);
+            answers = flattenList(answers);
         }
+
         score = calcScore(userChoices, answers);
         return score + "/" + answers.size();
     }
 
-    private void normalizeUserInput(List<String> list) {
+    private void normalizeMultiChoiceOptions(List<String> list) {
         for (int i = 0; i < list.size(); i++) {
             String element = list.get(i);
             list.set(i, element.substring(0, element.length() - 3));
         }
     }
 
-    private List<String> convertToListIndividual(List<String> initialList) {
+    private List<String> flattenList(List<String> initialList) {
         List<String> resultList = new ArrayList<>();
 
         for (String item : initialList) {
@@ -57,4 +60,3 @@ public class FormServiceImpl implements FormService {
         return score;
     }
 }
-
