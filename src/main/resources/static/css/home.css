@@ -12,11 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-<<<<<<< HEAD
-    background: url('../image/background.jpg') no-repeat;
-=======
     background: url('../images/background.jpg') no-repeat;
->>>>>>> 35abf7d (fix the issue of loading .css file using Thymeleaf)
     background-size: cover;
     background-position: center;
 }

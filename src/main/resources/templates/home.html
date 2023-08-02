@@ -5,11 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Flash Memorizer</title>
-<<<<<<< HEAD
-    <link rel="stylesheet" href="../static/css/home.css">
-=======
     <link rel="stylesheet" th:href="@{/css/home.css}">
->>>>>>> 35abf7d (fix the issue of loading .css file using Thymeleaf)
 </head>
     <body>
         <header>
@@ -27,7 +23,7 @@
             <span class="icon-close"><ion-icon name="close-outline"></ion-icon></span>
             <div class="form-box login">
                 <h2>Đăng Nhập</h2>
-                <form action="/home" method="post">
+                <form action="#" th:action="@{/home}" th:object="${user}" method="post">
                     
                     <div class="input-box" name="username">
                         <span class="icon">
@@ -50,7 +46,7 @@
                         <a href="#">Quên mật khẩu</a>
                     </div>
                     
-                    <button type="submit" class="btnLogin">Đăng nhập</button>
+                    <button type="submit" class="btnLogin" value="login">Đăng nhập</button>
 
                     <div class="login-register">
                         <p> Bạn chưa có tài khoản? 
@@ -100,7 +96,7 @@
                         <label><input type="checkbox"></input>Tôi đồng ý với các chính sách & điều khoản</label>
                     </div>
                     
-                    <button type="submit" class="btnLogin">Đăng Ký</button>
+                    <button type="submit" class="btnLogin" value="register">Đăng Ký</button>
 
                     <div class="login-register">
                         <p> Bạn chưa có tài khoản? 
@@ -110,8 +106,8 @@
                 </form>
             </div>
         </div>
-
-        <script src="/src/main/resources/static/home.js"></script> 
+        <script th:src="@{/js/home.js}"></script>
+        <script src="../static/home.js"></script>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script> 
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     </body>
