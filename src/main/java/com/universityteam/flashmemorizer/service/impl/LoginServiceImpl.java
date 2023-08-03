@@ -1,6 +1,6 @@
 package com.universityteam.flashmemorizer.service.impl;
 
-import com.universityteam.flashmemorizer.login.Login;
+import com.universityteam.flashmemorizer.entity.Login;
 import com.universityteam.flashmemorizer.repository.LoginRepository;
 import com.universityteam.flashmemorizer.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/register")
+@RequestMapping("/home")
 public class RegistrationController {
     private final UserService userService;
     private final ApplicationEventPublisher publisher;
@@ -60,7 +60,8 @@ public class RegistrationController {
     }
 
     @GetMapping("/resend-verification-token")
-    private void resendVerificationTokenEmail(UserDTO theUser, String applicationUrl, VerificationToken verificationToken) throws MessagingException, UnsupportedEncodingException {
+    private void resendVerificationTokenEmail(UserDTO theUser, String applicationUrl, VerificationToken verificationToken)
+            throws MessagingException, UnsupportedEncodingException {
         String url = applicationUrl + "/register/verifyEmail?token=" + verificationToken;
         eventListener.sendVerificationEmail(url);
         Logger logger = Logger.getLogger(RegistrationController.class.getName());

@@ -1,10 +1,7 @@
 package com.universityteam.flashmemorizer.controller;
 
-import com.universityteam.flashmemorizer.login.Login;
+import com.universityteam.flashmemorizer.entity.Login;
 import com.universityteam.flashmemorizer.service.LoginService;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +15,7 @@ public class LoginController{
     @Autowired
     private LoginService userService;
 
-    @GetMapping("/login")
+    @GetMapping("/home")
 
     public ModelAndView login(){
         ModelAndView mav = new ModelAndView("login");
@@ -26,21 +23,16 @@ public class LoginController{
         return mav;
     }
 
-    @PostMapping("/login")
-    public String login(@ModelAttribute("user") Login user){
+    @PostMapping("/home")
+    public String login(@org.jetbrains.annotations.NotNull @ModelAttribute("user") Login user){
         Login oauthUser = userService.login(user.getUsername(), user.getPassword());
 
         System.out.println(oauthUser);
         if(Objects.nonNull(oauthUser)){
-            return "redirect:/home";
+            return "redirect:/" + user.getId();
         }
         else{
-            return "redirect:/login";
+            return "redirect:/home";
         }
     }
-//
-//    @RequestMapping(value = {"/logout"}, method = RequestMethod.POST)
-//    public String logoutDo(HttpServletRequest request, HttpServletResponse reponse){
-//        return "redirect:/home";
-//    }
 }

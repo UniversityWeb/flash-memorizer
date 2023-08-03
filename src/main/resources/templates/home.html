@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Flash Memorizer</title>
     <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" href="../static/css/home.css">
 </head>
     <body>
         <header>
@@ -24,7 +25,6 @@
             <div class="form-box login">
                 <h2>Đăng Nhập</h2>
                 <form action="#" th:action="@{/home}" th:object="${user}" method="post">
-                    
                     <div class="input-box" name="username">
                         <span class="icon">
                             <ion-icon name="mail-outline"></ion-icon> 
@@ -58,7 +58,7 @@
 
             <div class="form-box register">
                 <h2>Đăng Ký</h2>
-                <form action="/home" method="post">
+                <form action="#" th:action="@{/home}" method="post">
 
                     <div class="input-box" name="full_name">
                         <span class="icon">
