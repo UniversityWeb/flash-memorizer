@@ -16,7 +16,7 @@
     <title>CompanyManagement</title>
 </head>
 <body>
-<div class="import_feature_content" ">
+<div class="import_feature_content" >
     <header class="title">
         <h2 class="title_text">Cancel Import</h2>
         <div class="title_line"></div>
@@ -27,7 +27,7 @@
         <p class="description">&nbsp;Copy and Paste your data here (from Word, Excel, Google Docs, etc.)</p>
         <div class="box_input">
             <div class="form-floating">
-                <textarea class="form-control input_import" placeholder="Leave a comment here" oninput="changeBorderColor(event)" ></textarea>
+                <textarea id="document_input" class="form-control input_import" placeholder="Word 1 &nbsp;&nbsp;&nbsp;Definition 1" oninput="changeBorderColor(event)" ></textarea>
             </div>
             <div class="menu_content">
                 <div class="menu_op">
@@ -81,7 +81,9 @@
                 <h3 class="title_prevlew">
                     <span>Prevlew</span>
                 </h3>
-                <p class="none_import_notify">Nothing to preview yet.</p> 
+                <p class="none_import_notify" style="display: none;">Nothing to preview yet.</p>
+                <ul id="listCards" class="list_cards-import">
+                </ul> 
             </div>
         </div>
        
