@@ -11,19 +11,9 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light navbar-bg fixed-top" th:fragment="navbar">
     <div class="container-fluid">
-        <div class="nav-item dropdown">
-            <div class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Fill Blank
-            </div>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Multi choices</a></li>
-                <li><a class="dropdown-item" href="#">Matching</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Home</a></li>
-            </ul>
-        </div>
+        <a class="navbar-brand mb-1 mt-1" href="/home">Home</a>
         <div class="navbar-right">
-            <a class="nav-link disabled justify-content-center" href="#" tabindex="-1" aria-disabled="true">Test 1 - Part 1</a>
+            <a class="nav-link disabled justify-content-center" tabindex="-1" aria-disabled="true" th:text="${cardReviewForm.deckName}"></a>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,11 +22,11 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Print test</a>
+                    <a class="nav-link" href="#" onclick="printPage()">Print test</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <button type="button" class="btn-close" aria-label="Close"></button>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="goBack()"></button>
                     </a>
                 </li>
             </ul>
@@ -46,5 +36,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/review-navbar.js}"></script>
 </body>
 </html>

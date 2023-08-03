@@ -1,6 +1,7 @@
 body {
     background-color:#F8F9FA;
 }
+
 .navbar .nav-link {
     font-size: 25px;
 }
@@ -15,6 +16,20 @@ body {
      align-items: center;
      flex-grow: 1;
 }
+
 .navbar-bg {
     background-color: white;
 }
+
+@media (min-width: 1024px) {
+    .navbar-right {
+        justify-content: right;
+    }
+}
+
+@media (max-width: 1023px) {
+    .navbar-right {
+        justify-content: center;
+    }
+}
+

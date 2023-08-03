@@ -1,3 +1,7 @@
+#imageWrapper {
+    display: none;
+}
+
 .radio-group {
     margin-left: 10px!important;
     margin-top: 40px!important;
@@ -58,21 +62,12 @@
     max-width: 1100px;
 }
 
-@media (min-width: 1024px) {
-    .navbar-right {
-        justify-content: right;
-  }
-}
-
 @media (max-width: 1023px) {
     .btn-content {
         width: 100%;
     }
     .btn-submit {
         width: 100%;
-    }
-    .navbar-right {
-        justify-content: center;
     }
 }
 

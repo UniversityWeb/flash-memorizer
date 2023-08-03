@@ -3,11 +3,13 @@ package com.universityteam.flashmemorizer.controller;
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.CardReview;
 import com.universityteam.flashmemorizer.dto.CardReviewForm;
+import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.enums.EReview;
 import com.universityteam.flashmemorizer.service.CardReviewService;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.service.CardService;
+import com.universityteam.flashmemorizer.service.DeckService;
 import com.universityteam.flashmemorizer.service.FormService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -28,6 +30,8 @@ public class CardController {
 
     @Autowired
     private CardService cardService;
+    @Autowired
+    private DeckService deckService;
 
     @Autowired
     private CardReviewService reviewService;
@@ -109,11 +113,15 @@ public class CardController {
     @GetMapping("/review")
     public String review(@RequestParam EReview reviewType, @RequestParam Long deckId, Model m) {
         submitted = false;
+        DeckDTO deck = deckService.getById(deckId);
         List<CardDTO> cards = cardService.getByDeckId(deckId);
         List<CardReview> cardReviews = reviewService.generateTest(reviewType, cards);
-        CardReviewForm cardReviewForm = new CardReviewForm();
 
-        m.addAttribute("reviewType", reviewType);
+        CardReviewForm cardReviewForm = new CardReviewForm();
+        cardReviewForm.setDeckName(deck.getName());
+        cardReviewForm.setDeckId(deck.getId());
+        cardReviewForm.setReviewType(reviewType);
+
         m.addAttribute("cardReviews", cardReviews);
         m.addAttribute("cardReviewForm", cardReviewForm);
 
@@ -127,6 +135,9 @@ public class CardController {
             cardReviewForm.setResult(result);
             m.addAttribute("cardReviewForm", cardReviewForm);
             submitted = true;
+        }
+        else {
+            return "review-result-error";
         }
 
         return "review-result";

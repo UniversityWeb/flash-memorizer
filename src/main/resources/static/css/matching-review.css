@@ -61,13 +61,8 @@ body {
 }
 
 @media (min-width: 1024px) {
-    .navbar-right {
-        justify-content: right;
-  }
 }
 
 @media (max-width: 1023px) {
-    .navbar-right {
-        justify-content: center;
-    }
+
 }

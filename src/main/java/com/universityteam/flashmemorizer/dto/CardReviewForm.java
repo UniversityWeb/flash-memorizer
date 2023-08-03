@@ -16,5 +16,7 @@ public class CardReviewForm {
     private List<String> answers = new ArrayList<String>();
     private List<String> userChoices = new ArrayList<String>();
     private EReview reviewType;
+    private long deckId;
+    private String deckName;
     private String result;
 }

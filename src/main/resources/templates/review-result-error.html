@@ -15,9 +15,13 @@
 <div class="container-fluid">
     <nav th:replace="~{review-navbar.html::(~{::navbar})}"></nav>
     <div class="main-container container py-5 px-4 p-5 mb-8">
-        ERROR PAGE
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Error!</h4>
+            <p>There was an error processing your request. Please try again later.</p>
+            <hr>
+            <p class="mb-0">You can contact support at support@example.com.</p>
+        </div>
     </div>
-</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

@@ -16,7 +16,6 @@ public class FormServiceImpl implements FormService {
         List<String> userChoices = form.getUserChoices();
         List<String> answers = form.getAnswers();
         long score = 0;
-
         if (form.getReviewType() == EReview.MULTI_CHOICE) {
             normalizeMultiChoiceOptions(userChoices);
         }

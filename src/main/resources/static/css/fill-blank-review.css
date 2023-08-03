@@ -1,3 +1,7 @@
+#imageWrapper {
+    display: none;
+}
+
 .term-height {
     height: 160px;
 }
@@ -76,16 +80,10 @@
 }
 
 @media (min-width: 1024px) {
-    .navbar-right {
-        justify-content: right;
-  }
 }
 
 @media (max-width: 1023px) {
     .btn-submit {
         width: 100%;
-    }
-    .navbar-right {
-        justify-content: center;
     }
 }
