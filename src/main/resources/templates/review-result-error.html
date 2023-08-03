@@ -1,20 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Custom CSS files -->
     <link rel="stylesheet" th:href="@{/css/review-result.css}">
     <link rel="stylesheet" href="../static/css/review-result.css">
     <link rel="stylesheet" th:href="@{/css/review-navbar.css}">
     <link rel="stylesheet" href="../static/css/review-navbar.css">
     <title>Review Result Error</title>
 </head>
+
 <body>
 <div class="container-fluid">
+    <!-- Include the review-navbar.html -->
     <nav th:replace="~{review-navbar.html::(~{::navbar})}"></nav>
     <div class="main-container container py-5 px-4 p-5 mb-8">
+        <!-- Alert for displaying error message -->
         <div class="alert alert-danger" role="alert">
             <h4 class="alert-heading">Error!</h4>
             <p>There was an error processing your request. Please try again later.</p>
@@ -23,9 +28,11 @@
         </div>
     </div>
 </div>
+
+<!-- Bootstrap JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-<script type="text/javascript" th:src="@{/js/review-result.js}"></script>
 </body>
+
 </html>
