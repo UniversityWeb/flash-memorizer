@@ -49,10 +49,10 @@ public class CardController {
         try {
             cardService.update(card);
             log.info("Card with Id {} updated successfully!", cardId);
-            ra.addFlashAttribute("msg", "Card updated successfully!");
+            ra.addFlashAttribute("successMsg", "Card updated successfully!");
         } catch (CardNotFoundException e) {
             log.error("Error updating card with Id {}: {}", cardId, e.getMessage());
-            ra.addFlashAttribute("msg", e.getMessage());
+            ra.addFlashAttribute("errorMsg", e.getMessage());
         }
         return "redirect:/decks/edit/" + card.getDeck().getId();
     }
@@ -71,20 +71,23 @@ public class CardController {
         try {
             cardService.add(card);
             log.info("Card with Id {} added successfully!", cardId);
-            ra.addFlashAttribute("msg", "Card added successfully!");
+            ra.addFlashAttribute("successMsg", "Card added successfully!");
         } catch (Exception e) {
             log.error("Error adding card with Id {}: {}", cardId, e.getMessage());
-            ra.addFlashAttribute("msg", e.getMessage());
+            ra.addFlashAttribute("errorMsg", e.getMessage());
         }
         return "redirect:/decks/edit/" + card.getDeck().getId();
     }
 
     @GetMapping("/delete")
-    public String delete(@RequestParam Long cardId, @RequestParam Long deckId) {
+    public String delete(@RequestParam Long cardId, @RequestParam Long deckId, RedirectAttributes ra) {
         try {
             cardService.delete(cardId);
+            log.info("Card with Id {} deleted successfully!", cardId);
+            ra.addFlashAttribute("successMsg", "Card deleted successfully!");
         } catch (CardNotFoundException e) {
-            log.error(e.getMessage());
+            log.error("Error deleting card with Id {}: {}", cardId, e.getMessage());
+            ra.addFlashAttribute("errorMsg", e.getMessage());
         }
         return "redirect:/decks/edit/" + deckId;
     }

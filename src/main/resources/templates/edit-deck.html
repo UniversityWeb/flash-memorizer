@@ -22,6 +22,14 @@
 </head>
 <body>
 
+<div th:if="${successMsg}" class="alert alert-success mt-3">
+    <span th:text="${successMsg}">Notify the success message!</span>
+</div>
+
+<div th:if="${errorMsg}" class="alert alert-danger mt-3">
+    <span th:text="${errorMsg}">An error occurred.</span>
+</div>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10 offset-md-1">
@@ -54,47 +62,54 @@
 
                         <!-- Add card details -->
                         <h4 class="text-center text-primary mt-5">Cards</h4>
-                        <ul id="cardList" class="list-group">
-                            <li class="list-group-item" th:each="curCard, stat : ${deckForm.cards}">
-                                <div class="card-body mb-3 position-relative">
-                                    <div class="format-bar d-flex justify-content-end">
-                                        <a class="btn btn-outline-primary btn-sm edit-button mr-2"
-                                           th:href="@{/cards/edit(cardId=${curCard.id})}">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </a>
 
-                                        <a class="btn btn-outline-danger btn-sm delete-button"
-                                           th:href="@{/cards/delete(cardId=${curCard.id}, deckId=${deckForm.deck.id})}">
-                                            <i class="fas fa-trash"></i> Delete
-                                        </a>
-                                    </div>
+                        <div th:if="${deckForm.cards.isEmpty()}" class="alert alert-info text-center">
+                            <p class="lead mb-0">You haven't created any cards</p>
+                        </div>
 
-                                    <!-- Use th:field for the hidden input field -->
-                                    <input type="hidden" th:field="*{cards[__${stat.index}__].id}" />
+                        <div th:if="${not deckForm.cards.isEmpty()}">
+                            <ul id="cardList" class="list-group">
+                                <li class="list-group-item" th:each="curCard, stat : ${deckForm.cards}">
+                                    <div class="card-body mb-3 position-relative">
+                                        <div class="format-bar d-flex justify-content-end">
+                                            <a class="btn btn-outline-primary btn-sm edit-button mr-2"
+                                               th:href="@{/cards/edit(cardId=${curCard.id})}">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
 
-                                    <div class="form-row mt-3">
-                                        <div class="col">
-                                            <label>Term</label>
-                                            <div class="card">
-                                                <div class="card-body border font-monospace"
-                                                     th:utext="*{cards[__${stat.index}__].term}">
-                                                    [Term]
+                                            <a class="btn btn-outline-danger btn-sm delete-button"
+                                               th:href="@{/cards/delete(cardId=${curCard.id}, deckId=${deckForm.deck.id})}">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                        </div>
+
+                                        <!-- Use th:field for the hidden input field -->
+                                        <input type="hidden" th:field="*{cards[__${stat.index}__].id}" />
+
+                                        <div class="form-row mt-3">
+                                            <div class="col">
+                                                <label>Term</label>
+                                                <div class="card">
+                                                    <div class="card-body border font-monospace"
+                                                         th:utext="*{cards[__${stat.index}__].term}">
+                                                        [Term]
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label>Description</label>
+                                                <div class="card">
+                                                    <div class="card-body border font-monospace"
+                                                         th:utext="*{cards[__${stat.index}__].desc}">
+                                                        [Desc]
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <label>Description</label>
-                                            <div class="card">
-                                                <div class="card-body border font-monospace"
-                                                     th:utext="*{cards[__${stat.index}__].desc}">
-                                                    [Desc]
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
 
                         <div class="d-flex justify-content-center mt-2 mb-3">
                             <a class="btn btn-outline-success"

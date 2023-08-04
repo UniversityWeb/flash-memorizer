@@ -11,6 +11,14 @@
 </head>
 <body>
 
+<div th:if="${successMsg}" class="alert alert-success mt-3">
+    <span th:text="${successMsg}">Notify the success message!</span>
+</div>
+
+<div th:if="${errorMsg}" class="alert alert-danger mt-3">
+    <span th:text="${errorMsg}">An error occurred.</span>
+</div>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10 offset-md-1">
