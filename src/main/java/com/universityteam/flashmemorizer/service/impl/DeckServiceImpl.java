@@ -55,6 +55,11 @@ public class DeckServiceImpl implements DeckService {
         Deck deck = deckRepo
                 .findById(deckDTO.getId())
                 .orElseThrow(() -> new DeckNotFoundException("Could not find any decks with Id=" + deckDTO.getId()));
+
+        deck.setName( deckDTO.getName() );
+        deck.setDesc( deckDTO.getDesc() );
+        deck.setModified( deckDTO.getModified() );
+
         try {
             Deck updated = deckRepo.save(deck);
             return deckConverter.convertEntityToDto(updated);

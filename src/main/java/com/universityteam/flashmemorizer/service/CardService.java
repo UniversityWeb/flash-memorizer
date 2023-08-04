@@ -8,6 +8,8 @@ import java.util.List;
 public interface CardService {
     CardDTO add(CardDTO cardDTO);
     boolean delete(Long id) throws CardNotFoundException;
-    List<CardDTO> saveCardsByDeck(Long deckId, List<CardDTO> afterChanged) throws CardNotFoundException;
+    CardDTO update(CardDTO cardDTO) throws CardNotFoundException;
     List<CardDTO> getByDeckId(Long deckId);
+
+    CardDTO getById(Long id) throws CardNotFoundException;
 }

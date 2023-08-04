@@ -6,8 +6,6 @@ import com.universityteam.flashmemorizer.entity.Card;
 import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.repository.CardRepository;
 import com.universityteam.flashmemorizer.service.CardService;
-import com.universityteam.flashmemorizer.utility.Utils;
-import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,35 +51,20 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<CardDTO> saveCardsByDeck(Long deckId, @NonNull List<CardDTO> afterChanged) throws CardNotFoundException {
-        List<CardDTO> beforeChanged = getByDeckId(deckId);
-        if (beforeChanged == null) {
-            throw new IllegalArgumentException("Invalid deckId: " + deckId);
-        }
-        return saveWithBeforeAndAfter(deckId, beforeChanged, afterChanged);
-    }
+    public CardDTO update(CardDTO cardDTO) throws CardNotFoundException {
+        Card card = cardRepo
+                .findById(cardDTO.getId())
+                .orElseThrow(() -> new CardNotFoundException("Could not find any cards with Id=" + cardDTO.getId()));
 
-    private List<CardDTO> saveWithBeforeAndAfter(
-            Long deckId,
-            @NonNull List<CardDTO> beforeChanged,
-            @NonNull List<CardDTO> afterChanged
-    ) throws CardNotFoundException {
-        List<CardDTO> addCards = Utils.getElementsInAWithoutB(afterChanged, beforeChanged);
-        addAll(addCards);
+        card.setTerm( cardDTO.getTerm() );
+        card.setDesc( cardDTO.getDesc() );
 
-        List<CardDTO> deleteCards = Utils.getElementsInAWithoutB(beforeChanged, afterChanged);
-        deleteAll(deleteCards);
-
-        return getByDeckId(deckId);
-    }
-
-    private void addAll(List<CardDTO> cards) {
-        cards.forEach(this::add);
-    }
-
-    private void deleteAll(List<CardDTO> cards) throws CardNotFoundException {
-        for (CardDTO card : cards) {
-            delete(card.getId());
+        try {
+            Card updated = cardRepo.save(card);
+            return cardConverter.convertEntityToDto(updated);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
         }
     }
 
@@ -89,5 +72,13 @@ public class CardServiceImpl implements CardService {
     public List<CardDTO> getByDeckId(Long deckId) {
         List<Card> cards = cardRepo.findByDeckId(deckId);
         return cardConverter.convertEntityToDto(cards);
+    }
+
+    @Override
+    public CardDTO getById(Long id) throws CardNotFoundException {
+        Card card = cardRepo
+                .findById(id)
+                .orElseThrow(() -> new CardNotFoundException("Could not find any decks with Id=" + id));
+        return cardConverter.convertEntityToDto(card);
     }
 }

@@ -2,7 +2,6 @@ package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
-import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.exception.DeckNotFoundException;
 import com.universityteam.flashmemorizer.form.DeckForm;
 import com.universityteam.flashmemorizer.service.CardService;
@@ -92,15 +91,14 @@ public class DeckController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute DeckForm deckForm, RedirectAttributes ra) {
+    public String updateDeckOnly(@ModelAttribute DeckForm deckForm, RedirectAttributes ra) {
         final Long deckId = deckForm.getDeck().getId();
         try {
             deckForm.getDeck().setModified(new Date());
             deckService.update(deckForm.getDeck());
-            cardService.saveCardsByDeck(deckId, deckForm.getCards());
             log.info("Deck with Id {} updated successfully!", deckId);
             ra.addFlashAttribute("msg", "Deck updated successfully!");
-        } catch (DeckNotFoundException | CardNotFoundException e) {
+        } catch (DeckNotFoundException e) {
             log.error("Error updating deckForm with Id {}: {}", deckId, e.getMessage());
             ra.addFlashAttribute("msg", e.getMessage());
         }

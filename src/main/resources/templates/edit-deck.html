@@ -9,16 +9,25 @@
     <link rel="stylesheet" href="../static/css/edit-deck.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/edit-deck.css}"/>
 
-    <title>Deck Input</title>
+    <link rel="stylesheet" href="../static/richtext/richtext.min.css">
+    <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}">
+
+    <link rel="stylesheet" href="../static/richtext/richtext.scss">
+    <link rel="stylesheet" th:href="@{/richText/richtext.scss}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+    <title>Edit Deck</title>
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-10 offset-md-1">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="text-center text-primary">Deck</h4>
+                    <h4 class="text-center text-primary">Deck Form</h4>
 
                     <form th:action="@{/decks/update}" method="post" id="deckForm" th:object="${deckForm}">
                         <input type="hidden" th:field="*{deck.id}" />
@@ -29,34 +38,35 @@
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <input type="text" class="form-control" th:field="*{deck.desc}" maxlength="500"/>
+                            <input type="text" class="deckDescEditor" th:field="*{deck.desc}" maxlength="500"/>
                         </div>
 
-                        <div class="form-group">
-                            <label>Creation Date</label>
-                            <input type="date" class="form-control" th:field="*{deck.creation}" disabled readonly/>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Modified Date</label>
-                            <input type="date" class="form-control" th:field="*{deck.modified}" disabled readonly/>
+                        <div class="form-row mt-3">
+                            <div class="col">
+                                <label>Creation</label>
+                                <input type="datetime-local" class="form-control" th:value="${#dates.format(deckForm.deck.creation, 'yyyy-MM-dd hh:mm')}" readonly>
+                            </div>
+                            <div class="col">
+                                <label>Modified</label>
+                                <input type="datetime-local" class="form-control" th:value="${#dates.format(deckForm.deck.modified, 'yyyy-MM-dd hh:mm')}" readonly>
+                            </div>
                         </div>
 
                         <!-- Add card details -->
-                        <h4 class="text-center text-primary">Cards</h4>
+                        <h4 class="text-center text-primary mt-5">Cards</h4>
                         <ul id="cardList" class="list-group">
                             <li class="list-group-item" th:each="curCard, stat : ${deckForm.cards}">
                                 <div class="card-body mb-3 position-relative">
-                                    <div class="format-bar d-flex justify-content-between">
-                                        <div>
-                                            <button type="button" class="btn btn-outline-primary btn-sm">Bold</button>
-                                            <button type="button" class="btn btn-outline-primary btn-sm">Italic</button>
-                                        </div>
+                                    <div class="format-bar d-flex justify-content-end">
+                                        <a class="btn btn-outline-primary btn-sm edit-button mr-2"
+                                           th:href="@{/cards/edit(cardId=${curCard.id})}">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
 
-                                        <button class="btn btn-outline-danger btn-sm delete-button"
-                                                th:href="@{/delete(cardId=${curCard.id})}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        <a class="btn btn-outline-danger btn-sm delete-button"
+                                           th:href="@{/cards/delete(cardId=${curCard.id}, deckId=${deckForm.deck.id})}">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
                                     </div>
 
                                     <!-- Use th:field for the hidden input field -->
@@ -65,30 +75,35 @@
                                     <div class="form-row mt-3">
                                         <div class="col">
                                             <label>Term</label>
-                                            <textarea class="form-control"
-                                                      th:field="*{cards[__${stat.index}__].term}"
-                                                      minlength="1"
-                                                      maxlength="100"
-                                                      required
-                                                      rows="3"></textarea>
+                                            <div class="card">
+                                                <div class="card-body border font-monospace"
+                                                     th:utext="*{cards[__${stat.index}__].term}">
+                                                    [Term]
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col">
                                             <label>Description</label>
-                                            <textarea class="form-control"
-                                                      th:field="*{cards[__${stat.index}__].desc}"
-                                                      minlength="1"
-                                                      maxlength="1000"
-                                                      required
-                                                      rows="3"></textarea>
+                                            <div class="card">
+                                                <div class="card-body border font-monospace"
+                                                     th:utext="*{cards[__${stat.index}__].desc}">
+                                                    [Desc]
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
 
-                        <button type="button" class="btn btn-secondary btn-block" onclick="addCard()">Add Another Card</button>
+                        <div class="d-flex justify-content-center mt-2 mb-3">
+                            <a class="btn btn-outline-success"
+                               th:href="@{/cards/input/{deckId}(deckId=${deckForm.deck.id})}">
+                                <i class="fas fa-plus"></i> Add Another Card
+                            </a>
+                        </div>
 
-                        <button type="submit" class="btn btn-primary btn-block">Save Deck and Cards</button>
+                        <button type="submit" class="btn btn-primary btn-block">Save Deck And Return</button>
                     </form>
                 </div>
             </div>
@@ -98,5 +113,18 @@
 
 <script th:src="@{/js/edit-deck.js}"></script>
 <script src="../static/js/edit-deck.js"></script>
+
+<script th:src="@{/richText/jquery.richtext.js}"></script>
+<script src="../static/richText/jquery.richtext.js"></script>
+
+<script th:src="@{/richText/jquery.richtext.min.js}"></script>
+<script src="../static/richText/jquery.richtext.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.deckDescEditor').richText();
+    });
+</script>
+
 </body>
 </html>
