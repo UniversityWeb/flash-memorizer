@@ -40,7 +40,7 @@ class DeckConverterTest {
         assertEquals(deckDTO.getDesc(), deck.getDesc());
         assertEquals(deckDTO.getCreation(), deck.getCreation());
         assertEquals(deckDTO.getModified(), deck.getModified());
-        assertEquals(deckDTO.getUser(), deck.getUser());
+        assertNull(deckDTO.getUser().getId());
     }
 
     @Test

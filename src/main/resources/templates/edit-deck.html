@@ -2,77 +2,141 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/edit-deck.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/edit-deck.css}"/>
 
-    <title>Deck Input</title>
+    <link rel="stylesheet" href="../static/richtext/richtext.min.css">
+    <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}">
+
+    <link rel="stylesheet" href="../static/richtext/richtext.scss">
+    <link rel="stylesheet" th:href="@{/richText/richtext.scss}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+    <title>Edit Deck</title>
 </head>
 <body>
 
-    <div th:if=${session.msg}>
-        <div class="alert alert-success" role="alert" th:text="${session.msg}">
-        </div>
-        <th:block th:text="${#session.removeAttribute('msg')}"></th:block>
-    </div>
+<div th:if="${successMsg}" class="alert alert-success mt-3">
+    <span th:text="${successMsg}">Notify the success message!</span>
+</div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="text-center text-primary">Deck</h4>
+<div th:if="${errorMsg}" class="alert alert-danger mt-3">
+    <span th:text="${errorMsg}">An error occurred.</span>
+</div>
 
-                        <form th:action="@{/deck/update}" method="post" th:object="${deck}">
-                            <input type="hidden" th:value="${deck.id}" name="id">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="text-center text-primary">Deck Form</h4>
 
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="name" th:value="${deck.name}">
+                    <form th:action="@{/decks/update}" method="post" id="deckForm" th:object="${deckForm}">
+                        <input type="hidden" th:field="*{deck.id}" />
+
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" th:field="*{deck.name}" maxlength="50"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="deckDescEditor" th:field="*{deck.desc}" maxlength="500"/>
+                        </div>
+
+                        <div class="form-row mt-3">
+                            <div class="col">
+                                <label>Creation</label>
+                                <input type="datetime-local" class="form-control" th:value="${#dates.format(deckForm.deck.creation, 'yyyy-MM-dd hh:mm')}" readonly>
                             </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="desc" th:value="${deck.desc}">
+                            <div class="col">
+                                <label>Modified</label>
+                                <input type="datetime-local" class="form-control" th:value="${#dates.format(deckForm.deck.modified, 'yyyy-MM-dd hh:mm')}" readonly>
                             </div>
+                        </div>
 
-                            <button class="btn btn-primary btn-block">Submit</button>
-                        </form>
+                        <!-- Add card details -->
+                        <h4 class="text-center text-primary mt-5">Cards</h4>
 
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                    </div>
+                        <div th:if="${deckForm.cards.isEmpty()}" class="alert alert-info text-center">
+                            <p class="lead mb-0">You haven't created any cards</p>
+                        </div>
+
+                        <div th:if="${not deckForm.cards.isEmpty()}">
+                            <ul id="cardList" class="list-group">
+                                <li class="list-group-item" th:each="curCard, stat : ${deckForm.cards}">
+                                    <div class="card-body mb-3 position-relative">
+                                        <div class="format-bar d-flex justify-content-end">
+                                            <a class="btn btn-outline-primary btn-sm edit-button mr-2"
+                                               th:href="@{/cards/edit(cardId=${curCard.id})}">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+
+                                            <a class="btn btn-outline-danger btn-sm delete-button"
+                                               th:href="@{/cards/delete(cardId=${curCard.id}, deckId=${deckForm.deck.id})}">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                        </div>
+
+                                        <!-- Use th:field for the hidden input field -->
+                                        <input type="hidden" th:field="*{cards[__${stat.index}__].id}" />
+
+                                        <div class="form-row mt-3">
+                                            <div class="col">
+                                                <label>Term</label>
+                                                <div class="card">
+                                                    <div class="card-body border font-monospace"
+                                                         th:utext="*{cards[__${stat.index}__].term}">
+                                                        [Term]
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label>Description</label>
+                                                <div class="card">
+                                                    <div class="card-body border font-monospace"
+                                                         th:utext="*{cards[__${stat.index}__].desc}">
+                                                        [Desc]
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-2 mb-3">
+                            <a class="btn btn-outline-success"
+                               th:href="@{/cards/input/{deckId}(deckId=${deckForm.deck.id})}">
+                                <i class="fas fa-plus"></i> Add Another Card
+                            </a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Save Deck And Return</button>
+                    </form>
                 </div>
-
             </div>
         </div>
-
     </div>
+</div>
 
-    <ul class="list-group">
-        <li class="list-group-item">
-            <div class="text-center">
-                <img src="..." class="rounded" alt="...">
-            </div>
+<script th:src="@{/richText/jquery.richtext.js}"></script>
+<script src="../static/richText/jquery.richtext.js"></script>
 
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" name="name" th:value="${deck.name}">
-            </div>
+<script th:src="@{/richText/jquery.richtext.min.js}"></script>
+<script src="../static/richText/jquery.richtext.min.js"></script>
 
-            <div class="form-group">
-                <label>Description</label>
-                <input type="text" class="form-control" name="desc" th:value="${deck.desc}">
-            </div>
-
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile04">
-                <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
-            </div>
-        </li>
-    </ul>
+<script>
+    $(document).ready(function() {
+        $('.deckDescEditor').richText();
+    });
+</script>
 
 </body>
 </html>

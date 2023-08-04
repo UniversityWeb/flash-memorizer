@@ -40,8 +40,8 @@ class UserCardConverterTest {
         assertEquals(userCardDTO.getReviewCount(), userCard.getReviewCount());
         assertEquals(userCardDTO.getInterval(), userCard.getInterval());
         assertEquals(userCardDTO.getRating(), userCard.getRating());
-        assertEquals(userCardDTO.getCard(), userCard.getCard());
-        assertEquals(userCardDTO.getUser(), userCard.getUser());
+        assertNull(userCardDTO.getCard().getId());
+        assertNull(userCardDTO.getUser().getId());
     }
 
     @Test

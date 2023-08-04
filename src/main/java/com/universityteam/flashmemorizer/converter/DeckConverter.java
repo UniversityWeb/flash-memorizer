@@ -2,7 +2,9 @@ package com.universityteam.flashmemorizer.converter;
 
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.entity.Deck;
+import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,5 +35,15 @@ public class DeckConverter {
 
     public Deck convertDtoToEntity(DeckDTO deckDTO) {
         return (deckDTO == null) ? null : mapper.map(deckDTO, Deck.class);
+    }
+
+    @PostConstruct
+    public void setupMapper() {
+        mapper.addMappings(new PropertyMap<Deck, DeckDTO>() {
+            @Override
+            protected void configure() {
+                skip(destination.getQuantityOfCards());
+            }
+        });
     }
 }

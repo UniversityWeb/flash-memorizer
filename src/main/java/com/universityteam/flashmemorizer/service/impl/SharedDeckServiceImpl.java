@@ -59,8 +59,8 @@ public class SharedDeckServiceImpl implements SharedDeckService {
     }
 
     @Override
-    public List<SharedDeckDTO> getBySenderId(Long senderId) {
-        List<SharedDeck> sharedDecks = shareRepo.findBySenderId(senderId);
+    public List<SharedDeckDTO> getBySharerId(Long sharerId) {
+        List<SharedDeck> sharedDecks = shareRepo.findBySharerId(sharerId);
         return shareConverter.convertEntityToDto(sharedDecks);
     }
 }

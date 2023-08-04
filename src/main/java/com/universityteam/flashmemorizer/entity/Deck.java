@@ -1,10 +1,7 @@
 package com.universityteam.flashmemorizer.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class Deck {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,18 +25,21 @@ public class Deck {
     @Column(name = "deck_desc", length = 500)
     private String desc;
 
-    private Date creation;
+    @Column(updatable = false)
+    private Date creation = new Date();
 
     @Column(name = "last_modified")
-    private Date modified;
+    private Date modified = new Date();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User user;
 
-    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "deck", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<Card> cards;
 
-    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "deck", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<SharedDeck> sharedDecks;
 }

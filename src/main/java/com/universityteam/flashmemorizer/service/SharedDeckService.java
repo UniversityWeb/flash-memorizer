@@ -8,5 +8,5 @@ public interface SharedDeckService {
     SharedDeckDTO add(SharedDeckDTO sharedDeckDTO);
     boolean delete(Long id);
     SharedDeckDTO update(SharedDeckDTO sharedDeckDTO);
-    List<SharedDeckDTO> getBySenderId(Long senderId);
+    List<SharedDeckDTO> getBySharerId(Long senderId);
 }

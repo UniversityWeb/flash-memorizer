@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface DeckRepository extends JpaRepository<Deck, Long> {
+    Long countById(Long id);
     List<Deck> findByUserId(Long userId);
 }

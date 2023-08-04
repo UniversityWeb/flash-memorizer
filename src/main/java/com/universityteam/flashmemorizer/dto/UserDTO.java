@@ -1,6 +1,9 @@
 package com.universityteam.flashmemorizer.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -14,6 +17,6 @@ public class UserDTO {
     private String pass;
     private String email;
     private String fullName;
-    private Date registration;
-    private Date lastLogin;
+    private Date registration = new Date();
+    private Date lastLogin = new Date();
 }
