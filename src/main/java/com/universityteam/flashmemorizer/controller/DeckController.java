@@ -85,7 +85,7 @@ public class DeckController {
             ArrayList<CardDTO> cardDTOS = (ArrayList) cardService.getByDeckId(deckId);
             deckForm.setCards(cardDTOS);
             deck.setQuantityOfCards( cardDTOS.size() );
-            log.info("Deck details retrieved successfully for Id: {}", deckId);
+            log.info("Deck details retrieved successfully for deckId: {}", deckId);
         }
         deckForm.setDeck(deck);
         m.addAttribute("deckForm", deckForm);

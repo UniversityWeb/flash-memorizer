@@ -35,8 +35,9 @@ public class CardController {
         CardDTO card;
         try {
             card = cardService.getById(cardId);
+            log.info("Card retrieved successfully for cardId: {}", cardId);
         } catch (CardNotFoundException e) {
-            log.error(e.getMessage());
+            log.error("Error while fetching card with cardId: {}", cardId, e);
             card = new CardDTO();
         }
         m.addAttribute("card", card);
