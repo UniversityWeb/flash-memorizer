@@ -8,6 +8,8 @@ const input_custom2 = document.getElementById("input_custom2");
 var radioButtons1 = document.getElementsByName("betweenTerm_decs");
 var radioButtons2 = document.getElementsByName("betweenCards");
 
+
+
 function changeBorderColor(event) {
     const textarea = event.target;
     const hasInput = textarea.value.trim() !== ''; // Kiểm tra nếu có nhập liệu
@@ -38,17 +40,21 @@ function changeBorderColor(event) {
   // Định nghĩa hàm kiểm tra số chẵn
   function importWithText(content,betweenTermAndDesc,betweenCards) {
     const arrLine = content.split(betweenCards);
-    const arrTerm =[];
-    const arrDesc = [];
+    var arrTerm =[];
+    var arrDesc = [];
+    var nTerm =0;
+    var nDesc =0;
     let numberCard = 0;
-    for (const line of arrLine) {
+    for (var line of arrLine) {
       const arr=line.split(betweenTermAndDesc);
-      arrTerm.push=arr[0];
-      arrDesc.push=arr[1];
+      arrTerm[nTerm++]=arr[0];
+      arrDesc[nDesc++]=arr[1];
       numberCard = numberCard + 1;
+      
     }
     for (let i = 0; i < numberCard; i++){
-      const li = document.createElement("li");
+      console.log(arrTerm[i]+"----"+arrDesc[i]);
+      var li = document.createElement("li");
       li.className="card_item";
       li.innerHTML = `
       <div class="number_of_item">
@@ -75,29 +81,27 @@ function changeBorderColor(event) {
     const text = textarea.value;
     listCards.innerHTML = "";
     var betweenTermAndDesc = ""; var betweenCards = "";
-    for (var i=0;i<3;i++)
-      {
-        if(radioButtons1[i].checked)
-        {
-          if(i!=2)
-          betweenTermAndDesc=radioButtons1[i].value;
-          else
-          betweenTermAndDesc=input_custom1.value;        
-          break;
-        }
+    
+    for (var i = 0; i < 3; i++) {  
+      if (radioButtons1[i].checked) {
+        if(i!=2)
+        betweenTermAndDesc = radioButtons1[i].value;
+        else
+        betweenTermAndDesc = input_custom1.value;
+        break;
       }
-      for (var i=0;i<3;i++)
-      {
-        if(radioButtons2[i].checked)
-        {
-          if(i!=2)
-          betweenCards=radioButtons2[i].value;
-          else
-          betweenCards=input_custom2.value;        
-          break;
-        }
+    }
+    for (var i = 0; i < 3; i++) {
+      if (radioButtons2[i].checked) {
+        if(i!=2)
+        betweenCards = radioButtons2[i].value;
+        else
+        betweenCards = input_custom2.value;
+        break;
       }
-    importWithText(text,betweenTermAndDesc,betweenCards);
+    }
+   importWithText(text,betweenTermAndDesc,betweenCards);
+ //   importWithText(text,"\t","\n");
     if(textarea.value == ""){
       listCards.innerHTML = "";
     }

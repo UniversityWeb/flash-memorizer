@@ -58,7 +58,7 @@
 .input_import{
     resize: both;
     overflow: auto; 
-    min-height: 10rem;
+    min-height: 15rem;
     border: 2px solid #353b3e;
     border-radius: 10px;
     font-size: 1.5rem;
