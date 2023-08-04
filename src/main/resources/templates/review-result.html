@@ -28,7 +28,7 @@
                 <h4>Your score is: <span th:text="${cardReviewForm.result}" class="badge badge-secondary bg-primary"></span></h4>
             </div>
             <div class="d-flex justify-content-center mt-4">
-                <a th:href="@{/home}" class="link-nav">
+                <a th:href="@{/cards/{deckId}(deckId=${cardReviewForm.deckId})}" class="link-nav">
                     <button type="button" class="btn btn-outline-primary btn-lg mx-auto btn-nav">Back to learning</button>
                 </a>
                 <a th:href="@{/cards/review(reviewType=${cardReviewForm.reviewType},deckId=${cardReviewForm.deckId})}" class="link-nav">

@@ -13,7 +13,8 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light navbar-bg fixed-top" th:fragment="navbar">
     <div class="container-fluid">
-        <a class="navbar-brand mb-1 mt-1" href="/home">Home</a>
+        <a class="navbar-brand mb-1 mt-1" href="#" th:text="${cardReviewForm.reviewType.displayName}">
+        </a>
         <div class="navbar-right">
             <a class="nav-link disabled justify-content-center" tabindex="-1" aria-disabled="true" th:text="${cardReviewForm.deckName}"></a>
         </div>
@@ -27,8 +28,8 @@
                     <a class="nav-link" href="#" onclick="printPage()">Print test</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <button type="button" class="btn-close" aria-label="Close" onclick="goBack()"></button>
+                    <a class="nav-link" th:href="@{/cards/{deckId}(deckId=${cardReviewForm.deckId})}">
+                        <button type="button" class="btn-close" aria-label="Close"></button>
                     </a>
                 </li>
             </ul>
