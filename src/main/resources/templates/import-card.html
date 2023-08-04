@@ -27,7 +27,7 @@
         <p class="description">&nbsp;Copy and Paste your data here (from Word, Excel, Google Docs, etc.)</p>
         <div class="box_input">
             <div class="form-floating">
-                <textarea id="document_input" class="form-control input_import" placeholder="Word 1 &nbsp;&nbsp;&nbsp;Definition 1" oninput="changeBorderColor(event)" ></textarea>
+                <textarea id="document_input" class="form-control input_import" oninput="changeBorderColor(event)" ></textarea>
             </div>
             <div class="menu_content">
                 <div class="menu_op">
@@ -35,17 +35,17 @@
                         <h4>Between term and definition</h4>
                         <div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions1" id="inlineRadio1" value="option1">
-                                <label class="form-check-label" for="inlineRadio1">Tab</label>
+                                <input class="form-check-input radio_input" type="radio" name="betweenTerm_decs" value="    " checked onchange="handleRadioChange()">
+                                <label class="form-check-label">Tab</label>
                             </div>
                             <div class="form-check form-check-inline ">
-                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions1" id="inlineRadio2" value="option2">
-                                <label class="form-check-label" for="inlineRadio2">Comma</label>
+                                <input class="form-check-input radio_input" type="radio" name="betweenTerm_decs" value="," onchange="handleRadioChange()">
+                                <label class="form-check-label">Comma</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions1" id="inlineRadio3" value="option3">
-                                <label class="form-check-label" for="inlineRadio3">
-                                    <input class="Custom_input" placeholder="-" type="text"></input>
+                                <input class="form-check-input radio_input" type="radio" name="betweenTerm_decs"value="" onchange="handleRadioChange()">
+                                <label class="form-check-label">
+                                    <input id="input_custom1" class="Custom_input" placeholder="-" type="text"></input>
                                     <p class="lable_under-input">Custom</p>
                                 </label>
                             </div>
@@ -55,17 +55,18 @@
                         <h4>Between cards</h4>
                         <div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions2" id="inlineRadio1" value="option1">
-                                <label class="form-check-label" for="inlineRadio1">New line</label>
+                                <input class="form-check-input radio_input" type="radio" name="betweenCards"value="
+" checked onchange="handleRadioChange()">
+                                <label class="form-check-label">New line</label>
                             </div>
                             <div class="form-check form-check-inline ">
-                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions2" id="inlineRadio2" value="option2">
-                                <label class="form-check-label" for="inlineRadio2">Semicolon</label>
+                                <input class="form-check-input radio_input" type="radio" name="betweenCards"value=";" onchange="handleRadioChange()">
+                                <label class="form-check-label">Semicolon</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input radio_input" type="radio" name="inlineRadioOptions2" id="inlineRadio3" value="option3">
-                                <label class="form-check-label" for="inlineRadio3">
-                                    <input class="Custom_input" placeholder="/n/n"  type="text"></input>
+                                <input class="form-check-input radio_input" type="radio" name="betweenCards" value="" onchange="handleRadioChange()">
+                                <label class="form-check-label">
+                                    <input id="input_custom2" class="Custom_input" placeholder="/n/n"  type="text"></input>
                                     <p class="lable_under-input">Custom</p>
                                 </label>
                             </div> 
@@ -81,7 +82,7 @@
                 <h3 class="title_prevlew">
                     <span>Prevlew</span>
                 </h3>
-                <p class="none_import_notify" style="display: none;">Nothing to preview yet.</p>
+                <p id="none_contain" class="none_import_notify" style="display: none;">Nothing to preview yet.</p>
                 <ul id="listCards" class="list_cards-import">
                 </ul> 
             </div>

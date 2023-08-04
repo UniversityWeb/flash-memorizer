@@ -42,6 +42,15 @@ public class ImportCardServiceImpl implements ImportCardService {
 
     @Override
     public List<CardDTO> importCards(String content, String betweenTermAndDesc, String betweenCards) {
-        return null;
+        var results = new ArrayList<CardDTO>();
+        var listLine = content.split(betweenCards);
+        for (String line: listLine) {
+            var arr = line.split(betweenTermAndDesc);
+            var cart = new CardDTO();
+            cart.setTerm(arr[0]);
+            cart.setDesc(arr[1]);
+            results.add(cart);
+        }
+        return results;
     }
 }
