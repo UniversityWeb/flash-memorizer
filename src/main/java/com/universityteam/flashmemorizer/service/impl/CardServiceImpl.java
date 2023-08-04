@@ -81,4 +81,9 @@ public class CardServiceImpl implements CardService {
                 .orElseThrow(() -> new CardNotFoundException("Could not find any decks with Id=" + id));
         return cardConverter.convertEntityToDto(card);
     }
+
+    @Override
+    public Integer countByDeckId(Long deckId) {
+        return cardRepo.countByDeckId(deckId);
+    }
 }

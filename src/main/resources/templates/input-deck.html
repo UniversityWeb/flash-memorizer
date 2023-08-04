@@ -10,34 +10,39 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 
+    <link rel="stylesheet" href="../static/richtext/richtext.min.css">
+    <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}">
+
+    <link rel="stylesheet" href="../static/richtext/richtext.scss">
+    <link rel="stylesheet" th:href="@{/richText/richtext.scss}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
     <title>Deck Input</title>
 </head>
 <body>
 
-<div class="alert alert-success" role="alert">
-    Deck Delete Successfully...
-</div>
-
 <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-10 offset-md-1">
             <div class="card">
                 <div class="card-body">
                     <h4 class="text-center text-primary">Deck</h4>
 
-                    <form th:action="@{/deck/update}" method="post" th:object="${deck}">
-                        <input type="hidden" th:value="${deck.id}" name="id">
-
+                    <form th:action="@{/decks/add}" method="post" id="deck" th:object="${deck}">
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" name="name" th:value="${deck.name}">
+                            <input type="text" class="form-control" th:field="*{name}" maxlength="50" />
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <input type="text" class="form-control" name="desc" th:value="${deck.desc}">
+                            <input type="text" class="deckDescEditor" th:field="*{desc}" maxlength="500" />
                         </div>
 
-                        <button class="btn btn-primary btn-block">Submit</button>
+                        <input type="hidden" th:field="*{user.id}" />
+
+                        <button type="submit" class="btn btn-primary btn-block">Add And Move To Details</button>
                     </form>
                 </div>
             </div>
@@ -46,6 +51,18 @@
     </div>
 
 </div>
+
+<script th:src="@{/richText/jquery.richtext.js}"></script>
+<script src="../static/richText/jquery.richtext.js"></script>
+
+<script th:src="@{/richText/jquery.richtext.min.js}"></script>
+<script src="../static/richText/jquery.richtext.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.deckDescEditor').richText();
+    });
+</script>
 
 </body>
 </html>

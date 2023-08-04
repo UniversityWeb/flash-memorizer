@@ -2,6 +2,7 @@ package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
+import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.exception.DeckNotFoundException;
 import com.universityteam.flashmemorizer.form.DeckForm;
 import com.universityteam.flashmemorizer.service.CardService;
@@ -30,21 +31,30 @@ public class DeckController {
     @Autowired
     private CardService cardService;
 
-    @GetMapping("/get")
+    @GetMapping("/get-my-decks")
     public String getDecksByUserId(@RequestParam Long userId, Model m) {
         List<DeckDTO> decks;
         try {
             decks = deckService.getByUser(userId);
+            for (DeckDTO deck : decks) {
+                Integer quantity = cardService.countByDeckId(deck.getId());
+                deck.setQuantityOfCards(quantity);
+            }
+            log.info("Decks retrieved successfully for userId: {}", userId);
         } catch (DeckNotFoundException e) {
-            log.error(e.getMessage());
+            log.error("Error while fetching decks with userId: {}", userId, e);
             decks = new ArrayList<>();
         }
         m.addAttribute("decks", decks);
-        return "deck";
+        m.addAttribute("userId", userId);
+        return "edit-decks";
     }
 
     @GetMapping("/input")
-    public String inputForm() {
+    public String inputForm(@RequestParam Long userId, Model m) {
+        UserDTO user = UserDTO.builder().id(userId).build();
+        DeckDTO newDeckOfUser = DeckDTO.builder().user(user).build();
+        m.addAttribute("deck", newDeckOfUser);
         return "input-deck";
     }
 
@@ -53,13 +63,13 @@ public class DeckController {
         deck.setCreation(new Date());
         deck.setModified(new Date());
         try {
-            deckService.add(deck);
+            DeckDTO added = deckService.add(deck);
             log.info("Deck added successfully!");
-            ra.addFlashAttribute("msg", "Deck added successfully!");
-            return "redirect:/decks/edit/" + deck.getId();
+            ra.addFlashAttribute("successMsg", "Deck added successfully!");
+            return "redirect:/decks/edit/" + added.getId();
         } catch (Exception e) {
             log.error(e.getMessage());
-            ra.addFlashAttribute("msg", "Deck added unsuccessfully!");
+            ra.addFlashAttribute("errorMsg", "Deck added unsuccessfully!");
             return "redirect:/decks/new";
         }
     }
@@ -74,6 +84,7 @@ public class DeckController {
         } else {
             ArrayList<CardDTO> cardDTOS = (ArrayList) cardService.getByDeckId(deckId);
             deckForm.setCards(cardDTOS);
+            deck.setQuantityOfCards( cardDTOS.size() );
             log.info("Deck details retrieved successfully for Id: {}", deckId);
         }
         deckForm.setDeck(deck);
@@ -97,10 +108,10 @@ public class DeckController {
             deckForm.getDeck().setModified(new Date());
             deckService.update(deckForm.getDeck());
             log.info("Deck with Id {} updated successfully!", deckId);
-            ra.addFlashAttribute("msg", "Deck updated successfully!");
+            ra.addFlashAttribute("successMsg", "Deck updated successfully!");
         } catch (DeckNotFoundException e) {
             log.error("Error updating deckForm with Id {}: {}", deckId, e.getMessage());
-            ra.addFlashAttribute("msg", e.getMessage());
+            ra.addFlashAttribute("errorMsg", e.getMessage());
         }
         return "redirect:/cards/review/" + deckId;
     }
@@ -109,11 +120,12 @@ public class DeckController {
     public String delete(@RequestParam Long userId, @RequestParam Long deckId, RedirectAttributes ra) {
         try {
             deckService.delete(deckId);
-            ra.addFlashAttribute("message", "The Deck Id=" + deckId + " has been deleted.");
+            log.info("Deck with Id {} deleted successfully!", deckId);
+            ra.addFlashAttribute("successMsg", "Deck deleted successfully!");
         } catch (DeckNotFoundException e) {
-            log.error(e.getMessage());
-            ra.addFlashAttribute("message", e.getMessage());
+            log.error("Error deleting deckForm with Id {}: {}", deckId, e.getMessage());
+            ra.addFlashAttribute("errorMsg", e.getMessage());
         }
-        return "redirect:/decks/get?userId=" + userId;
+        return "redirect:/decks/get-my-decks?userId=" + userId;
     }
 }

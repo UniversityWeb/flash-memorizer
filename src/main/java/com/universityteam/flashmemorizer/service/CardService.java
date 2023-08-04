@@ -12,4 +12,6 @@ public interface CardService {
     List<CardDTO> getByDeckId(Long deckId);
 
     CardDTO getById(Long id) throws CardNotFoundException;
+
+    Integer countByDeckId(Long deckId);
 }

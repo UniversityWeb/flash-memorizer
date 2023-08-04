@@ -11,6 +11,8 @@ import java.util.List;
 public interface CardRepository extends JpaRepository<Card, Long> {
     Long countById(Long id);
 
+    Integer countByDeckId(Long deckId);
+
     @Query(value = "SELECT * FROM cards WHERE deck_id = :deckId", nativeQuery = true)
     List<Card> findByDeckId(Long deckId);
 }

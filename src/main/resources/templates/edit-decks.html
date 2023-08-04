@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          rel="stylesheet">
+
+    <title>Edit Decks</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="text-center text-primary">Decks</h4>
+
+                    <div th:if="${decks.isEmpty()}" class="alert alert-info text-center">
+                        <p class="lead mb-0">You haven't created any decks</p>
+                    </div>
+
+                    <div th:if="${not decks.isEmpty()}">
+                        <ul class="list-group" id="deckList">
+                            <li class="list-group-item" th:each="curDeck, stat : ${decks}">
+                                <div class="card-body mb-3 position-relative">
+                                    <div class="badge rounded-pill bg-success" style="color: #ffffff;">
+                                        <span th:text="${curDeck.quantityOfCards + ' items'}">[Quantity] items</span>
+                                    </div>
+                                    <div class="format-bar d-flex justify-content-end">
+                                        <a class="btn btn-outline-primary btn-sm edit-button mr-2"
+                                           th:href="@{/cards/review/{deckId}(deckId=${curDeck.id})}">
+                                            <i class="fas fa-eye"></i> Review
+                                        </a>
+
+                                        <a class="btn btn-outline-danger btn-sm delete-button"
+                                           th:href="@{/decks/delete(userId=${curDeck.user.id}, deckId=${curDeck.id})}">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+                                    </div>
+
+                                    <input th:value="${curDeck.id}" type="hidden"/>
+
+                                    <div class="form-row mt-3">
+                                        <div class="col">
+                                            <label>Name</label>
+                                            <div class="card">
+                                                <div class="card-body border font-monospace"
+                                                     th:utext="*{decks[__${stat.index}__].name}">[Term]</div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label>Description</label>
+                                            <div class="card">
+                                                <div class="card-body border font-monospace"
+                                                     th:utext="*{decks[__${stat.index}__].desc}">[Desc]</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-2 mb-3">
+                        <a class="btn btn-outline-success" th:href="@{/decks/input(userId=${userId})}">
+                            <i class="fas fa-plus"></i> Add Another Deck
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
