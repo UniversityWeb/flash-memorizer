@@ -21,4 +21,6 @@ public class DeckDTO {
     private Date modified = new Date();
 
     private UserDTO user = new UserDTO();
+
+    private Integer quantityOfCards;
 }

@@ -1,10 +1,7 @@
 package com.universityteam.flashmemorizer.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,6 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +23,11 @@ public class Card {
 
     @Column(name = "card_desc", length = 1000)
     private String desc;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="deck_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Deck deck;
 
     @OneToMany(mappedBy = "card", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
