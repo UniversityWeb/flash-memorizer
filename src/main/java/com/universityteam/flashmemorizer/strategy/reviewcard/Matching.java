@@ -22,9 +22,6 @@ public class Matching implements ReviewStrategy<MatchingCard> {
                 })
                 .collect(Collectors.toList());
     }
-    public boolean isCorrect(MatchingCard matchingCard) {
-        return matchingCard.isCorrect();
-    }
     public boolean isAnswer(MatchingCard movingCard, MatchingCard targetCard) {
         boolean isCorrect = movingCard.getDisplayPart().equals(targetCard.getHiddenPart());
         movingCard.setCorrect(isCorrect);

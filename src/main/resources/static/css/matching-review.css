@@ -1,19 +1,16 @@
 body {
-    overflow-x: hidden;
-}
-
-.wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-}
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
 .board-height {
-    height: 80vh!important;
+    height: 85vh!important;
 }
 
 .card {
-    width: 180px;
-    height: 180px;
     background-color: #F8F9FA;
     border: 1px solid #CED4DA;
     border-radius: 10px;
@@ -27,6 +24,8 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
+    cursor: grab;
+    margin: 5px;
 }
 
 .card[draggable="true"] {
@@ -35,6 +34,10 @@ body {
 
 .card[draggable="true"]:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.time-section {
+    height: 75px !important;
 }
 
 .time-value {
@@ -61,6 +64,7 @@ body {
 }
 
 @media (min-width: 1024px) {
+
 }
 
 @media (max-width: 1023px) {
