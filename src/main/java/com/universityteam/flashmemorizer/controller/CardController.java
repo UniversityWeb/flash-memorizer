@@ -5,13 +5,12 @@ import com.universityteam.flashmemorizer.dto.CardReview;
 import com.universityteam.flashmemorizer.dto.CardReviewForm;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.enums.EReview;
+import com.universityteam.flashmemorizer.exception.DeckNotFoundException;
 import com.universityteam.flashmemorizer.service.CardReviewService;
-import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.service.CardService;
 import com.universityteam.flashmemorizer.service.DeckService;
 import com.universityteam.flashmemorizer.service.FormService;
-import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +111,7 @@ public class CardController {
     }
 
     @GetMapping("/review")
-    public String review(@RequestParam EReview reviewType, @RequestParam Long deckId, Model m) {
+    public String review(@RequestParam EReview reviewType, @RequestParam Long deckId, Model m) throws DeckNotFoundException {
         submitted = false;
         DeckDTO deck = deckService.getById(deckId);
         List<CardDTO> cards = cardService.getByDeckId(deckId);
