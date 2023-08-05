@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -11,6 +12,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class Deck {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,16 +33,11 @@ public class Deck {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private User user;
-
-<<<<<<< HEAD
-
-    @OneToMany(mappedBy = "deck", cascade = {CascadeType.ALL, CascadeType.REMOVE}, orphanRemoval = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-=======
+    private User user;
+
     @OneToMany(mappedBy = "deck", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
->>>>>>> ecca4ca (fix the recursive problem with @ToString.Exclude)
     private List<Card> cards;
 
     @OneToMany(mappedBy = "deck", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)

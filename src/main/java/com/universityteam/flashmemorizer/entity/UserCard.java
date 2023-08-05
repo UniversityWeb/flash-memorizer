@@ -14,6 +14,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class UserCard {
     @Id
     @Column(name = "card_id")
@@ -37,9 +39,13 @@ public class UserCard {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id", insertable = false, updatable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Card card;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User user;
 }

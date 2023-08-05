@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +27,7 @@ public class Card {
     @Column(name = "card_desc", length = 1000)
     private String desc;
 
+    private Date creation;
     @Column(name = "card_img")
     @Lob
     private byte[] img;
@@ -34,4 +37,7 @@ public class Card {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Deck deck;
+
+    @OneToMany(mappedBy = "card", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<UserCard> userCards;
 }
