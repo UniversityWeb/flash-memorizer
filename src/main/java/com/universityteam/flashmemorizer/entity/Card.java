@@ -1,10 +1,7 @@
 package com.universityteam.flashmemorizer.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class Card {
     @Column(name = "card_desc", length = 1000)
     private String desc;
 
-    @Column(name = "card_img")
+    @Column(name = "card_img", columnDefinition = "BLOB")
     @Lob
     private byte[] img;
 

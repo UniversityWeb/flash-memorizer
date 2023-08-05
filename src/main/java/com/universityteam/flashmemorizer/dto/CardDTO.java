@@ -1,6 +1,7 @@
 package com.universityteam.flashmemorizer.dto;
 
 import lombok.*;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.util.Objects;
 
@@ -28,12 +29,13 @@ public class CardDTO {
     public int hashCode() {
         return Objects.hash(term, desc);
     }
-=======
-    private Date creation = new Date();
-    private Date modified = new Date();
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private DeckDTO deck = new DeckDTO();
->>>>>>> ecca4ca (fix the recursive problem with @ToString.Exclude)
+
+    public String generateBase64Image()
+    {
+        return Base64.encodeBase64String(this.img);
+    }
 }

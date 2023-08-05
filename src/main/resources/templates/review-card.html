@@ -62,7 +62,7 @@
                                                 </div>
                                             </div>
                                             <h3 th:text = "${card.term}"></h3>
-                                            <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" alt="Avatar" style="width:70%;height:70%;">
+                                            <img th:src="@{'data:image/jpg;base64,'+${card.generateBase64Image()}}" alt="Base64 Encoded Image" style='width:auto; height: 80%;'/>
                                         </div>
                                         <div class="flip-card-back">
                                             <h4>Nghĩa</h4>
