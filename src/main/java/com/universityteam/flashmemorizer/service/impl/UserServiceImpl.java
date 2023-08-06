@@ -5,13 +5,14 @@ import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.entity.User;
 import com.universityteam.flashmemorizer.entity.VerificationToken;
 import com.universityteam.flashmemorizer.exception.UserAlreadyExistsException;
-import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
+import com.universityteam.flashmemorizer.exception.UserNotFoundException;
 import com.universityteam.flashmemorizer.records.RegistrationRequest;
 import com.universityteam.flashmemorizer.repository.UserRepository;
+import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
 import com.universityteam.flashmemorizer.service.UserService;
-
 import lombok.RequiredArgsConstructor;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,9 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
+
+    private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository tokenRepository;;
@@ -39,20 +42,28 @@ public class UserServiceImpl implements UserService {
             User added = userRepo.save(user);
             return userConverter.convertEntityToDto(added);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return null;
         }
     }
 
     @Override
-    public UserDTO update(UserDTO userDTO) {
-        Optional<User> optUser = userRepo.findById(userDTO.getId());
-        if (optUser.isEmpty()) return null;
+    public UserDTO update(UserDTO userDTO) throws UserNotFoundException {
+        User user = userRepo
+                .findById(userDTO.getId())
+                .orElseThrow(() -> new UserNotFoundException("Could not find any users with userId=" + userDTO.getId()));
+
+        user.setUsername( userDTO.getUsername() );
+        user.setPass( userDTO.getPass() );
+        user.setEmail( userDTO.getEmail() );
+        user.setFullName( userDTO.getFullName() );
+        user.setLastLogin( userDTO.getLastLogin() );
+
         try {
-            User updated = userRepo.save(optUser.get());
+            User updated = userRepo.save(user);
             return userConverter.convertEntityToDto(updated);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return null;
         }
     }
