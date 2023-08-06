@@ -1,8 +1,8 @@
 package com.universityteam.flashmemorizer.service;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
-import com.universityteam.flashmemorizer.registration.RegistrationRequest;
-import com.universityteam.flashmemorizer.registration.token.VerificationToken;
+import com.universityteam.flashmemorizer.records.RegistrationRequest;
+import com.universityteam.flashmemorizer.entity.VerificationToken;
 
 import java.util.List;
 

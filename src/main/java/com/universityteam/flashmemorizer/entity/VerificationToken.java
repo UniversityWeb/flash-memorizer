@@ -1,36 +1,40 @@
-package com.universityteam.flashmemorizer.registration.token;
+package com.universityteam.flashmemorizer.entity;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import com.universityteam.flashmemorizer.dto.UserDTO;
+import jakarta.persistence.*;
+import lombok.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+@Data
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
+@IdClass(VerificationToken.class)
+@Table(name = "verification_token")
+@AllArgsConstructor
+@Builder
 public class VerificationToken {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "token", length = 255)
     private String token;
+
+    @Column(name = "expirationTime")
     private Date expirationTime;
+
     private static final int EXPIRATION_TIME = 15;
 
+    @OneToOne
     @JoinColumn(name = "user_id")
-    private UserDTO user;
+    private User user;
     
-    public VerificationToken(String token, UserDTO user){
+    public VerificationToken(String token, User user){
         super();
         this.token = token;
         this.user = user;

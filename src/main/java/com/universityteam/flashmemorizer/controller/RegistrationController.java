@@ -1,15 +1,16 @@
 package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
-import com.universityteam.flashmemorizer.registration.RegistrationRequest;
-import com.universityteam.flashmemorizer.registration.envents.listener.RegistrationCompleteEventListener;
-import com.universityteam.flashmemorizer.registration.token.VerificationToken;
-import com.universityteam.flashmemorizer.registration.token.VerificationTokenRepository;
+import com.universityteam.flashmemorizer.entity.User;
+import com.universityteam.flashmemorizer.records.RegistrationRequest;
+import com.universityteam.flashmemorizer.events.RegistrationCompleteEventListener;
+import com.universityteam.flashmemorizer.entity.VerificationToken;
+import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
 import jakarta.mail.MessagingException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 
-import com.universityteam.flashmemorizer.registration.envents.RegistrationCompleteEvent;
+import com.universityteam.flashmemorizer.entity.RegistrationCompleteEvent;
 import com.universityteam.flashmemorizer.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/home")
+@RequestMapping("/register")
 public class RegistrationController {
     private final UserService userService;
     private final ApplicationEventPublisher publisher;
@@ -28,7 +29,7 @@ public class RegistrationController {
     private final RegistrationCompleteEventListener eventListener;
     private final HttpServletRequest servletRequest;
 
-    @PostMapping("/home")
+    @PostMapping
     public String registerUser(@RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request){
         UserDTO user = userService.registerUser(registrationRequest);
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
@@ -37,30 +38,27 @@ public class RegistrationController {
 
     @GetMapping("/verifyEmail")
     public String VerifyEmail(@RequestParam("token") String token){
-
-        String url = applicationUrl(servletRequest) + "/register/resend-verification-token?token=" + token;
-
         VerificationToken theToken = tokenRepository.findByToken(token);
-//        if(theToken.getUser().isEnable()){
-//            return "This account has already been verified, please, login!";
-//        }
+        if(theToken.getUser().isEnabled()){
+            return "This account has already been verified, please, login.";
+        }
         String verificationResult = userService.validateToken(token);
         if(verificationResult.equalsIgnoreCase("valid")){
-            return "Email verifid successfully. Now you can login account <3";
+            return "Email verified successfully. Now you can login account!";
         }
-        return "Invalid verification token, <a href=" + url +"\"> Get a new verification link. </a>" ;
+        return "Invalid verification link, please, check your email for new verification link. </a>" ;
     }
 
-    public String resendVerificationToken(@RequestParam("token") String oldToken,
-                                          final HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+    @GetMapping("/resend-verification-token")
+    public String resendVerificationToken(@RequestParam("token") String oldToken, final HttpServletRequest request)
+            throws MessagingException, UnsupportedEncodingException {
         VerificationToken verificationToken = userService.generateNewVerificationCode(oldToken);
-        UserDTO theUser = verificationToken.getUser();
+        User theUser = verificationToken.getUser();
         resendVerificationTokenEmail(theUser, applicationUrl(request), verificationToken);
         return "A new verification link has been sent to your email, please, check to active your account";
     }
 
-    @GetMapping("/resend-verification-token")
-    private void resendVerificationTokenEmail(UserDTO theUser, String applicationUrl, VerificationToken verificationToken)
+    private void resendVerificationTokenEmail(User theUser, String applicationUrl, VerificationToken verificationToken)
             throws MessagingException, UnsupportedEncodingException {
         String url = applicationUrl + "/register/verifyEmail?token=" + verificationToken;
         eventListener.sendVerificationEmail(url);
@@ -69,6 +67,7 @@ public class RegistrationController {
     }
 
     public String applicationUrl(HttpServletRequest request){
-        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        return "http://" + request.getServerName() + ":"
+                + request.getServerPort() + request.getContextPath();
     }
 }

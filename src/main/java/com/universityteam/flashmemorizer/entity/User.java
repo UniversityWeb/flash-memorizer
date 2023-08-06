@@ -36,6 +36,8 @@ public class User {
 
     @Column(name = "last_login")
     private Date lastLogin;
+    
+    private boolean isEnabled = false;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<Deck> decks;

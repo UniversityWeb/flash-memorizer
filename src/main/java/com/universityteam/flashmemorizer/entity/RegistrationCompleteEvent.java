@@ -1,9 +1,7 @@
-package com.universityteam.flashmemorizer.registration.envents;
+package com.universityteam.flashmemorizer.entity;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import org.springframework.context.ApplicationEvent;
-
-import com.universityteam.flashmemorizer.entity.User;
 
 import lombok.Getter;
 import lombok.Setter;

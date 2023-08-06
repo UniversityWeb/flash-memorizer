@@ -1,14 +1,17 @@
-package com.universityteam.flashmemorizer.registration.envents.listener;
+package com.universityteam.flashmemorizer.events;
 
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
+import com.universityteam.flashmemorizer.config.MailConfig;
 import com.universityteam.flashmemorizer.dto.UserDTO;
-import com.universityteam.flashmemorizer.registration.envents.RegistrationCompleteEvent;
+import com.universityteam.flashmemorizer.entity.RegistrationCompleteEvent;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
@@ -30,15 +33,10 @@ public class RegistrationCompleteEventListener
 
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent event){
-        // 1. Get the newly registered user
         UserDTO theUser = event.getUser();
-        // 2. Create a verification taken for the user
         String verificationToken = UUID.randomUUID().toString();
-        // 3. Save the verification taken for the user
         userService.saveUserVerifycationToken(theUser, verificationToken);
-        // 4. Buil the verification url to be sent to the user
         String url = event.getApplicationUrl() + "/register/verifyEmail?token=" + verificationToken;
-        // 5. Send the email
         try {
             sendVerificationEmail(url);
         } catch (MessagingException | UnsupportedEncodingException e) {
@@ -56,7 +54,7 @@ public class RegistrationCompleteEventListener
                 + "<a href =\"" + url + "\"> Verify your email to active your account </a>"
                 + "<p> Thank your <br> Users Registration Portal Service";
         MimeMessage message = mailSender.createMimeMessage();
-        var messageHelper = new MimeMessageHelper(message);
+        var messageHelper = new MimeMessageHelper(message, "UTF-8");
         messageHelper.setFrom("admin@gmail.com", senderName);
         messageHelper.setTo(theUser.getEmail());
         messageHelper.setSubject(subject);

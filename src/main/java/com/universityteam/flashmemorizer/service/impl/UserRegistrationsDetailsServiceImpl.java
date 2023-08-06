@@ -1,15 +1,16 @@
-package com.universityteam.flashmemorizer.registration.security;
+package com.universityteam.flashmemorizer.service.impl;
 
+import com.universityteam.flashmemorizer.registration.UserRegistrationDetails;
 import com.universityteam.flashmemorizer.repository.UserRepository;
+import com.universityteam.flashmemorizer.service.UserRegistrationDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserRegistrationsDetailsService implements UserDetailsService {
+public class UserRegistrationsDetailsServiceImpl implements UserRegistrationDetailsService {
 
     private final UserRepository userRepos;
 

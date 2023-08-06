@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.registration.security;
+package com.universityteam.flashmemorizer.registration;
 
 import com.universityteam.flashmemorizer.entity.User;
 import lombok.Data;
@@ -19,11 +19,7 @@ public class UserRegistrationDetails implements UserDetails {
     public UserRegistrationDetails(User user){
         this.username = user.getUsername();
         this.password = user.getPass();
-//        this.isEnabled = user.isEnable();
-//        this.authorities = Arrays.stream(user.getRole()
-//                .split(","))
-//                .map(SimpleGrantedAuthority::new)
-//                .collect(Collectors.toList());
+        this.isEnabled = user.isEnabled();
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

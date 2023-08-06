@@ -67,8 +67,8 @@ class UserConverterTest {
                 .pass("hihi124")
                 .email("hihi@gmail.com")
                 .fullName("Hi Tran")
-                .registration(LocalDate.now())
-                .lastLogin(LocalDate.now())
+                .registration(new Date())
+                .lastLogin(new Date())
                 .build();
 
         // Act

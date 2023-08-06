@@ -3,10 +3,10 @@ package com.universityteam.flashmemorizer.service.impl;
 import com.universityteam.flashmemorizer.converter.UserConverter;
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.entity.User;
+import com.universityteam.flashmemorizer.entity.VerificationToken;
 import com.universityteam.flashmemorizer.exception.UserAlreadyExistsException;
-import com.universityteam.flashmemorizer.registration.token.VerificationTokenRepository;
-import com.universityteam.flashmemorizer.registration.token.VerificationToken;
-import com.universityteam.flashmemorizer.registration.RegistrationRequest;
+import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
+import com.universityteam.flashmemorizer.records.RegistrationRequest;
 import com.universityteam.flashmemorizer.repository.UserRepository;
 import com.universityteam.flashmemorizer.service.UserService;
 
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
-    private final VerificationTokenRepository tokenRepository;
+    private final VerificationTokenRepository tokenRepository;;
 
     @Autowired
     private UserConverter userConverter;
@@ -91,14 +91,14 @@ public class UserServiceImpl implements UserService {
         newUser.setPass(passwordEncoder.encode(request.pass()));
         newUser.setFullName(request.fullName());
         newUser.setEmail(request.email());
-//        newUser.setRole(request.role());
         return add(newUser);
     }
 
 
     @Override
     public void saveUserVerifycationToken(UserDTO theUser, String token){
-        var verificationToken = new VerificationToken(token, theUser);
+        User user = userConverter.convertDtoToEntity(theUser);
+        var verificationToken = new VerificationToken(token, user);
         tokenRepository.save(verificationToken);
     }
 
@@ -108,14 +108,15 @@ public class UserServiceImpl implements UserService {
         if(token == null){
             return "Invalid verification token";
         }
-        UserDTO user = token.getUser();
+        User user = token.getUser();
         Calendar calendar = Calendar.getInstance();
         if(token.getExpirationTime().getTime() -  calendar.getTime().getTime() <= 0){
             tokenRepository.delete(token);
             return "Token already expired";
         }
-//        user.setEnable(true);
-        this.add(user);
+        UserDTO userDTO = userConverter.convertEntityToDto(user);
+        userDTO.setEnabled(true);
+        this.add(userDTO);
         return "valid";
     }
 

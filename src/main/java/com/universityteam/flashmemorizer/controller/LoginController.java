@@ -2,28 +2,21 @@ package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.entity.Login;
 import com.universityteam.flashmemorizer.service.LoginService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
 
-@Controller
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/login")
 public class LoginController{
 
     @Autowired
     private LoginService userService;
 
-    @GetMapping("/home")
-
-    public ModelAndView login(){
-        ModelAndView mav = new ModelAndView("login");
-        mav.addObject("user", new Login());
-        return mav;
-    }
-
-    @PostMapping("/home")
+    @PostMapping
     public String login(@org.jetbrains.annotations.NotNull @ModelAttribute("user") Login user){
         Login oauthUser = userService.login(user.getUsername(), user.getPassword());
 
@@ -32,7 +25,7 @@ public class LoginController{
             return "redirect:/" + user.getId();
         }
         else{
-            return "redirect:/home";
+            return "redirect:/login";
         }
     }
 }
