@@ -19,4 +19,5 @@ public class UserDTO {
     private String fullName;
     private Date registration = new Date();
     private Date lastLogin = new Date();
+    private boolean isEnable;
 }
