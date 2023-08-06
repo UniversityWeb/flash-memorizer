@@ -1,0 +1,50 @@
+/* CSS styles for the floating window and the outer window */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+
+.floating-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 150px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none; /* This ensures the floating window is initially hidden */
+    z-index: 1; /* Ensures the window is displayed above other content */
+}
+
+/* Additional style for the button */
+.show-button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1; /* Ensures the button is displayed above other content */
+}
+
+/* Updated style for the close button */
+.close-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.custom-input {
+    background-color: #F6F7FB;
+}
