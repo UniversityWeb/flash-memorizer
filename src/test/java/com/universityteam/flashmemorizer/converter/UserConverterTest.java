@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -66,8 +67,8 @@ class UserConverterTest {
                 .pass("hihi124")
                 .email("hihi@gmail.com")
                 .fullName("Hi Tran")
-                .registration(new Date())
-                .lastLogin(new Date())
+                .registration(LocalDate.now())
+                .lastLogin(LocalDate.now())
                 .build();
 
         // Act

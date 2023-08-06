@@ -28,7 +28,7 @@ public class RegistrationController {
     private final RegistrationCompleteEventListener eventListener;
     private final HttpServletRequest servletRequest;
 
-    @PostMapping
+    @PostMapping("/home")
     public String registerUser(@RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request){
         UserDTO user = userService.registerUser(registrationRequest);
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
@@ -41,9 +41,9 @@ public class RegistrationController {
         String url = applicationUrl(servletRequest) + "/register/resend-verification-token?token=" + token;
 
         VerificationToken theToken = tokenRepository.findByToken(token);
-        if(theToken.getUser().isEnable()){
-            return "This account has already been verified, please, login!";
-        }
+//        if(theToken.getUser().isEnable()){
+//            return "This account has already been verified, please, login!";
+//        }
         String verificationResult = userService.validateToken(token);
         if(verificationResult.equalsIgnoreCase("valid")){
             return "Email verifid successfully. Now you can login account <3";

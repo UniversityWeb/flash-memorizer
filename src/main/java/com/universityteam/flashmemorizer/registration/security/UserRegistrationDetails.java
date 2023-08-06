@@ -3,13 +3,10 @@ package com.universityteam.flashmemorizer.registration.security;
 import com.universityteam.flashmemorizer.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 public class UserRegistrationDetails implements UserDetails {
@@ -22,11 +19,11 @@ public class UserRegistrationDetails implements UserDetails {
     public UserRegistrationDetails(User user){
         this.username = user.getUsername();
         this.password = user.getPass();
-        this.isEnabled = user.isEnable();
-        this.authorities = Arrays.stream(user.getRole()
-                .split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+//        this.isEnabled = user.isEnable();
+//        this.authorities = Arrays.stream(user.getRole()
+//                .split(","))
+//                .map(SimpleGrantedAuthority::new)
+//                .collect(Collectors.toList());
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

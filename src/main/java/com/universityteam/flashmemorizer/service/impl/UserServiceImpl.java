@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
         newUser.setPass(passwordEncoder.encode(request.pass()));
         newUser.setFullName(request.fullName());
         newUser.setEmail(request.email());
-        newUser.setRole(request.role());
+//        newUser.setRole(request.role());
         return add(newUser);
     }
 
@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
             tokenRepository.delete(token);
             return "Token already expired";
         }
-        user.setEnable(true);
+//        user.setEnable(true);
         this.add(user);
         return "valid";
     }
