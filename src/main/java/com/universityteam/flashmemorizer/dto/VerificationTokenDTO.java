@@ -16,5 +16,5 @@ public class VerificationTokenDTO {
     private Long id;
     private String token;
     private Date expirationTime;
-    private Long userID;
+    private UserDTO user;
 }

@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.entity;
+package com.universityteam.flashmemorizer.event;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import org.springframework.context.ApplicationEvent;

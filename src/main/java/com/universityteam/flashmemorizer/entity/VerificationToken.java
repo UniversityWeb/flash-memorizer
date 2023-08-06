@@ -8,8 +8,6 @@ import lombok.*;
 
 
 @Data
-@Getter
-@Setter
 @Entity
 @NoArgsConstructor
 @IdClass(VerificationToken.class)
@@ -25,7 +23,7 @@ public class VerificationToken {
     @Column(name = "token", length = 255)
     private String token;
 
-    @Column(name = "expirationTime")
+    @Column(name = "expiration_time")
     private Date expirationTime;
 
     private static final int EXPIRATION_TIME = 15;
