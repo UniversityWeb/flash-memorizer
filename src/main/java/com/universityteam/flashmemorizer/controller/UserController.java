@@ -1,17 +1,17 @@
 package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
+import com.universityteam.flashmemorizer.exception.PasswordMismatchException;
 import com.universityteam.flashmemorizer.exception.UserNotFoundException;
+import com.universityteam.flashmemorizer.form.ChangePassForm;
 import com.universityteam.flashmemorizer.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
@@ -24,9 +24,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private PasswordEncoder encoder;
-
     @GetMapping
     public List<UserDTO> getUsers (){
         return userService.getUsers();
@@ -36,7 +33,9 @@ public class UserController {
     public String getDetails(@RequestParam Long userId, Model m) {
         try {
             UserDTO user = userService.getById(userId);
+            ChangePassForm passForm = ChangePassForm.builder().userId(userId).build();
             log.info("Users retrieved successfully for userId: {}", userId);
+            m.addAttribute("passForm", passForm);
             m.addAttribute("user", user);
             return "user-profile";
         } catch (UserNotFoundException e) {
@@ -48,9 +47,7 @@ public class UserController {
     @PostMapping("/update")
     public String update(@ModelAttribute("user") UserDTO user, RedirectAttributes ra) {
         try {
-            if (!StringUtils.isEmpty(user.getPass()))
-                user.setPass(encoder.encode(user.getPass()));
-            userService.update(user);
+            userService.updateNotPassword(user);
             log.info("User with userId: {} updated successfully!", user.getId());
             ra.addFlashAttribute("successMsg", "User updated successfully!");
         } catch (UserNotFoundException e) {
@@ -67,5 +64,21 @@ public class UserController {
 
         userService.delete(user.getId());
         return "redirect:/login";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(ChangePassForm passForm, RedirectAttributes ra) {
+        try {
+            userService.changePassword(passForm);
+            log.info("Password changed for user with ID: {}", passForm.getUserId());
+            ra.addFlashAttribute("successMsg", "Password updated successfully!");
+        } catch (PasswordMismatchException e) {
+            log.error("Error while changing password with userId: {}", passForm.getUserId(),e);
+            ra.addFlashAttribute("errorMsg", "Password and confirmation do not match");
+        } catch (UserNotFoundException e) {
+            log.error(e.getMessage());
+            return "redirect:/login";
+        }
+        return "redirect:/users/edit?userId=" + passForm.getUserId();
     }
 }

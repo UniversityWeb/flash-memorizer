@@ -17,7 +17,7 @@ public class LoginController{
     private LoginService userService;
 
     @PostMapping
-    public String login(@org.jetbrains.annotations.NotNull @ModelAttribute("user") Login user){
+    public String login(@ModelAttribute("user") Login user){
         Login oauthUser = userService.login(user.getUsername(), user.getPassword());
 
         System.out.println(oauthUser);
