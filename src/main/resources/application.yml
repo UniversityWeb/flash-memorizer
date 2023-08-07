@@ -26,3 +26,7 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+
+api:
+  voiceRssApiUrl: https://api.voicerss.org/
+  voiceRssApiKey: d62e7c8089e446bc84849496b4dc5f5f

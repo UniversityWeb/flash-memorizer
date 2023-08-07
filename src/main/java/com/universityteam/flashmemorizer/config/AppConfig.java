@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.*;
 
 @Configuration
 public class AppConfig {
@@ -18,9 +21,13 @@ public class AppConfig {
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
         return mapper;
     }
-
     @Bean
     public Logger logger(){
         return LoggerFactory.getLogger(getClass());
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
