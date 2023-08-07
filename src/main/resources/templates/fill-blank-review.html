@@ -32,8 +32,8 @@
 
             <!-- Outer card container -->
             <div class="outer-card bg-light text-dark margin-top-15">
-                <div class="card custom-border d-flex align-items-center justify-content-center mx-auto max-width-11">
-                    <div class="card-body m-3 card-height">
+                <div class="card custom-border d-flex align-items-center justify-content-center mx-auto">
+                    <div class="col-11 pl-5 card-body m-3 card-height">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <!-- Card title: Term -->
                             <p class="card-title small-title-color lang-vi">Term</p>
@@ -61,7 +61,7 @@
                                     <span th:each="word, index : ${cardReview.descWithBlanks}">
                                         <span th:if="${word == 'blank-context-for-input'}">
                                             <!-- Input field for blank context -->
-                                            <input type="text" class="form-control d-inline w-auto ml-1" th:id="'blank' + ${index.count}">
+                                            <input type="text" class="form-control d-inline w-auto ml-1 word-input" th:id="'blank' + ${index.count}">
                                         </span>
                                         <span th:unless="${word == 'blank-context-for-input'}" th:text="${word}"></span>
                                     </span>
@@ -90,7 +90,9 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 <!-- Custom JavaScript -->
-<script type="text/javascript" th:src="@{/js/fill-blank-review.js}"></script>
+<script type="text/javascript" th:src="@{/js/fill-blank-review.js}">
+
+</script>
 </body>
 
 </html>

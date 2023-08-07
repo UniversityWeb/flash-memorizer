@@ -2,7 +2,7 @@ package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.CardReview;
-import com.universityteam.flashmemorizer.dto.CardReviewForm;
+import com.universityteam.flashmemorizer.form.CardReviewForm;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.enums.EReview;
 import com.universityteam.flashmemorizer.exception.DeckNotFoundException;

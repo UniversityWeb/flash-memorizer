@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.dto;
+package com.universityteam.flashmemorizer.form;
 
 import com.universityteam.flashmemorizer.enums.EReview;
 import lombok.AllArgsConstructor;

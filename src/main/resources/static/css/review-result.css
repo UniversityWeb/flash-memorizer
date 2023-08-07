@@ -22,11 +22,15 @@ body {
 	margin-top: 100px;
 }
 
+.custom-border {
+    border-radius: 8px!important;
+}
+
 .btn-nav {
     justify-content: center;
     display: block;
     width: 90%!important;
-    height: 120px!important;
+    height: 75px!important;
 }
 
 .link-nav {

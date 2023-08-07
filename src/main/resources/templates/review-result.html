@@ -22,17 +22,17 @@
     <div class="main-container container py-5 px-4 p-5 mb-8">
         <div class="card py-5 px-4 mx-auto">
             <img th:src="@{/images/result.svg}" src="../static/images/result.svg" alt="image">
-            <h3 class="bg-primary text-light text-center mb-3 p-3">Test Results</h3>
+            <h3 class="bg-primary text-light text-center mb-3 p-3 custom-border">Test Results</h3>
             <p class="text-muted text-center mb-3"><em>Be kind to yourself, and keep practicing!</em></p>
             <div class="d-flex justify-content-center">
                 <h4>Your score is: <span th:text="${cardReviewForm.result}" class="badge badge-secondary bg-primary"></span></h4>
             </div>
             <div class="d-flex justify-content-center mt-4">
                 <a th:href="@{/cards/{deckId}(deckId=${cardReviewForm.deckId})}" class="link-nav">
-                    <button type="button" class="btn btn-outline-primary btn-lg mx-auto btn-nav">Back to learning</button>
+                    <button type="button" class="btn btn-outline-primary  mx-auto btn-nav">Back to learning</button>
                 </a>
                 <a th:href="@{/cards/review(reviewType=${cardReviewForm.reviewType},deckId=${cardReviewForm.deckId})}" class="link-nav">
-                    <button type="button" class="btn btn-outline-primary btn-lg mx-auto btn-nav">Take a new test</button>
+                    <button type="button" class="btn btn-outline-primary  mx-auto btn-nav">Take a new test</button>
                 </a>
             </div>
         </div>

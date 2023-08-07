@@ -1,7 +1,7 @@
 package com.universityteam.flashmemorizer.service;
 
 
-import com.universityteam.flashmemorizer.dto.CardReviewForm;
+import com.universityteam.flashmemorizer.form.CardReviewForm;
 
 
 public interface FormService {

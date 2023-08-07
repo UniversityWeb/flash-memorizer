@@ -1,6 +1,6 @@
 package com.universityteam.flashmemorizer.service.impl;
 
-import com.universityteam.flashmemorizer.dto.CardReviewForm;
+import com.universityteam.flashmemorizer.form.CardReviewForm;
 import com.universityteam.flashmemorizer.enums.EReview;
 import com.universityteam.flashmemorizer.service.FormService;
 import org.springframework.stereotype.Service;
@@ -44,14 +44,25 @@ public class FormServiceImpl implements FormService {
     }
 
     /**
-     * Normalizes the multi-choice options by removing the option numbers (e.g., "1. Option A" becomes "Option A").
+     * Normalizes the multi-choice options by removing the error char from frontend (e.g., "Option A" has char ",,," at the end).
      *
      * @param list The list of multi-choice options to be normalized.
      */
     private void normalizeMultiChoiceOptions(List<String> list) {
         for (int i = 0; i < list.size(); i++) {
             String element = list.get(i);
-            list.set(i, element.substring(0, element.length() - 3));
+            int countErrChars = 0;
+            for (int j = element.length() - 1; j >= 0; j--) {
+                if (element.charAt(j) == ',') {
+                    countErrChars++;
+                }
+                else {
+                    break;
+                }
+            }
+            if (element.endsWith(",")) {
+                list.set(i, element.substring(0, element.length() - countErrChars));
+            }
         }
     }
 

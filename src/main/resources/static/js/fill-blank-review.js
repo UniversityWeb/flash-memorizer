@@ -49,4 +49,21 @@ document.addEventListener("DOMContentLoaded", function () {
     submitButton.addEventListener("click", function () {
         updateUserChoices();
     });
+
+    // Validate the text user types (only one word for each blank)
+      const wordInputs = document.querySelectorAll(".word-input");
+
+      wordInputs.forEach(function(input) {
+        input.addEventListener("input", function() {
+          // Get the entered value and trim any leading/trailing spaces
+          const inputValue = this.value.trim();
+
+          const words = inputValue.split(" ");
+
+          if (words.length > 1) {
+            alert("Please enter only one word.");
+            this.value = "";
+          }
+        });
+      });
 });
