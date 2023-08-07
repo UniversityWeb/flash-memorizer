@@ -24,7 +24,7 @@
             <span class="icon-close"><ion-icon name="close-outline"></ion-icon></span>
             <div class="form-box login">
                 <h2>Đăng Nhập</h2>
-                <form action="#" th:action="@{/home}" th:object="${user}" method="post">
+                <form action="#" th:action="@{/user/${user.timezone}}" th:object="${user}" method="post">
                     <div class="input-box" name="username">
                         <span class="icon">
                             <ion-icon name="mail-outline"></ion-icon> 
@@ -58,7 +58,7 @@
 
             <div class="form-box register">
                 <h2>Đăng Ký</h2>
-                <form action="#" th:action="@{/home}" method="post">
+                <form action="#" th:action="@{/home/register}" method="post">
 
                     <div class="input-box" name="full_name">
                         <span class="icon">

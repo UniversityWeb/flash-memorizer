@@ -3,23 +3,30 @@ package com.universityteam.flashmemorizer.registration;
 import com.universityteam.flashmemorizer.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
-public class UserRegistrationDetails implements UserDetails {
+public class UserInfoDetails implements UserDetails {
 
     private String username;
     private String password;
     private boolean isEnabled;
     private List<GrantedAuthority> authorities;
 
-    public UserRegistrationDetails(User user){
+    public UserInfoDetails(User user){
         this.username = user.getUsername();
         this.password = user.getPass();
-        this.isEnabled = user.isEnabled();
+        System.out.println();
+        this.authorities = Arrays.stream(user.getRole().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+//        this.isEnabled = user.isEnabled();
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

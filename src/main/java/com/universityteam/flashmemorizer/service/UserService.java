@@ -1,5 +1,6 @@
 package com.universityteam.flashmemorizer.service;
 
+import com.universityteam.flashmemorizer.dto.LoginDTO;
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.exception.PasswordMismatchException;
 import com.universityteam.flashmemorizer.form.ChangePassForm;
@@ -14,6 +15,9 @@ public interface UserService {
     UserDTO updateNotPassword(UserDTO userDTO) throws UserNotFoundException;
     List<UserDTO> getUsers();
     UserDTO findByEmail(String email);
+    UserDTO findByUsername(String username);
+    UserDTO findByUsernameAndPassword(String username, String password);
+    UserDTO loginUser(LoginDTO login);
     UserDTO registerUser(RegistrationRequest request);
     void saveUserVerifycationToken(UserDTO theUser, String token);
     String validateToken(String theToken);

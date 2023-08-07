@@ -36,6 +36,9 @@ public class User {
 
     @Column(name = "last_login")
     private Date lastLogin;
+
+    @Column(name = "role", length = 45)
+    private String role;
     
     private boolean isEnabled = false;
 

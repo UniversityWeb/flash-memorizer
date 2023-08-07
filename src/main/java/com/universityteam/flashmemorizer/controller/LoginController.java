@@ -1,31 +1,32 @@
 package com.universityteam.flashmemorizer.controller;
 
-import com.universityteam.flashmemorizer.entity.Login;
-import com.universityteam.flashmemorizer.service.LoginService;
+import com.universityteam.flashmemorizer.dto.LoginDTO;
+import com.universityteam.flashmemorizer.dto.UserDTO;
+import com.universityteam.flashmemorizer.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
-@RequestMapping("/login")
+@RequestMapping("/home")
 public class LoginController{
 
     @Autowired
-    private LoginService userService;
-
+    private final UserService userService;
     @PostMapping
-    public String login(@ModelAttribute("user") Login user){
-        Login oauthUser = userService.login(user.getUsername(), user.getPassword());
-
+    public String login(@org.jetbrains.annotations.NotNull @ModelAttribute("user") LoginDTO user){
+        UserDTO oauthUser = userService.loginUser(user);
         System.out.println(oauthUser);
         if(Objects.nonNull(oauthUser)){
-            return "redirect:/" + user.getId();
+            return "redirect:/user/" + oauthUser.getId();
         }
         else{
-            return "redirect:/login";
+            return "redirect:/home";
         }
     }
+
 }

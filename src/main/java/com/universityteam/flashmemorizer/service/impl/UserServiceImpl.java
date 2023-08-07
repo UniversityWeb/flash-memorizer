@@ -1,6 +1,7 @@
 package com.universityteam.flashmemorizer.service.impl;
 
 import com.universityteam.flashmemorizer.converter.UserConverter;
+import com.universityteam.flashmemorizer.dto.LoginDTO;
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.entity.User;
 import com.universityteam.flashmemorizer.entity.VerificationToken;
@@ -12,9 +13,12 @@ import com.universityteam.flashmemorizer.records.RegistrationRequest;
 import com.universityteam.flashmemorizer.repository.UserRepository;
 import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
 import com.universityteam.flashmemorizer.service.UserService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +31,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepo;
@@ -84,6 +89,41 @@ public class UserServiceImpl implements UserService {
         for (UserDTO user : users)
             if(user.getEmail().compareTo(email) == 0)
                 return user;
+        return null;
+    }
+
+    @Override
+    public UserDTO findByUsername(String username) {
+        List<UserDTO> users = getUsers();
+        for (UserDTO user : users)
+            if(user.getUsername().compareTo(username) == 0)
+                return user;
+        return null;
+    }
+
+    @Override
+    public UserDTO findByUsernameAndPassword(String username, String password){
+        List<UserDTO> users = getUsers();
+        for (UserDTO user : users)
+            if(user.getUsername().compareTo(username) == 0
+                && user.getPass().compareTo(password) == 0)
+                return user;
+        return null;
+    }
+
+    @Override
+    public UserDTO loginUser(LoginDTO login){
+        UserDTO user = this.findByUsername(login.getUsename());
+        if(user != null){
+            String password = login.getPassword();
+            String endcodedPassword = user.getPass();
+            if(endcodedPassword.matches(password) == true){
+                Optional<UserDTO> theUser =
+                        Optional.ofNullable(this.findByUsernameAndPassword(login.getUsename(), login.getPassword()));
+                if(theUser.isPresent())
+                    return theUser.orElse(null);
+            }
+        }
         return null;
     }
 

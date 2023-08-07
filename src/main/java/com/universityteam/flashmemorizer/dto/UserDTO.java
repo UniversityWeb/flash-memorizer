@@ -21,4 +21,5 @@ public class UserDTO {
     private Date registration = new Date();
     private Date lastLogin = new Date();
     private boolean isEnabled = false;
+    private String role;
 }

@@ -8,6 +8,7 @@ import com.universityteam.flashmemorizer.entity.VerificationToken;
 import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
 import jakarta.mail.MessagingException;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.universityteam.flashmemorizer.event.RegistrationCompleteEvent;
@@ -19,9 +20,9 @@ import lombok.RequiredArgsConstructor;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Logger;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
-@RequestMapping("/register")
+@RequestMapping("/home")
 public class RegistrationController {
     private final UserService userService;
     private final ApplicationEventPublisher publisher;
@@ -29,7 +30,7 @@ public class RegistrationController {
     private final RegistrationCompleteEventListener eventListener;
     private final HttpServletRequest servletRequest;
 
-    @PostMapping
+    @PostMapping("/register")
     public String registerUser(@RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request){
         UserDTO user = userService.registerUser(registrationRequest);
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));

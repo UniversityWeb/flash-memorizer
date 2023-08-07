@@ -1,6 +1,6 @@
 package com.universityteam.flashmemorizer.service.impl;
 
-import com.universityteam.flashmemorizer.registration.UserRegistrationDetails;
+import com.universityteam.flashmemorizer.registration.UserInfoDetails;
 import com.universityteam.flashmemorizer.repository.UserRepository;
 import com.universityteam.flashmemorizer.service.UserRegistrationDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class UserRegistrationsDetailsServiceImpl implements UserRegistrationDeta
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepos.findByEmail(email)
-                .map(UserRegistrationDetails::new)
+                .map(UserInfoDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

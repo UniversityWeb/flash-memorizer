@@ -5,25 +5,28 @@ import com.universityteam.flashmemorizer.exception.PasswordMismatchException;
 import com.universityteam.flashmemorizer.exception.UserNotFoundException;
 import com.universityteam.flashmemorizer.form.ChangePassForm;
 import com.universityteam.flashmemorizer.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/users")
+@RequiredArgsConstructor
+@RequestMapping("")
 public class UserController {
 
     private final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
-
     @GetMapping
     public List<UserDTO> getUsers (){
         return userService.getUsers();
@@ -80,5 +83,11 @@ public class UserController {
             return "redirect:/login";
         }
         return "redirect:/users/edit?userId=" + passForm.getUserId();
+    }
+
+
+    @GetMapping("/user/{id}")
+    public String gethome() {
+        return "review-card";
     }
 }
