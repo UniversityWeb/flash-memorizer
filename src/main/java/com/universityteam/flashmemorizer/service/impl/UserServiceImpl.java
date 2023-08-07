@@ -4,8 +4,10 @@ import com.universityteam.flashmemorizer.converter.UserConverter;
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.entity.User;
 import com.universityteam.flashmemorizer.entity.VerificationToken;
+import com.universityteam.flashmemorizer.exception.PasswordMismatchException;
 import com.universityteam.flashmemorizer.exception.UserAlreadyExistsException;
 import com.universityteam.flashmemorizer.exception.UserNotFoundException;
+import com.universityteam.flashmemorizer.form.ChangePassForm;
 import com.universityteam.flashmemorizer.records.RegistrationRequest;
 import com.universityteam.flashmemorizer.repository.UserRepository;
 import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
@@ -13,7 +15,6 @@ import com.universityteam.flashmemorizer.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +32,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository tokenRepository;;
-
-    @Autowired
-    private UserConverter userConverter;
+    private final UserConverter userConverter;
 
     @Override
     public UserDTO add(UserDTO userDTO) {
@@ -48,16 +47,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO update(UserDTO userDTO) throws UserNotFoundException {
+    public UserDTO updateNotPassword(UserDTO userDTO) throws UserNotFoundException {
         User user = userRepo
                 .findById(userDTO.getId())
                 .orElseThrow(() -> new UserNotFoundException("Could not find any users with userId=" + userDTO.getId()));
 
         user.setUsername( userDTO.getUsername() );
-        user.setPass( userDTO.getPass() );
         user.setEmail( userDTO.getEmail() );
         user.setFullName( userDTO.getFullName() );
-        user.setLastLogin( userDTO.getLastLogin() );
 
         try {
             User updated = userRepo.save(user);
@@ -69,14 +66,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getById(Long Id) {
-        User user = userRepo.findById(Id).get();
+    public UserDTO getById(Long id) throws UserNotFoundException {
+        User user = userRepo.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Could not find any users with userId=" + id));
         return userConverter.convertEntityToDto(user);
     }
 
     @Override
     public List<UserDTO> getUsers(){
-        return userConverter.convertEntityToDto(userRepo.findAll());
+        List<User> users = userRepo.findAll();
+        return userConverter.convertEntityToDto(users);
     }
 
     @Override
@@ -137,5 +136,38 @@ public class UserServiceImpl implements UserService {
         verificationToken.setToken(UUID.randomUUID().toString());
         verificationToken.setExpirationTime(verificationTokenTime.getExpirationTime());
         return tokenRepository.save(verificationToken);
+    }
+
+    @Override
+    public boolean delete(Long userId) throws UserNotFoundException {
+        Long count = userRepo.countById(userId);
+        if (count == null || count == 0)
+            throw new UserNotFoundException("Could not find any users with userId=" + userId);
+        try {
+            userRepo.deleteById(userId);
+            return true;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean changePassword(ChangePassForm passForm) throws UserNotFoundException, PasswordMismatchException {
+        UserDTO user = getById(passForm.getUserId());
+        if (!passwordEncoder.matches(passForm.getCurPass(), user.getPass())) {
+            throw new PasswordMismatchException("Incorrect current password");
+        }
+        if (!passForm.getNewPass().equals(passForm.getReTypeNewPass())) {
+            throw new PasswordMismatchException("New password and confirm password do not match");
+        }
+        String newPassHash = passwordEncoder.encode(passForm.getNewPass());
+        try {
+            userRepo.updatePasswordById(user.getId(), newPassHash);
+            return true;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return false;
+        }
     }
 }
