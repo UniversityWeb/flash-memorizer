@@ -3,10 +3,20 @@ package com.universityteam.flashmemorizer.config;
 import com.universityteam.flashmemorizer.entity.*;
 import com.universityteam.flashmemorizer.enums.ERating;
 import com.universityteam.flashmemorizer.repository.*;
+import com.universityteam.flashmemorizer.service.CardService;
+import com.universityteam.flashmemorizer.service.ImageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +29,7 @@ public class DataInitializer implements CommandLineRunner {
     private final UserRepository userRepo;
     private final UserCardRepository userCardRepo;
     private final SharedDeckRepository sharedDeckRepo;
-
+    private final ImageService imageService;
     @Override
     public void run(String... args) throws Exception {
         clearAllData();
@@ -34,7 +44,7 @@ public class DataInitializer implements CommandLineRunner {
         userRepo.deleteAll();
     }
 
-    private void initData() {
+    private void initData() throws IOException {
         List<User> users = initUser();
         List<Deck> decks = initDeck( users.get(0) );
         List<Card> cards = initCard( decks.get(0) );
@@ -84,31 +94,39 @@ public class DataInitializer implements CommandLineRunner {
         return deckRepo.saveAll(decks);
     }
 
-    private List<Card> initCard(Deck deck) {
+    private List<Card> initCard(Deck deck) throws IOException {
+        String currentFilePath = Paths.get("").toAbsolutePath().toString();
+        String imagePath = currentFilePath +"\\src\\test\\java\\com\\universityteam\\flashmemorizer\\resource\\meo.jpg";
+        byte[] imageBytes = imageService.convertPathToByte(imagePath);
         List<Card> cards = List.of(
                 Card.builder()
                         .term("Term 1")
                         .desc("Description 1")
+                        .img(imageBytes)
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 2")
                         .desc("Description 2")
+                        .img(imageBytes)
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 3")
                         .desc("Description 3")
+                        .img(imageBytes)
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 4")
                         .desc("Description 4")
+                        .img(imageBytes)
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 5")
                         .desc("Description 5")
+                        .img(imageBytes)
                         .deck(deck)
                         .build()
         );
