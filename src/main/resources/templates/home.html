@@ -24,20 +24,20 @@
             <span class="icon-close"><ion-icon name="close-outline"></ion-icon></span>
             <div class="form-box login">
                 <h2>Đăng Nhập</h2>
-                <form action="#" th:action="@{/user/${user.timezone}}" th:object="${user}" method="post">
+                <form action="#" th:action="@{/login-process}" th:object="${user}" method="post">
                     <div class="input-box" name="username">
                         <span class="icon">
                             <ion-icon name="mail-outline"></ion-icon> 
                         </span>
-                        <input type="text" required>
+                        <input type="text" name="username" required>
                         <label>Tên tài khoản</label>
                     </div>
                     
-                    <div class="input-box" name="pass_hash">
+                    <div class="input-box" name="password">
                         <span class="icon">
                             <ion-icon name="key-outline"></ion-icon>  
                         </span>
-                        <input type="password" required>
+                        <input type="password" name="password" required>
                         <label>Mật Khẩu</label>
                     </div>
 
@@ -58,13 +58,13 @@
 
             <div class="form-box register">
                 <h2>Đăng Ký</h2>
-                <form action="#" th:action="@{/home/register}" method="post">
+                <form action="#" th:action="@{/register-process}" th:object="${user}" method="post">
 
-                    <div class="input-box" name="full_name">
+                    <div class="input-box" name="fullname">
                         <span class="icon">
                             <ion-icon name="pricetags-outline"></ion-icon>
                         </span>
-                        <input type="text" required>
+                        <input type="text" name="fullname" required>
                         <label>Họ và tên</label>
                     </div>
 
@@ -72,7 +72,7 @@
                         <span class="icon">
                             <ion-icon name="person-circle-outline"></ion-icon> 
                         </span>
-                        <input type="text" required>
+                        <input type="text" name="username" required>
                         <label>Tên Tài Khoản</label>
                     </div>
 
@@ -80,15 +80,15 @@
                         <span class="icon">
                             <ion-icon name="mail-outline"></ion-icon> 
                         </span>
-                        <input type="email" required>
+                        <input type="email" name="email" required>
                         <label>Email</label>
                     </div>
                     
-                    <div class="input-box" name="pass_hash">
+                    <div class="input-box" name="password">
                         <span class="icon">
                             <ion-icon name="key-outline"></ion-icon>  
                         </span>
-                        <input type="password" required>
+                        <input type="password" name="password" required>
                         <label>Mật Khẩu</label>
                     </div>
 

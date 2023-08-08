@@ -1,7 +1,6 @@
 package com.universityteam.flashmemorizer.service.impl;
 
 import com.universityteam.flashmemorizer.converter.UserConverter;
-import com.universityteam.flashmemorizer.dto.LoginDTO;
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.entity.User;
 import com.universityteam.flashmemorizer.entity.VerificationToken;
@@ -9,6 +8,7 @@ import com.universityteam.flashmemorizer.exception.PasswordMismatchException;
 import com.universityteam.flashmemorizer.exception.UserAlreadyExistsException;
 import com.universityteam.flashmemorizer.exception.UserNotFoundException;
 import com.universityteam.flashmemorizer.form.ChangePassForm;
+import com.universityteam.flashmemorizer.records.LoginRequest;
 import com.universityteam.flashmemorizer.records.RegistrationRequest;
 import com.universityteam.flashmemorizer.repository.UserRepository;
 import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException("Could not find any users with userId=" + userDTO.getId()));
 
         user.setUsername( userDTO.getUsername() );
-        user.setEmail( userDTO.getEmail() );
+        user.setEmail(userDTO.getEmail() );
         user.setFullName( userDTO.getFullName() );
 
         try {
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findByUsername(String username) {
-        List<UserDTO> users = getUsers();
+        List<UserDTO> users = this.getUsers();
         for (UserDTO user : users)
             if(user.getUsername().compareTo(username) == 0)
                 return user;
@@ -104,24 +104,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findByUsernameAndPassword(String username, String password){
         List<UserDTO> users = getUsers();
-        for (UserDTO user : users)
-            if(user.getUsername().compareTo(username) == 0
-                && user.getPass().compareTo(password) == 0)
+        for (UserDTO user : users) {
+            if (user.getUsername().compareTo(username) == 0
+                    && user.getPass().compareTo(password) == 0)
                 return user;
+        }
         return null;
     }
 
     @Override
-    public UserDTO loginUser(LoginDTO login){
-        UserDTO user = this.findByUsername(login.getUsename());
+    public UserDTO loginUser(LoginRequest login){
+        UserDTO user = this.findByUsername(login.username());
         if(user != null){
-            String password = login.getPassword();
+            String password = login.password();
             String endcodedPassword = user.getPass();
-            if(endcodedPassword.matches(password) == true){
-                Optional<UserDTO> theUser =
-                        Optional.ofNullable(this.findByUsernameAndPassword(login.getUsename(), login.getPassword()));
-                if(theUser.isPresent())
-                    return theUser.orElse(null);
+            if(passwordEncoder.matches(password, endcodedPassword)){
+                return user;
             }
         }
         return null;
@@ -129,17 +127,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO registerUser(RegistrationRequest request) {
-        Optional<UserDTO> user = Optional.of(this.findByEmail(request.email()));
-
-        if(user.isPresent()){
+        Optional<UserDTO> isExistEmail = Optional.ofNullable(this.findByEmail(request.email()));
+        if(isExistEmail.isPresent()){
             throw new UserAlreadyExistsException(
                 "User with email " + request.email() + " already exist");
+        }
+        Optional<UserDTO> isExistUsername = Optional.ofNullable(this.findByUsername(request.username()));
+        if(isExistUsername.isPresent()){
+            throw new UserAlreadyExistsException(
+                    "User with username " + request.username() + " already exist");
         }
 
         var newUser = new UserDTO();
         newUser.setUsername(request.username());
-        newUser.setPass(passwordEncoder.encode(request.pass()));
-        newUser.setFullName(request.fullName());
+        newUser.setPass(passwordEncoder.encode(request.password()));
+        newUser.setFullName(request.fullname());
         newUser.setEmail(request.email());
         return add(newUser);
     }

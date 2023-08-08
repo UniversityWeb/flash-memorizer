@@ -70,7 +70,7 @@ public class UserRegistrationSecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/home").permitAll())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/**").authenticated())
-                .formLogin(withDefaults()) // trả về page login nếu chưa authenticate
+                .formLogin(auth -> auth.usernameParameter("username").passwordParameter("pass_hash"))
                 .build();
 //        return http
 //                .authorizeHttpRequests(auth -> auth.requestMatchers("/home", "/user/new").permitAll())

@@ -1,8 +1,8 @@
 package com.universityteam.flashmemorizer.records;
 
 public record RegistrationRequest (
+    String fullname,
     String username,
-    String pass,
-    String fullName,
-    String email) {
+    String email,
+    String password) {
 }

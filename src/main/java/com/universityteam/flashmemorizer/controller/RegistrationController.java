@@ -9,6 +9,7 @@ import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
 import jakarta.mail.MessagingException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.universityteam.flashmemorizer.event.RegistrationCompleteEvent;
@@ -22,19 +23,20 @@ import java.util.logging.Logger;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/home")
+@RequestMapping("/register-process")
 public class RegistrationController {
     private final UserService userService;
     private final ApplicationEventPublisher publisher;
     private final VerificationTokenRepository tokenRepository;
     private final RegistrationCompleteEventListener eventListener;
-    private final HttpServletRequest servletRequest;
 
-    @PostMapping("/register")
-    public String registerUser(@RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request){
+    @PostMapping
+    public String registerUser(@org.jetbrains.annotations.NotNull @ModelAttribute("user") RegistrationRequest registrationRequest, final HttpServletRequest request, Model model){
+        System.out.println(registrationRequest);
         UserDTO user = userService.registerUser(registrationRequest);
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
-        return "Success! Please, check yout email for to complete your registration!";
+        model.addAttribute("successMessage", "Registration completed successfully!");
+        return "registrationSusscess";
     }
 
     @GetMapping("/verifyEmail")
