@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class MatchingCard extends CardReview {
     private String displayPart;
     private String hiddenPart;
-    private boolean isVanished;
 }

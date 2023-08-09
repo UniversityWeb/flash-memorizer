@@ -22,14 +22,6 @@ public class Matching implements ReviewStrategy<MatchingCard> {
                 })
                 .collect(Collectors.toList());
     }
-    public boolean isAnswer(MatchingCard movingCard, MatchingCard targetCard) {
-        boolean isCorrect = movingCard.getDisplayPart().equals(targetCard.getHiddenPart());
-        movingCard.setCorrect(isCorrect);
-        movingCard.setVanished(isCorrect);
-        targetCard.setCorrect(isCorrect);
-        targetCard.setVanished(isCorrect);
-        return isCorrect;
-    }
 
     private List<String> createRandomWords(List<CardDTO> cards) {
         List<String> words = cards.stream()

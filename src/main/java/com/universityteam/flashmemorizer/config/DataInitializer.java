@@ -107,12 +107,17 @@ public class DataInitializer implements CommandLineRunner {
                         .build(),
                 Card.builder()
                         .term("Term 4")
-                        .desc("Description 4; this is a long description to test for our flashcards project.")
+                        .desc("Description 4;  this is a short description.")
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 5")
-                        .desc("Description 5; this is a long description to test for our flashcards project.")
+                        .desc("Description 5; a short description.")
+                        .deck(deck)
+                        .build(),
+                Card.builder()
+                        .term("Term 6")
+                        .desc("Description 6;")
                         .deck(deck)
                         .build()
         );
