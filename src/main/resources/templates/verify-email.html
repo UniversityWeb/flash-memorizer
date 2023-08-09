@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Verification</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Thêm các tệp CSS hoặc thẻ style tại đây nếu cần -->
+</head>
+<body>
+<div class="container">
+    <h1>Email Verification</h1>
+    <p th:text="${message}"></p>
+    <p>
+        <a th:if="${valid}" href="/home">Log in</a>
+    </p>
+</div>
+</body>
+</html>

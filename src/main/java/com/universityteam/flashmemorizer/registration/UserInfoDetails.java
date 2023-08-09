@@ -26,7 +26,7 @@ public class UserInfoDetails implements UserDetails {
         this.authorities = Arrays.stream(user.getRole().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-//        this.isEnabled = user.isEnabled();
+        this.isEnabled = user.isEnabled();
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -47,4 +47,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<UserCard> userCards;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<VerificationToken> verificationTokens;
 }

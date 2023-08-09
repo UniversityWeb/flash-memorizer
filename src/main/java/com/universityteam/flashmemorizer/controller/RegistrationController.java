@@ -36,20 +36,34 @@ public class RegistrationController {
         UserDTO user = userService.registerUser(registrationRequest);
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
         model.addAttribute("successMessage", "Registration completed successfully!");
-        return "registrationSusscess";
+        return "registration-susscess";
     }
 
     @GetMapping("/verifyEmail")
-    public String VerifyEmail(@RequestParam("token") String token){
+    public String VerifyEmail(@RequestParam("token") String token, Model model){
+        System.out.println(token);
+
         VerificationToken theToken = tokenRepository.findByToken(token);
-        if(theToken.getUser().isEnabled()){
-            return "This account has already been verified, please, login.";
-        }
+//        theToken.getUser() = userService.getById(theToken.getUser().getId());
+
+        model.addAttribute("valid", false);
+        if(theToken == null)
+            model.addAttribute("message", "Token not found!");
+//
+//        if(theToken.getUser().isEnabled())
+//            model.addAttribute("message", "This account has already been verified, please, login.");
+
         String verificationResult = userService.validateToken(token);
-        if(verificationResult.equalsIgnoreCase("valid")){
-            return "Email verified successfully. Now you can login account!";
+
+        if(verificationResult.equalsIgnoreCase("valid")) {
+            theToken.getUser().setEnabled(true);
+            model.addAttribute("valid", true);
+            model.addAttribute("message", "Email verified successfully. Now you can login account!");
         }
-        return "Invalid verification link, please, check your email for new verification link. </a>" ;
+
+        model.addAttribute("message", "Invalid verification link, please, check your email for new verification link. </a>" );
+
+        return "verify-email";
     }
 
     @GetMapping("/resend-verification-token")
@@ -63,7 +77,7 @@ public class RegistrationController {
 
     private void resendVerificationTokenEmail(User theUser, String applicationUrl, VerificationToken verificationToken)
             throws MessagingException, UnsupportedEncodingException {
-        String url = applicationUrl + "/register/verifyEmail?token=" + verificationToken;
+        String url = applicationUrl + "/register-process/verifyEmail?token=" + verificationToken;
         eventListener.sendVerificationEmail(url);
         Logger logger = Logger.getLogger(RegistrationController.class.getName());
         logger.info("Click the link to verify your registration: "+ url);
