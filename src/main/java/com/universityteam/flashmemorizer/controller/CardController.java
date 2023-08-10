@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -97,24 +98,6 @@ public class CardController {
         return "redirect:/decks/edit/" + deckId;
     }
 
-    @GetMapping("/import")
-    public String importCardsUI(){
-        return "import-card";
-    }
-
-    @PostMapping("/import/import-cards")
-    public String importCards( List<CardDTO> cards, RedirectAttributes ra){
-        try {
-            for (var card:cards) {
-                cardService.add(card);
-            }
-            ra.addFlashAttribute("successMsg", "Card imported successfully!");
-        } catch (Exception e) {
-            ra.addFlashAttribute("errorMsg", e.getMessage());
-        }
-        return "import-card";
-    }
-    
     @GetMapping("/import")
     public String importCardsUI(){
         return "import-card";
