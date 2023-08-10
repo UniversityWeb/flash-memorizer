@@ -24,7 +24,12 @@
     <div class="content" >
         <h3>Import your data. </h3>
         
-        <p class="description">&nbsp;Copy and Paste your data here (from Word, Excel, Google Docs, etc.)</p>
+        <p class="description">&nbsp;Copy and Paste your data here (from Word, Excel, Google Docs, etc.)
+            <div class="btn_importFile btn">
+                <i class="fa-solid fa-file-circle-plus"></i>
+            </div>
+        </p>
+        
         <div class="box_input">
             <div class="form-floating">
                 <textarea id="document_input" class="form-control input_import" oninput="changeBorderColor(event)" ></textarea>
@@ -74,7 +79,7 @@
                         
                     </div>
                 </div>
-                <button class="btn btn_import">
+                <button id="btn_import" class="btn btn_import">
                     Import
                 </button>
             </div>

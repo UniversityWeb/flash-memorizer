@@ -96,4 +96,40 @@ public class CardController {
         }
         return "redirect:/decks/edit/" + deckId;
     }
+
+    @GetMapping("/import")
+    public String importCardsUI(){
+        return "import-card";
+    }
+
+    @PostMapping("/import/import-cards")
+    public String importCards( List<CardDTO> cards, RedirectAttributes ra){
+        try {
+            for (var card:cards) {
+                cardService.add(card);
+            }
+            ra.addFlashAttribute("successMsg", "Card imported successfully!");
+        } catch (Exception e) {
+            ra.addFlashAttribute("errorMsg", e.getMessage());
+        }
+        return "import-card";
+    }
+    
+    @GetMapping("/import")
+    public String importCardsUI(){
+        return "import-card";
+    }
+
+    @PostMapping("/import/import-cards")
+    public String importCards( List<CardDTO> cards, RedirectAttributes ra){
+        try {
+            for (var card:cards) {
+                cardService.add(card);
+            }
+            ra.addFlashAttribute("successMsg", "Card imported successfully!");
+        } catch (Exception e) {
+            ra.addFlashAttribute("errorMsg", e.getMessage());
+        }
+        return "import-card";
+    }
 }

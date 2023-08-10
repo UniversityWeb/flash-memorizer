@@ -7,8 +7,8 @@ const input_custom2 = document.getElementById("input_custom2");
   // Lấy danh sách tất cả các nút radio trong cùng một nhóm (cùng tên)
 var radioButtons1 = document.getElementsByName("betweenTerm_decs");
 var radioButtons2 = document.getElementsByName("betweenCards");
-
-
+var APISRC="http://localhost:8000/cards/import/import-cards";
+const Cards = [];
 
 function changeBorderColor(event) {
     const textarea = event.target;
@@ -21,7 +21,6 @@ function changeBorderColor(event) {
       textarea.style.border = '2px solid #353b3e'; // Màu border khi không có nhập liệu
     }
 }
-
   textarea.addEventListener("keydown", function (event) {
     // Nếu phím nhấn là Tab, ngăn trình duyệt xử lý sự kiện mặc định
     if (event.key === "Tab") {
@@ -39,21 +38,17 @@ function changeBorderColor(event) {
   
   // Định nghĩa hàm kiểm tra số chẵn
   function importWithText(content,betweenTermAndDesc,betweenCards) {
+    Cards.length=0;
     const arrLine = content.split(betweenCards);
-    var arrTerm =[];
-    var arrDesc = [];
-    var nTerm =0;
-    var nDesc =0;
-    let numberCard = 0;
     for (var line of arrLine) {
       const arr=line.split(betweenTermAndDesc);
-      arrTerm[nTerm++]=arr[0];
-      arrDesc[nDesc++]=arr[1];
-      numberCard = numberCard + 1;
-      
+      var card = {
+        term: arr[0],
+        desc:arr[1]
+      };
+      Cards.push(card);
     }
-    for (let i = 0; i < numberCard; i++){
-      console.log(arrTerm[i]+"----"+arrDesc[i]);
+    for (let i = 0; i < Cards.length; i++){
       var li = document.createElement("li");
       li.className="card_item";
       li.innerHTML = `
@@ -61,12 +56,12 @@ function changeBorderColor(event) {
       <h3>${i+1}</h3>
     </div>
     <div class="item_content">
-      <span class="item_txt">${arrTerm[i]}</span>
+      <span class="item_txt">${Cards[i].term}</span>
       <div class="line"></div>
       <h4>TERM</h4>
     </div>
     <div class="item_content">
-      <span class="item_txt">${arrDesc[i]}</span>
+      <span class="item_txt">${Cards[i].desc}</span>
       <div class="line"></div>
       <h4>DEFINITION</h4>
     </div>
@@ -80,6 +75,7 @@ function changeBorderColor(event) {
     // Lấy nội dung của textarea
     const text = textarea.value;
     listCards.innerHTML = "";
+    Cards.slice(0);
     var betweenTermAndDesc = ""; var betweenCards = "";
     
     for (var i = 0; i < 3; i++) {  
@@ -101,11 +97,9 @@ function changeBorderColor(event) {
       }
     }
    importWithText(text,betweenTermAndDesc,betweenCards);
- //   importWithText(text,"\t","\n");
     if(textarea.value == ""){
       listCards.innerHTML = "";
     }
-    
   }
 
   // Gán sự kiện "input" để lắng nghe sự thay đổi của textarea
@@ -151,3 +145,32 @@ function handleRadioChange() {
 
 //static
 textarea.placeholder="Word 1"+radioButtons1[0].value+"Definition 1"+radioButtons2[0].value+"Word 2"+radioButtons1[0].value+"Definition 2"+radioButtons2[0].value+"Word 3"+radioButtons1[0].value+"Definition 3";
+
+document.getElementById('btn_import').addEventListener('click', function () {
+  importCards(Cards);
+});
+
+function importCards(data, callback) {
+  var options = {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json' // Đảm bảo đặt tiêu đề Content-Type là application/json
+    }
+  };
+
+  fetch(APISRC, options)
+      .then(function(response) {
+        return response.json(); // Trả về kết quả từ .json() để đảm bảo kết quả được chuyển tiếp
+      })
+      .then(callback)
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
+}
+
+
+
+
+
+
