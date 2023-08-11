@@ -7,7 +7,9 @@ const input_custom2 = document.getElementById("input_custom2");
   // Lấy danh sách tất cả các nút radio trong cùng một nhóm (cùng tên)
 var radioButtons1 = document.getElementsByName("betweenTerm_decs");
 var radioButtons2 = document.getElementsByName("betweenCards");
-var APISRC="http://localhost:8000/cards/import/import-cards";
+///get url
+var currentURL = window.location.href;
+var deckID = currentURL.match(/\/(\d+)$/)[1];
 const Cards = [];
 
 function changeBorderColor(event) {
@@ -44,7 +46,10 @@ function changeBorderColor(event) {
       const arr=line.split(betweenTermAndDesc);
       var card = {
         term: arr[0],
-        desc:arr[1]
+        desc:arr[1],
+        deck: {
+            id: deckID
+        }
       };
       Cards.push(card);
     }
@@ -159,7 +164,7 @@ function importCards(data, callback) {
     }
   };
 
-  fetch(APISRC, options)
+  fetch(currentURL.slice(0, -deckID.length)+"save-all", options)
       .then(function(response) {
         return response.json(); // Trả về kết quả từ .json() để đảm bảo kết quả được chuyển tiếp
       })
@@ -168,6 +173,7 @@ function importCards(data, callback) {
         console.error('Error:', error);
       });
 }
+
 
 
 

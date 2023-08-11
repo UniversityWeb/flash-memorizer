@@ -230,7 +230,6 @@ label{
     font-weight: 600;
     color: gray;
 }
-
 .btn_importFile:hover{
     transform: scale(1.1);
 }

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -85,5 +86,17 @@ public class CardServiceImpl implements CardService {
     @Override
     public Integer countByDeckId(Long deckId) {
         return cardRepo.countByDeckId(deckId);
+    }
+
+    @Override
+    public List<CardDTO> saveAll(List<CardDTO> cardsDTO){
+        List<Card> cards = cardConverter.convertDtoToEntity(cardsDTO);
+        try {
+           List<Card> cardsSaved=cardRepo.saveAll(cards);
+            return cardConverter.convertEntityToDto(cardsSaved);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
     }
 }

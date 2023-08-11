@@ -98,17 +98,15 @@ public class CardController {
         return "redirect:/decks/edit/" + deckId;
     }
 
-    @GetMapping("/import")
+    @GetMapping("/show-import/{deckId}")
     public String importCardsUI(){
         return "import-card";
     }
 
-    @PostMapping("/import/import-cards")
-    public String importCards( List<CardDTO> cards, RedirectAttributes ra){
+    @PostMapping("/show-import/save-all")
+    public String importCards(@RequestBody List<CardDTO> cards, RedirectAttributes ra){
         try {
-            for (var card:cards) {
-                cardService.add(card);
-            }
+            cardService.saveAll(cards);
             ra.addFlashAttribute("successMsg", "Card imported successfully!");
         } catch (Exception e) {
             ra.addFlashAttribute("errorMsg", e.getMessage());
