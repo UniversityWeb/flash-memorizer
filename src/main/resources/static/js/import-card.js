@@ -9,7 +9,11 @@ var radioButtons1 = document.getElementsByName("betweenTerm_decs");
 var radioButtons2 = document.getElementsByName("betweenCards");
 ///get url
 var currentURL = window.location.href;
-var deckID = currentURL.match(/\/(\d+)$/)[1];
+var matches = currentURL.match(/\/(\d+)$/);
+var deckID = matches[1];
+//
+var dropZone = document.getElementById('dropZone');
+//
 const Cards = [];
 
 function changeBorderColor(event) {
@@ -107,6 +111,7 @@ function changeBorderColor(event) {
     }
   }
 
+
   // Gán sự kiện "input" để lắng nghe sự thay đổi của textarea
   textarea.addEventListener("input", handleTextareaChange);
 
@@ -124,7 +129,7 @@ function handleRadioChange() {
   // Duyệt qua danh sách nút radio để xem nút nào được chọn
   var str1=""; var str2=""; var str3="";
   var value1 = ""; var value2 = "";
-  for (var i = 0; i < 3; i++) {  
+  for (var i = 0; i < 3; i++) {
     if (radioButtons1[i].checked) {
       if(i!=2)
       value1 = radioButtons1[i].value;
@@ -155,6 +160,34 @@ document.getElementById('btn_import').addEventListener('click', function () {
   importCards(Cards);
 });
 
+function DataProcessing(){
+  // Duyệt qua danh sách nút radio để xem nút nào được chọn
+  var str1=""; var str2=""; var str3="";
+  var value1 = ""; var value2 = "";
+  for (var i = 0; i < 3; i++) {
+    if (radioButtons1[i].checked) {
+      if(i!=2)
+        value1 = radioButtons1[i].value;
+      else
+        value1 = input_custom1.value;
+      str1="Word 1"+value1+"Definition 1";
+      str2="Word 2"+value1+"Definition 2";
+      str3="Word 3"+value1+"Definition 3";
+      break;
+    }
+  }
+  for (var i = 0; i < 3; i++) {
+    if (radioButtons2[i].checked) {
+      if(i!=2)
+        value2 = radioButtons2[i].value;
+      else
+        value2 = input_custom2.value;
+      break;
+    }
+  }
+  textarea.placeholder=str1+value2+str2+value2+str3;
+}
+
 function importCards(data, callback) {
   var options = {
     method: 'POST',
@@ -175,6 +208,72 @@ function importCards(data, callback) {
 }
 
 
+//modal file
+// modal for new proj
+var modal_file = document.getElementById("modalFile");
+function openModalFile() {
+  modal_file.style.display = "flex";
+}
+
+function closeModalFile() {
+  modal_file.style.display = "none";
+}
+
+var closeBtn = document.getElementsByClassName("close")[0];
+
+closeBtn.onclick = function() {
+  closeModalFile();
+};
+//xử lý file
+//exel
+document.getElementById('fileInput').addEventListener('change', handleFile, false);
+
+function handleFile(e) {
+  var file = e.target.files[0];
+  var reader = new FileReader();
+
+  reader.onload = function (event) {
+    var data = event.target.result;
+    var workbook = XLSX.read(data, { type: 'binary' });
+    var sheetName = workbook.SheetNames[0]; // Assume the first sheet
+
+    var sheet = workbook.Sheets[sheetName];
+    var json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+    textarea.value= json.map(function(item) {
+                              return item.join('\t'); // Khoảng trắng ở đây là bốn dấu cách
+                            }).join('\n');
+    handleTextareaChange();
+  };
+
+  reader.readAsBinaryString(file);
+
+}
+//
+
+
+  dropZone.addEventListener('dragover', handleDragOver, false);
+  dropZone.addEventListener('dragleave', handleDragLeave, false);
+  dropZone.addEventListener('drop', handleDrop, false);
+
+  function handleDragOver(e) {
+  e.preventDefault();
+  dropZone.classList.add('dragover');
+}
+
+  function handleDragLeave(e) {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+}
+
+  function handleDrop(e) {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+
+  var file = e.dataTransfer.files[0];
+    document.getElementById('fileInput').files = e.dataTransfer.files;
+    var event = new Event('change', { bubbles: true });
+    document.getElementById('fileInput').dispatchEvent(event);
+}
 
 
 
