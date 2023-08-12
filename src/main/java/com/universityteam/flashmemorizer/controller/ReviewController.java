@@ -60,8 +60,6 @@ public class ReviewController {
         if (!submitted) {
             String result = formService.getResult(cardReviewForm);
             cardReviewForm.setResult(result);
-            System.out.println("answers" + cardReviewForm.getAnswers());
-            System.out.println("users" + cardReviewForm.getUserChoices());
             m.addAttribute("cardReviewForm", cardReviewForm);
             submitted = true;
         }
