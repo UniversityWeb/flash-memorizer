@@ -24,7 +24,6 @@ public class Card {
     @Column(name = "card_desc", length = 1000)
     private String desc;
 
-    private Date creation;
     @Column(name = "card_img", columnDefinition = "BLOB")
     @Lob
     private byte[] img;

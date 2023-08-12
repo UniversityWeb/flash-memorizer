@@ -29,9 +29,6 @@ public class CardDTO {
     public int hashCode() {
         return Objects.hash(term, desc);
     }
-=======
-    private Date creation = new Date();
-    private Date modified = new Date();
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
