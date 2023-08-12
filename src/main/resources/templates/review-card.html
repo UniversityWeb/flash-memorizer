@@ -45,11 +45,11 @@
                         <i class="fas fa-check"></i> Test
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" th:href="@{/cards/review(reviewType=MULTI_CHOICE,deckId=${deckId})}">Multi Choice</a>
-                        <a class="dropdown-item" th:href="@{/cards/review(reviewType=FILL_BLANK,deckId=${deckId})}">Fill Blank</a>
+                        <a class="dropdown-item" th:href="@{/review/get-review(reviewType=MULTI_CHOICE,deckId=${deckId})}">Multi Choice</a>
+                        <a class="dropdown-item" th:href="@{/review/get-review(reviewType=FILL_BLANK,deckId=${deckId})}">Fill Blank</a>
                     </div>
                 </div>
-                <a th:href="@{/cards/review(reviewType=MATCHING,deckId=${deckId})}" class="w-25">
+                <a th:href="@{/review/get-review(reviewType=MATCHING,deckId=${deckId})}" class="w-25">
                     <button type="button" class="btn btn-secondary m-2 w-100">
                         <i class="fas fa-puzzle-piece"></i> Match
                     </button>

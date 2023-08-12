@@ -1,11 +1,7 @@
 package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
-import com.universityteam.flashmemorizer.dto.CardReview;
-import com.universityteam.flashmemorizer.form.CardReviewForm;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
-import com.universityteam.flashmemorizer.enums.EReview;
-import com.universityteam.flashmemorizer.exception.DeckNotFoundException;
 import com.universityteam.flashmemorizer.service.CardReviewService;
 import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.service.CardService;
@@ -32,13 +28,6 @@ public class CardController {
     @Autowired
     private DeckService deckService;
 
-    @Autowired
-    private CardReviewService reviewService;
-
-    @Autowired
-    private FormService formService;
-
-    Boolean submitted = false;
     @GetMapping("/{deckId}")
     public String getByDeckId(@PathVariable Long deckId, Model m) {
         List<CardDTO> cards = cardService.getByDeckId(deckId);
@@ -108,38 +97,5 @@ public class CardController {
             ra.addFlashAttribute("errorMsg", e.getMessage());
         }
         return "redirect:/decks/edit/" + deckId;
-    }
-
-    @GetMapping("/review")
-    public String review(@RequestParam EReview reviewType, @RequestParam Long deckId, Model m) throws DeckNotFoundException {
-        submitted = false;
-        DeckDTO deck = deckService.getById(deckId);
-        List<CardDTO> cards = cardService.getByDeckId(deckId);
-        List<CardReview> cardReviews = reviewService.generateTest(reviewType, cards);
-
-        CardReviewForm cardReviewForm = new CardReviewForm();
-        cardReviewForm.setDeckName(deck.getName());
-        cardReviewForm.setDeckId(deck.getId());
-        cardReviewForm.setReviewType(reviewType);
-
-        m.addAttribute("cardReviews", cardReviews);
-        m.addAttribute("cardReviewForm", cardReviewForm);
-
-        return reviewType.getHtmlFile();
-    }
-
-    @PostMapping("/review/submit-answers")
-    public String submitAnswers(@ModelAttribute("cardReviewForm") CardReviewForm cardReviewForm, Model m) {
-        if (!submitted) {
-            String result = formService.getResult(cardReviewForm);
-            cardReviewForm.setResult(result);
-            m.addAttribute("cardReviewForm", cardReviewForm);
-            submitted = true;
-        }
-        else {
-            return "review-result-error";
-        }
-
-        return "review-result";
     }
 }

@@ -20,7 +20,7 @@
     <nav th:replace="~{review-navbar.html::(~{::navbar})}"></nav>
 
     <!-- Form for review submission -->
-    <form id="reviewForm" action="#" th:action="@{/cards/review/submit-answers}" th:object=${cardReviewForm} method="post">
+    <form id="reviewForm" action="#" th:action="@{/review/submit-answers}" th:object=${cardReviewForm} method="post">
         <!-- Hidden inputs for review data -->
         <input type="hidden" th:name="reviewType" th:value="${cardReviewForm.reviewType}" th:id="${'reviewType'}" />
         <input type="hidden" th:name="deckId" th:value="${cardReviewForm.deckId}" th:id="${'deckId'}" />
@@ -29,7 +29,7 @@
         <!-- Loop through each cardReview -->
         <div th:each="cardReview, cardReviewIndex : ${cardReviews}">
             <!-- Hidden input for storing the term to be matched -->
-            <input type="hidden" th:name="answers[__${cardReviewIndex.index}__]" th:value="${cardReview.term}" th:id="${'cardReviewAnswer' + cardReviewIndex.index}" />
+            <input type="hidden" th:name="answers[__${cardReviewIndex.index}__]" th:value="${cardReview.answer}" th:id="${'cardReviewAnswer' + cardReviewIndex.index}" />
 
             <!-- Outer card container -->
             <div class="outer-card bg-light text-dark">
@@ -45,7 +45,7 @@
                         <!-- Definition content -->
                         <div class="row">
                             <div class="col-md-10 body-color lang-vi">
-                                <p class="card-text des-height" th:text="${cardReview.desc}"></p>
+                                <p class="card-text des-height" th:text="${cardReview.question}"></p>
                             </div>
                             <div class="col-md-2" id="imageWrapper">
                                 <img th:src="@{/images/result.svg}" src="../static/images/result.svg" alt="image" class="img-fluid rounded">
@@ -61,21 +61,17 @@
                                 <div th:each="option, index : ${cardReview.options}" class="form-check col-sm-12 col-md-6 mb-2">
                                     <!-- Radio button for each option -->
                                     <input type="radio" class="form-check-input"
+                                           th:field=*{userChoices[__${cardReviewIndex.index}__]}
                                            th:name="${'btnradio' + cardReviewIndex.index}"
                                            th:id="${'btnradio' + cardReviewIndex.index + '_' + index}"
                                            autocomplete="off"
-                                           th:value="${index}"
-                                           th:data-card-review-index="${cardReviewIndex.index}" />
+                                           th:value="${option}"
+                                           th:data-card-review-index="${cardReviewIndex.index}"/>
                                     <!-- Label for the radio button -->
                                     <label class="form-check-label btn-wide btn-height btn-content"
                                            th:name="${'btnradio' + cardReviewIndex.index}"
                                            th:for="${'btnradio' + cardReviewIndex.index + '_' + index}"
                                            th:text="${option}"></label>
-                                    <!-- Hidden input for storing user choices -->
-                                    <input type="hidden"
-                                           th:field=*{userChoices[__${cardReviewIndex.index}__]}
-                                           th:id="${'cardReviewIndexChoose' + cardReviewIndex.index}"
-                                           th:attr="data-card-review-index=${cardReviewIndex.index}" />
                                 </div>
                             </div>
                         </div>
