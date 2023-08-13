@@ -20,15 +20,15 @@
     <nav th:replace="~{review-navbar.html::(~{::navbar})}"></nav>
 
     <!-- Form for review submission -->
-    <form id="reviewForm" action="#" th:action="@{/review/submit-answers}" th:object=${cardReviewForm} method="post">
+    <form id="reviewForm" action="#" th:action="@{/review/submit-fill-blank}" th:object=${cardReviewForm} method="post">
         <input type="hidden" th:name="reviewType" th:value="${cardReviewForm.reviewType}" th:id="${'reviewType'}" />
         <input type="hidden" th:name="deckId" th:value="${cardReviewForm.deckId}" th:id="${'deckId'}" />
         <input type="hidden" th:name="deckName" th:value="${cardReviewForm.deckName}" th:id="${'deckName'}" />
 
         <!-- Loop through each cardReview -->
-        <div th:each="cardReview, cardReviewIndex : ${cardReviews}">
+        <div th:each="cardReview, cardReviewIndex : ${cardReviewForm.cardReviews}">
             <!-- Hidden input for storing answers -->
-            <input type="hidden" th:name="answers[__${cardReviewIndex.index}__]" th:value="${#strings.listJoin(cardReview.hideTexts, ' ')}" th:id="${'cardReviewAnswer' + cardReviewIndex.index}" />
+<!--            <input type="hidden" th:name="|cardReviews[${cardReviewIndex.index}].answer|" th:value="${#strings.listJoin(cardReview.hideTexts, ' ')}" th:id="${'cardReviewAnswer' + cardReviewIndex.index}" />-->
 
             <!-- Outer card container -->
             <div class="outer-card bg-light text-dark margin-top-15">
@@ -38,15 +38,17 @@
                             <!-- Card title: Term -->
                             <p class="card-title small-title-color lang-vi">Term</p>
                             <!-- Card subtitle: Review progress indicator -->
-                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviews.size()}"></p>
+                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviewForm.cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviewForm.cardReviews.size()}"></p>
                         </div>
 
                         <!-- Term content -->
                         <div class="row">
                             <div class="col-md-10 body-color lang-vi">
                                 <p class="card-text term-height" th:text="${cardReview.term}"></p>
+                                <input type="hidden" th:name="|cardReviews[${cardReviewIndex.index}].term|" th:value="${cardReview.term}"/>
+
                             </div>
-                            <div class="col-md-2" id="imageWrapper">
+                            <div class="col-md-2 imageWrapper">
                                 <img th:src="@{/images/result.svg}" src="../static/images/result.svg" alt="image" class="img-fluid rounded">
                             </div>
                         </div>
@@ -68,7 +70,7 @@
                             </div>
 
                             <!-- Hidden input for storing input user fills -->
-                            <input type="hidden" class="hidden-user-choices" th:field=*{userChoices[__${cardReviewIndex.index}__]} th:id="${'cardReviewIndexChoose' + cardReviewIndex.index}" th:attr="data-card-review-index=${cardReviewIndex.index}" />
+<!--                            <input type="hidden" class="hidden-user-choices" th:field="*{cardReviews[__${cardReviewIndex.index}__].userChoice}" th:id="${'cardReviewIndexChoose' + cardReviewIndex.index}" th:attr="data-card-review-index=${cardReviewIndex.index}" />-->
                         </div>
 
                         <!-- Next button -->

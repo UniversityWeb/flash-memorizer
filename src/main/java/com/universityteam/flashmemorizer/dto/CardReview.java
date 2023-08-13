@@ -13,4 +13,5 @@ public class CardReview {
     private String term;
     private String desc;
     private String question;
+    private boolean isCorrect;
 }

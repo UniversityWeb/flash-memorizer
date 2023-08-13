@@ -6,10 +6,11 @@ import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.enums.EReview;
 import com.universityteam.flashmemorizer.exception.DeckNotFoundException;
 import com.universityteam.flashmemorizer.form.CardReviewForm;
+import com.universityteam.flashmemorizer.form.FillBlankForm;
+import com.universityteam.flashmemorizer.form.MultiChoiceForm;
 import com.universityteam.flashmemorizer.service.CardReviewService;
 import com.universityteam.flashmemorizer.service.CardService;
 import com.universityteam.flashmemorizer.service.DeckService;
-import com.universityteam.flashmemorizer.service.FormService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,6 @@ public class ReviewController {
     @Autowired
     private CardReviewService reviewService;
 
-    @Autowired
-    private FormService formService;
-
     Boolean submitted = false;
 
     @GetMapping("/get-review")
@@ -48,19 +46,42 @@ public class ReviewController {
         cardReviewForm.setDeckName(deck.getName());
         cardReviewForm.setDeckId(deck.getId());
         cardReviewForm.setReviewType(reviewType);
+        cardReviewForm.setCardReviews(cardReviews);
 
-        m.addAttribute("cardReviews", cardReviews);
         m.addAttribute("cardReviewForm", cardReviewForm);
 
         return reviewType.getHtmlFile();
     }
 
-    @PostMapping("/submit-answers")
-    public String submitAnswer(@ModelAttribute("cardReviewForm") CardReviewForm cardReviewForm, Model m) {
+    @PostMapping("/submit-multi-choice")
+    public String submitMultiChoice(@ModelAttribute("cardReviewForm") MultiChoiceForm cardReviewForm, Model m) {
         if (!submitted) {
-            String result = formService.getResult(cardReviewForm);
+            String result = reviewService.getResult(cardReviewForm.getReviewType(), cardReviewForm.getCardReviews());
             cardReviewForm.setResult(result);
+
             m.addAttribute("cardReviewForm", cardReviewForm);
+
+            System.out.println("cardReviews " + cardReviewForm.getCardReviews());
+
+            submitted = true;
+        }
+        else {
+            return "review-result-error";
+        }
+
+        return "multi-choice-result";
+    }
+
+    @PostMapping("/submit-fill-blank")
+    public String submitFillBlank(@ModelAttribute("cardReviewForm") FillBlankForm cardReviewForm, Model m) {
+        if (!submitted) {
+            String result = reviewService.getResult(cardReviewForm.getReviewType(), cardReviewForm.getCardReviews());
+            cardReviewForm.setResult(result);
+
+            m.addAttribute("cardReviewForm", cardReviewForm);
+
+            System.out.println("cardReviews " + cardReviewForm.getCardReviews());
+
             submitted = true;
         }
         else {

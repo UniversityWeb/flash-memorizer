@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CardReviewServiceImpl implements CardReviewService {
+public class CardReviewServiceImpl<T extends CardReview> implements CardReviewService<T> {
 
     @Autowired
     private ReviewFactory reviewFactory;
@@ -21,5 +21,11 @@ public class CardReviewServiceImpl implements CardReviewService {
     public List<CardReview> generateTest(EReview eReview, List<CardDTO> cards) {
         ReviewStrategy strategy = reviewFactory.create(eReview);
         return strategy.generateTest(cards);
+    }
+
+    @Override
+    public String getResult(EReview eReview, List<T> cardReviews) {
+        ReviewStrategy strategy = reviewFactory.create(eReview);
+        return strategy.getResult(cardReviews);
     }
 }

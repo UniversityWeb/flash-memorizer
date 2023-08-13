@@ -30,18 +30,36 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
 
         return cards.stream()
                 .map(card -> {
-                    MultiChoiceCard multiChoiceCard = new MultiChoiceCard();
+                    MultiChoiceCard cardReview = new MultiChoiceCard();
 
                     String term = card.getTerm();
                     List<String> options = generateOptions(terms, term);
 
-                    multiChoiceCard.setQuestion(card.getDesc());
-                    multiChoiceCard.setOptions(options);
-                    multiChoiceCard.setAnswer(term);
+                    cardReview.setQuestion(card.getDesc());
+                    cardReview.setOptions(options);
+                    cardReview.setAnswer(term);
 
-                    return multiChoiceCard;
+                    return cardReview;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getResult(List<MultiChoiceCard> cardReviews) {
+        System.out.println("multi-choice" + cardReviews);
+        int score = 0;
+        for (MultiChoiceCard cardReview : cardReviews) {
+            System.out.println(cardReview.getUserChoice());
+            System.out.println(cardReview.getAnswer());
+            System.out.println(cardReview.getOptions());
+            System.out.println(cardReview.getQuestion());
+            if (cardReview.getUserChoice() != null && cardReview.getUserChoice().equalsIgnoreCase(cardReview.getAnswer())) {
+                cardReview.setCorrect(true);
+                score++;
+            }
+        }
+
+        return score + "/" + cardReviews.size();
     }
 
     /**

@@ -13,4 +13,5 @@ import java.util.List;
 public class MultiChoiceCard extends CardReview {
     private List<String> options = new ArrayList<>();
     private String answer;
+    private String userChoice;
 }

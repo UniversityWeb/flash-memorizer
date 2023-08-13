@@ -1,6 +1,6 @@
 package com.universityteam.flashmemorizer.form;
 
-import com.universityteam.flashmemorizer.dto.CardReview;
+import com.universityteam.flashmemorizer.dto.MultiChoiceCard;
 import com.universityteam.flashmemorizer.enums.EReview;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,10 +13,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardReviewForm {
+public class MultiChoiceForm {
     private Long deckId;
     private String deckName;
     private EReview reviewType;
     private String result;
-    private List<CardReview> cardReviews = new ArrayList<>();
+    private List<MultiChoiceCard> cardReviews = new ArrayList<>();
 }

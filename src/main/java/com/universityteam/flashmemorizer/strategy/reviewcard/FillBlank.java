@@ -25,19 +25,32 @@ public class FillBlank implements ReviewStrategy<FillBlankCard> {
     public List<FillBlankCard> generateTest(List<CardDTO> cards) {
         return cards.stream()
                 .map(card -> {
-                    FillBlankCard fillBlankCard = new FillBlankCard();
+                    FillBlankCard cardReview = new FillBlankCard();
 
                     String desc = card.getDesc();
                     List<String> hideTexts = createHideTexts(desc);
                     String descWithBlanks = createDescWithBlanks(hideTexts, desc);
 
-                    fillBlankCard.setTerm(card.getTerm());
-                    fillBlankCard.setHideTexts(hideTexts);
-                    fillBlankCard.setQuestion(descWithBlanks);
+                    cardReview.setTerm(card.getTerm());
+                    cardReview.setHideTexts(hideTexts);
+                    cardReview.setQuestion(descWithBlanks);
 
-                    return fillBlankCard;
+                    return cardReview;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getResult(List<FillBlankCard> cardReviews) {
+        int score = 0;
+//        for (FillBlankCard cardReview : cardReviews) {
+//            if (cardReview.getUserChoice() != null && cardReview.getUserChoice().equalsIgnoreCase(cardReview.getAnswer())) {
+//                cardReview.setCorrect(true);
+//                score++;
+//            }
+//        }
+
+        return score + "/" + cardReviews.size();
     }
 
     /**

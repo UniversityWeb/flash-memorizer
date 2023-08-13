@@ -40,6 +40,11 @@ public class Matching implements ReviewStrategy<MatchingCard> {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public String getResult(List<MatchingCard> cardReviews) {
+        return null;
+    }
+
     /**
      * Generates a shuffled list of term and description strings from a list of CardDTO instances.
      *

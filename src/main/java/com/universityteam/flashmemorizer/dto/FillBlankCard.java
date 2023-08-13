@@ -12,5 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FillBlankCard extends CardReview {
-    List<String> hideTexts = new ArrayList<>();
+    private List<String> hideTexts = new ArrayList<>();
+    private List<String> userFills = new ArrayList<>();
 }

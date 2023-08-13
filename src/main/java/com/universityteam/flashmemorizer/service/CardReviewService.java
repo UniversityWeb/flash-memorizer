@@ -6,6 +6,7 @@ import com.universityteam.flashmemorizer.enums.EReview;
 
 import java.util.List;
 
-public interface CardReviewService {
+public interface CardReviewService<T extends CardReview> {
     List<CardReview> generateTest(EReview eReview, List<CardDTO> cards);
+    String getResult(EReview eReview, List<T> cardReviews);
 }
