@@ -84,4 +84,12 @@ public class DeckServiceImpl implements DeckService {
                 .orElseThrow(() -> new DeckNotFoundException("Could not find any decks with Id=" + id));
         return deckConverter.convertEntityToDto(deck);
     }
+
+    @Override
+    public List<DeckDTO> getByUsername(String username) throws DeckNotFoundException {
+        List<Deck> decks = deckRepo.findByUsername(username);
+        if (decks == null || decks.isEmpty())
+            throw new DeckNotFoundException("Could not find any decks with username=" + username);
+        return deckConverter.convertEntityToDto(decks);
+    }
 }
