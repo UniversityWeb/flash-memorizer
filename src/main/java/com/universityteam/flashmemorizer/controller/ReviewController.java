@@ -56,38 +56,27 @@ public class ReviewController {
     @PostMapping("/submit-multi-choice")
     public String submitMultiChoice(@ModelAttribute("cardReviewForm") MultiChoiceForm cardReviewForm, Model m) {
         if (!submitted) {
+            submitted = true;
             String result = reviewService.getResult(cardReviewForm.getReviewType(), cardReviewForm.getCardReviews());
             cardReviewForm.setResult(result);
-
             m.addAttribute("cardReviewForm", cardReviewForm);
-
             System.out.println("cardReviews " + cardReviewForm.getCardReviews());
-
-            submitted = true;
-        }
-        else {
-            return "review-result-error";
+            return "multi-choice-result";
         }
 
-        return "multi-choice-result";
+        return "review-result-error";
     }
 
     @PostMapping("/submit-fill-blank")
     public String submitFillBlank(@ModelAttribute("cardReviewForm") FillBlankForm cardReviewForm, Model m) {
         if (!submitted) {
+            submitted = true;
             String result = reviewService.getResult(cardReviewForm.getReviewType(), cardReviewForm.getCardReviews());
             cardReviewForm.setResult(result);
-
             m.addAttribute("cardReviewForm", cardReviewForm);
-
             System.out.println("cardReviews " + cardReviewForm.getCardReviews());
-
-            submitted = true;
+            return "fill-blank-result";
         }
-        else {
-            return "review-result-error";
-        }
-
-        return "review-result";
+        return "review-result-error";
     }
 }
