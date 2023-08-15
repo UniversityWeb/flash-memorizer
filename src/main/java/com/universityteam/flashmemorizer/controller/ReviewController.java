@@ -60,7 +60,6 @@ public class ReviewController {
             String result = reviewService.getResult(cardReviewForm.getReviewType(), cardReviewForm.getCardReviews());
             cardReviewForm.setResult(result);
             m.addAttribute("cardReviewForm", cardReviewForm);
-            System.out.println("cardReviews " + cardReviewForm.getCardReviews());
             return "multi-choice-result";
         }
 
@@ -74,7 +73,6 @@ public class ReviewController {
             String result = reviewService.getResult(cardReviewForm.getReviewType(), cardReviewForm.getCardReviews());
             cardReviewForm.setResult(result);
             m.addAttribute("cardReviewForm", cardReviewForm);
-            System.out.println("cardReviews " + cardReviewForm.getCardReviews());
             return "fill-blank-result";
         }
         return "review-result-error";

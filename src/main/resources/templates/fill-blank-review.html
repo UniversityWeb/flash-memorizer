@@ -25,11 +25,12 @@
         <input type="hidden" th:name="deckId" th:value="${cardReviewForm.deckId}" th:id="${'deckId'}" />
         <input type="hidden" th:name="deckName" th:value="${cardReviewForm.deckName}" th:id="${'deckName'}" />
 
+
         <!-- Loop through each cardReview -->
         <div th:each="cardReview, cardReviewIndex : ${cardReviewForm.cardReviews}">
             <!-- Hidden input for storing answers -->
-<!--            <input type="hidden" th:name="|cardReviews[${cardReviewIndex.index}].answer|" th:value="${#strings.listJoin(cardReview.hideTexts, ' ')}" th:id="${'cardReviewAnswer' + cardReviewIndex.index}" />-->
-
+            <input type="hidden" th:name="|cardReviews[${cardReviewIndex.index}].question|" th:value="${cardReview.question}"/>
+            <input type="hidden" th:name="|cardReviews[${cardReviewIndex.index}].desc|" th:value="${cardReview.desc}"/>
             <!-- Outer card container -->
             <div class="outer-card bg-light text-dark margin-top-15">
                 <div class="card custom-border d-flex align-items-center justify-content-center mx-auto">
@@ -54,7 +55,7 @@
                         </div>
 
                         <!-- Definition section -->
-                        <div class="mt-4 des-height small-form">
+                        <div class="mt-4 small-form">
                             <!-- Definition title -->
                             <h5 class="card-title mb-4 big-title-color lang-vi font-weight-bold">Definition</h5>
 
@@ -62,15 +63,14 @@
                             <div class="desc-p body-color form-group lang-vi mb-2">
                                 <span th:each="word, index : ${#strings.arraySplit(cardReview.question, ' ')}">
                                         <span th:if="${word == 'blank-context-for-input'}">
-                                            <!-- Input field for blank context -->
-                                            <input type="text" class="form-control d-inline w-auto ml-1 word-input" th:id="'blank' + ${index.count}">
+                                            <input type="text" th:field="*{cardReviews[__${cardReviewIndex.index}__].userFills[__${index.index}__]}" class="form-control d-inline w-auto ml-1 word-input"/>
                                         </span>
                                         <span th:unless="${word == 'blank-context-for-input'}" th:text="${word}"></span>
                                     </span>
                             </div>
-
-                            <!-- Hidden input for storing input user fills -->
-<!--                            <input type="hidden" class="hidden-user-choices" th:field="*{cardReviews[__${cardReviewIndex.index}__].userChoice}" th:id="${'cardReviewIndexChoose' + cardReviewIndex.index}" th:attr="data-card-review-index=${cardReviewIndex.index}" />-->
+                            <div th:each="word, index : ${cardReview.hideTexts}">
+                                <input type="hidden" th:name="|cardReviews[${cardReviewIndex.index}].hideTexts[${index.index}]|" th:value="${word}"/>
+                            </div>
                         </div>
 
                         <!-- Next button -->

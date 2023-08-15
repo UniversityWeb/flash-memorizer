@@ -14,8 +14,8 @@
     height: 160px;
 }
 
-.des-height {
-    min-height: 240px;
+.word-input {
+    text-align: center;
 }
 
 .btn-next {

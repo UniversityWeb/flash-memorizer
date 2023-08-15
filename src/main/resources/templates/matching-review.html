@@ -34,7 +34,7 @@
         </div>
         <div class="col-lg-10">
             <!-- Thymeleaf iteration for generating cards -->
-            <div th:each="cardReview : ${cardReviews}"
+            <div th:each="cardReview : ${cardReviewForm.cardReviews}"
                  th:data-hiddenPart="${cardReview.hiddenPart}" th:data-displayPart="${cardReview.displayPart}" class="card">
                 <div class="card-body" th:text="${cardReview.displayPart}"></div>
             </div>

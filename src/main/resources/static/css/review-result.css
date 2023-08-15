@@ -21,12 +21,6 @@ body {
     height: 55vh;
 }
 
-.sub-text {
-    position: absolute;
-    bottom: 18vh;
-    left: 45vw;
-}
-
 .card {
 	width: 100%;
 	max-width: 800px;
@@ -44,6 +38,13 @@ body {
     color: #B00020!important;
 }
 
+.word-input {
+    pointer-events: none;
+}
+
+.answer {
+    letter-spacing: 2px;
+}
 .custom-border {
     border-radius: 8px!important;
 }

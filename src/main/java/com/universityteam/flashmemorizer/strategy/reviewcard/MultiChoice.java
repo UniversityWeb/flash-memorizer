@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * MultiChoice - Review Strategy for Multiple Choice Card
+ * MultiChoice - Review Strategy for Multiple Choice Cards
  * This class implements the ReviewStrategy interface for Multiple Choice cards.
  * It generates test cards with multiple choice options based on the provided cards.
- * The question for each card is the card's description, and the 4 options are generated from the list of card's terms.
- * Each card's term is used as the correct option, and other terms are used as distractors.
+ * The question for each card is the card's description, and the options are generated from the list of card's terms.
+ * Each card's term is used as the correct option, while other terms are used as distractors.
  */
 public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
 
@@ -26,7 +26,7 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
      */
     @Override
     public List<MultiChoiceCard> generateTest(List<CardDTO> cards) {
-        List<String> terms = generateListOfTerms(cards);
+        List<String> terms = extractTermsFromCards(cards);
 
         return cards.stream()
                 .map(card -> {
@@ -46,13 +46,8 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
 
     @Override
     public String getResult(List<MultiChoiceCard> cardReviews) {
-        System.out.println("multi-choice" + cardReviews);
         int score = 0;
         for (MultiChoiceCard cardReview : cardReviews) {
-            System.out.println(cardReview.getUserChoice());
-            System.out.println(cardReview.getAnswer());
-            System.out.println(cardReview.getOptions());
-            System.out.println(cardReview.getQuestion());
             if (cardReview.getUserChoice() != null && cardReview.getUserChoice().equalsIgnoreCase(cardReview.getAnswer())) {
                 cardReview.setCorrect(true);
                 score++;
@@ -68,7 +63,7 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
      * @param cards The list of CardDTO objects representing the flashcards.
      * @return A list of terms extracted from the CardDTO objects to be used for generating options.
      */
-    private List<String> generateListOfTerms(List<CardDTO> cards) {
+    private List<String> extractTermsFromCards(List<CardDTO> cards) {
         return cards.stream()
                 .map(CardDTO::getTerm)
                 .collect(Collectors.toList());
