@@ -62,7 +62,12 @@
                                                 </div>
                                             </div>
                                             <h3 th:text = "${card.term}"></h3>
-                                            <img th:src="@{'data:image/jpg;base64,'+${card.generateBase64Image()}}" alt="Base64 Encoded Image" style='width:auto; height: 80%;'/>
+                                            <div th:with="base64string= ${T(org.apache.tomcat.util.codec.binary.Base64).encodeBase64String(card.img)}"
+                                                 style='width:auto; height: 80%;'>
+                                                <img th:src="@{'data:image/jpg;base64,'+ ${base64string}}"
+                                                     alt="Base64 Encoded Image"
+                                                     style='width:100%; height: 100%;'/>
+                                            </div>
                                         </div>
                                         <div class="flip-card-back">
                                             <h4>Nghĩa</h4>
