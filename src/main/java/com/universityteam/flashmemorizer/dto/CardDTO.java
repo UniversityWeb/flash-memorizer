@@ -33,9 +33,4 @@ public class CardDTO {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private DeckDTO deck = new DeckDTO();
-
-    public String generateBase64Image()
-    {
-        return Base64.encodeBase64String(this.img);
-    }
 }
