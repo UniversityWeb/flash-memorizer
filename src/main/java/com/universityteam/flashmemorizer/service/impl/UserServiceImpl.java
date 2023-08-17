@@ -95,18 +95,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findByUsername(String username) {
         List<UserDTO> users = this.getUsers();
-        for (UserDTO user : users)
-            if(user.getUsername().compareTo(username) == 0)
-                return user;
-        return null;
-    }
-
-    @Override
-    public UserDTO findByUsernameAndPassword(String username, String password){
-        List<UserDTO> users = getUsers();
         for (UserDTO user : users) {
-            if (user.getUsername().compareTo(username) == 0
-                    && user.getPass().compareTo(password) == 0)
+            if (user.getUsername().compareTo(username) == 0)
                 return user;
         }
         return null;
@@ -127,25 +117,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO registerUser(RegistrationRequest request) {
-        Optional<UserDTO> isExistEmail = Optional.ofNullable(this.findByEmail(request.email()));
-        if(isExistEmail.isPresent()){
-            throw new UserAlreadyExistsException(
-                "User with email " + request.email() + " already exist");
-        }
-        Optional<UserDTO> isExistUsername = Optional.ofNullable(this.findByUsername(request.username()));
-        if(isExistUsername.isPresent()){
-            throw new UserAlreadyExistsException(
-                    "User with username " + request.username() + " already exist");
-        }
-
         var newUser = new UserDTO();
         newUser.setUsername(request.username());
         newUser.setPass(passwordEncoder.encode(request.password()));
         newUser.setFullName(request.fullname());
         newUser.setEmail(request.email());
+        newUser.setRole("USERS");
         return add(newUser);
     }
 
+
+    public boolean isExistsEmail(String email){
+        Optional<UserDTO> isExistEmail = Optional.ofNullable(this.findByEmail(email));
+        if(isExistEmail.isPresent())
+            return true;
+        return false;
+    }
+    public boolean isExistUsername(String username){
+        Optional<UserDTO> isExistUsername = Optional.ofNullable(this.findByUsername(username));
+        if(isExistUsername.isPresent())
+            return true;
+        return false;
+    }
+    public boolean passwordNotMatch(String password, String passwordConfirm){
+        if(password.equals(passwordConfirm))
+            return false;
+        return true;
+    }
 
     @Override
     public void saveUserVerifycationToken(UserDTO theUser, String token){

@@ -1,114 +1,150 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Flash Memorizer</title>
-    <link rel="stylesheet" th:href="@{/css/home.css}">
-    <link rel="stylesheet" href="../static/css/home.css">
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="../static/css/home.css">
 </head>
-    <body>
-        <header>
-            <h2 class="logo">Flash Memorizer</h2>
-            <nav class="navigation">
-                <a href="#">Trang Chủ</a>
-                <a href="#">Thông Tin</a>
-                <a href="#">Khóa Học</a>
-                <a href="#">Tài Liệu</a>
-                <button class="btnLogin-popup">Đăng nhập</button>
-            </nav>
-        </header>
+<body>
+    <header>
+        <h2 class="logo" href="/home" style="text-decoration: none">Flash Memorizer</h2>
+        <nav class="navigation">
+            <a href="/home">Trang Chủ</a>
+            <a href="#">Thông Tin</a>
+            <a href="#">Khóa Học</a>
+            <a href="#">Tài Liệu</a>
+            <button class="btnLogin-popup">Đăng nhập</button>
+        </nav>
+    </header>
 
-        <div class="wrapper">
-            <span class="icon-close"><ion-icon name="close-outline"></ion-icon></span>
-            <div class="form-box login">
-                <h2>Đăng Nhập</h2>
-                <form action="#" th:action="@{/login-process}" th:object="${user}" method="post">
-                    <div class="input-box" name="username">
-                        <span class="icon">
-                            <ion-icon name="mail-outline"></ion-icon> 
-                        </span>
-                        <input type="text" name="username" required>
-                        <label>Tên tài khoản</label>
-                    </div>
-                    
-                    <div class="input-box" name="password">
-                        <span class="icon">
-                            <ion-icon name="key-outline"></ion-icon>  
-                        </span>
-                        <input type="password" name="password" required>
-                        <label>Mật Khẩu</label>
-                    </div>
-
-                    <div class="remember-forgot">
-                        <label><input type="checkbox">Nhớ mật khẩu</input></label>
-                        <a href="#">Quên mật khẩu</a>
-                    </div>
-                    
-                    <button type="submit" class="btnLogin" value="login">Đăng nhập</button>
-
-                    <div class="login-register">
-                        <p> Bạn chưa có tài khoản? 
-                            <a href="#" class="register-link">Tạo tài khoản</a>
-                        </p>
-                    </div>   
-                </form>
-            </div>
-
-            <div class="form-box register">
-                <h2>Đăng Ký</h2>
-                <form action="#" th:action="@{/register-process}" th:object="${user}" method="post">
-
-                    <div class="input-box" name="fullname">
-                        <span class="icon">
-                            <ion-icon name="pricetags-outline"></ion-icon>
-                        </span>
-                        <input type="text" name="fullname" required>
-                        <label>Họ và tên</label>
-                    </div>
-
-                    <div class="input-box" name="username">
-                        <span class="icon">
-                            <ion-icon name="person-circle-outline"></ion-icon> 
-                        </span>
-                        <input type="text" name="username" required>
-                        <label>Tên Tài Khoản</label>
-                    </div>
-
-                    <div class="input-box" name="email">
-                        <span class="icon">
-                            <ion-icon name="mail-outline"></ion-icon> 
-                        </span>
-                        <input type="email" name="email" required>
-                        <label>Email</label>
-                    </div>
-                    
-                    <div class="input-box" name="password">
-                        <span class="icon">
-                            <ion-icon name="key-outline"></ion-icon>  
-                        </span>
-                        <input type="password" name="password" required>
-                        <label>Mật Khẩu</label>
-                    </div>
-
-                    <div class="remember-forgot">
-                        <label><input type="checkbox"></input>Tôi đồng ý với các chính sách & điều khoản</label>
-                    </div>
-                    
-                    <button type="submit" class="btnLogin" value="register">Đăng Ký</button>
-
-                    <div class="login-register">
-                        <p> Bạn đã có tài khoản?
-                            <a href="#" class="login-link">Đăng Nhập</a>
-                        </p>
-                    </div>   
-                </form>
-            </div>
+    <div class="message-error" th:if="${param.loginFailed}">
+        <div class="message-content">
+            <span class="message-close">&times;</span>
+            <p>Tài khoản hoặc mật khẩu không chính xác</p>
         </div>
-        <script th:src="@{/js/home.js}"></script>
-        <script src="../static/home.js"></script>
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script> 
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    </div>
+
+    <div class="message-error" th:if="${param.isExistsEmail}">
+        <div class="message-content">
+            <span class="message-close">&times;</span>
+            <p>Email đã tồn tại!</p>
+        </div>
+    </div>
+
+    <div class="message-error" th:if="${param.isExistsUsername}">
+        <div class="message-content">
+            <span class="message-close">&times;</span>
+            <p>Tên tài khoản đã tồn tại!</p>
+        </div>
+    </div>
+
+    <div class="message-error" th:if="${param.passwordNotMatch}">
+        <div class="message-content">
+            <span class="message-close">&times;</span>
+            <p>Mật khẩu không khớp!</p>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <span class="icon-close"><ion-icon name="close-outline"/></span>
+        <div class="form-box login">
+            <h2>Đăng Nhập</h2>
+            <form action="#" th:action="@{/login-process}" th:object="${user}" method="post">
+                <div class="input-box" name="username">
+                            <span class="icon">
+                                <ion-icon name="person-circle-outline"></ion-icon>
+                            </span>
+                    <input type="text" name="username" required>
+                    <label>Tên tài khoản</label>
+                </div>
+
+                <div class="input-box" name="password">
+                            <span class="icon">
+                                <ion-icon name="key-outline"></ion-icon>
+                            </span>
+                    <input type="password" name="password" required>
+                    <label>Mật Khẩu</label>
+                </div>
+
+                <div class="remember-forgot">
+                    <label><input type="checkbox">Nhớ mật khẩu</input></label>
+                    <a href="#">Quên mật khẩu</a>
+                </div>
+
+                <button type="submit" class="btnLogin" value="login">Đăng nhập</button>
+
+                <div class="login-register">
+                    <p> Bạn chưa có tài khoản?
+                        <a href="#" class="register-link">Tạo tài khoản</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box register">
+            <h2>Đăng Ký</h2>
+            <form action="#" th:action="@{/register-process}" th:object="${user}" method="post">
+
+                <div class="input-box" name="fullname">
+                            <span class="icon">
+                                <ion-icon name="pricetags-outline"></ion-icon>
+                            </span>
+                    <input type="text" name="fullname" required>
+                    <label>Họ và tên</label>
+                </div>
+
+                <div class="input-box" name="email">
+                            <span class="icon">
+                                <ion-icon name="mail-outline"></ion-icon>
+                            </span>
+                    <input type="email" name="email" required>
+                    <label>Email</label>
+                </div>
+
+                <div class="input-box" name="username">
+                            <span class="icon">
+                                <ion-icon name="person-circle-outline"></ion-icon>
+                            </span>
+                    <input type="text" name="username" required>
+                    <label>Tên Tài Khoản</label>
+                </div>
+
+                <div class="input-box" name="password">
+                            <span class="icon">
+                                <ion-icon name="key-outline"></ion-icon>
+                            </span>
+                    <input type="password" name="password" required>
+                    <label>Mật Khẩu</label>
+                </div>
+
+
+                <div class="input-box" name="passwordConfirm">
+                            <span class="icon">
+                                <ion-icon name="key-outline"></ion-icon>
+                            </span>
+                    <input type="password" name="passwordConfirm" required>
+                    <label>Xác Nhận Mật Khẩu</label>
+                </div>
+
+                <div class="remember-forgot">
+                    <label><input type="checkbox"></input>Tôi đồng ý với các chính sách & điều khoản</label>
+                </div>
+
+                <button type="submit" class="btnLogin" value="register">Đăng Ký</button>
+
+                <div class="login-register">
+                    <p> Bạn đã có tài khoản?
+                        <a href="#" class="login-link">Đăng Nhập</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script th:src="@{/js/home.js}" src="../static/js/home.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>User Home</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/user-home.css}"  href="../static/css/user-home.css">
+</head>
+<body>
+<header>
+    <h2 class="logo">Flash Memorizer</h2>
+    <nav class="navigation">
+        <a href="#">Trang Chủ</a>
+        <a href="#">Thông Tin</a>
+        <a href="#">Khóa Học</a>
+        <a href="#">Tài Liệu</a>
+        <img src="../static/images/user-pic.png" th:src="@{/images/user-pic.png}" class="user-pic" onclick="toggedMenu()">
+    </nav>
+    <div class="sub-menu-wrap" id="subMenu">
+        <div class="sub-menu">
+            <div class="user-info">
+                <img src="../static/images/user-pic.png" th:src="@{/images/user-pic.png}">
+                <span th:text="${fullName}"/>
+            </div>
+            <hr>
+            <a class="sub-menu-link" href="#">
+                <ion-icon name="create-outline"></ion-icon>
+                <p>Sửa Thông Tin</p>
+                <span>></span>
+            </a>
+            <a class="sub-menu-link" href="#">
+                <ion-icon name="settings-outline"></ion-icon>
+                <p>Cài Đặt & Bảo Mật</p>
+                <span>></span>
+            </a>
+            <a class="sub-menu-link" href="#">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <p>Trợ Giúp</p>
+                <span>></span>
+            </a>
+            <a class="sub-menu-link" th:href="@{/logout}"
+               onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
+                <ion-icon name="log-out-outline"></ion-icon>
+                <p>Đăng Xuất</p>
+                <span>></span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
+    <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+</form>
+<script th:src="@{/js/user-home.js}" src="../static/js/user-home.js" ></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

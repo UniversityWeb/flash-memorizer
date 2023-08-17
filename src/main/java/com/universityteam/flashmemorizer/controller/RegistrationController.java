@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 @Controller
@@ -31,11 +32,21 @@ public class RegistrationController {
     private final RegistrationCompleteEventListener eventListener;
 
     @PostMapping
-    public String registerUser(@org.jetbrains.annotations.NotNull @ModelAttribute("user") RegistrationRequest registrationRequest, final HttpServletRequest request, Model model){
+    public String registerUser(@org.jetbrains.annotations.NotNull @ModelAttribute("user") RegistrationRequest registrationRequest,
+                               final HttpServletRequest request){
         System.out.println(registrationRequest);
+
+        if(userService.isExistsEmail(registrationRequest.email()))
+            return "redirect:/home?isExistsEmail";
+
+        if(userService.isExistUsername(registrationRequest.username()))
+            return "redirect:/home?isExistsUsername";
+
+        if(userService.passwordNotMatch(registrationRequest.password(),registrationRequest.passwordConfirm()))
+            return "redirect:/home?passwordNotMatch";
+
         UserDTO user = userService.registerUser(registrationRequest);
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
-        model.addAttribute("successMessage", "Registration completed successfully!");
         return "registration-susscess";
     }
 
@@ -44,14 +55,10 @@ public class RegistrationController {
         System.out.println(token);
 
         VerificationToken theToken = tokenRepository.findByToken(token);
-//        theToken.getUser() = userService.getById(theToken.getUser().getId());
 
         model.addAttribute("valid", false);
         if(theToken == null)
             model.addAttribute("message", "Token not found!");
-//
-//        if(theToken.getUser().isEnabled())
-//            model.addAttribute("message", "This account has already been verified, please, login.");
 
         String verificationResult = userService.validateToken(token);
 

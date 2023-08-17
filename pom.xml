@@ -54,13 +54,11 @@
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- mapping DTO vs Entity -->
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>2.4.5</version>
 		</dependency>
-		<!-- convert html to plain text -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>

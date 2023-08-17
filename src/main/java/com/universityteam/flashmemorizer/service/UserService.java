@@ -1,6 +1,7 @@
 package com.universityteam.flashmemorizer.service;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
+import com.universityteam.flashmemorizer.entity.User;
 import com.universityteam.flashmemorizer.exception.PasswordMismatchException;
 import com.universityteam.flashmemorizer.form.ChangePassForm;
 import com.universityteam.flashmemorizer.records.LoginRequest;
@@ -16,9 +17,11 @@ public interface UserService {
     List<UserDTO> getUsers();
     UserDTO findByEmail(String email);
     UserDTO findByUsername(String username);
-    UserDTO findByUsernameAndPassword(String username, String password);
     UserDTO loginUser(LoginRequest login);
     UserDTO registerUser(RegistrationRequest request);
+    boolean isExistsEmail(String email);
+    boolean isExistUsername(String username);
+    boolean passwordNotMatch(String password, String passwordConfirm);
     void saveUserVerifycationToken(UserDTO theUser, String token);
     String validateToken(String theToken);
     VerificationToken generateNewVerificationCode(String oldToken);

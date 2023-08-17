@@ -1,14 +1,18 @@
 package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
+import com.universityteam.flashmemorizer.entity.User;
+import com.universityteam.flashmemorizer.entity.UserHolder;
 import com.universityteam.flashmemorizer.exception.PasswordMismatchException;
 import com.universityteam.flashmemorizer.exception.UserNotFoundException;
 import com.universityteam.flashmemorizer.form.ChangePassForm;
 import com.universityteam.flashmemorizer.service.UserService;
+import com.universityteam.flashmemorizer.service.impl.CustomUserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,6 +32,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    private CustomUserDetailsServiceImpl userDetailsService;
     @GetMapping
     public List<UserDTO> getUsers (){
         return userService.getUsers();
@@ -85,9 +91,11 @@ public class UserController {
         return "redirect:/users/edit?userId=" + passForm.getUserId();
     }
 
-
     @GetMapping("/user/{id}")
-    public String gethome() {
-        return "review-card";
+    public String getUserHome(Model model, Authentication authentication) {
+        UserHolder userHolder = (UserHolder) authentication.getPrincipal();
+        model.addAttribute("fullName", userHolder.getUserHolder().getFullName());
+        return "user-home";
     }
 }
+
