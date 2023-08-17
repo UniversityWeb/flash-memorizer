@@ -37,7 +37,7 @@
             <p class="text-muted text-center mb-4"><em>Be kind to yourself, and keep practicing!</em></p>
             <!-- Display user's score -->
             <div class="d-flex justify-content-center">
-                <h4>Your score is: <span th:text="${cardReviewForm.result}" class="badge badge-secondary bg-primary"></span></h4>
+                <h4>Your score is: <span th:text="${cardReviewForm.result}" class="badge badge-secondary bg-primary">[Result]</span></h4>
             </div>
             <!-- Navigation buttons -->
             <div class="d-flex justify-content-center mt-4">
@@ -63,14 +63,14 @@
                             <!-- Card title: Definition -->
                             <p class="card-title small-title-color lang-vi">Term</p>
                             <!-- Card subtitle: Review progress indicator -->
-                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviewForm.cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviewForm.cardReviews.size()}"></p>
+                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviewForm.cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviewForm.cardReviews.size()}">[index]</p>
                         </div>
 
                         <!-- Term content -->
                         <div class="row">
                             <div class="col-md-10 body-color lang-vi">
                                 <!-- Card question -->
-                                <p class="card-text des-height" th:text="${cardReview.term}"></p>
+                                <p class="card-text des-height" th:utext="${cardReview.question}">[Question]</p>
                             </div>
                             <div class="col-md-2 imageWrapper">
                                 <!-- Card image -->
@@ -84,7 +84,7 @@
 
                             <!-- Loop through each word in cardReview.descWithBlanks -->
                             <div class="desc-p body-color form-group lang-vi mb-2">
-                                <span th:each="word, index : ${#strings.arraySplit(cardReview.question, ' ')}">
+                                <span th:each="word, index : ${#strings.arraySplit(cardReview.descWithBlanks, ' ')}">
                                         <span th:if="${word == 'blank-context-for-input'}">
                                             <input th:if="${cardReview.isCorrect == true}" type="text"
                                                    th:value="${cardReviewForm.cardReviews[__${cardReviewIndex.index}__].userFills[__${index.index}__]}"
@@ -93,13 +93,13 @@
                                                    th:value="${cardReviewForm.cardReviews[__${cardReviewIndex.index}__].userFills[__${index.index}__]}"
                                                    class="form-control d-inline w-auto ml-1 word-input"/>
                                         </span>
-                                        <span th:unless="${word == 'blank-context-for-input'}" th:text="${word}"></span>
+                                        <span th:unless="${word == 'blank-context-for-input'}" th:text="${word}">[word]</span>
                                     </span>
                             </div>
                             <div th:if="${cardReview.isCorrect == false}" class="desc-p form-group lang-vi mb-2 answer">
                                 <span>Correct answers: </span>
                                 <span th:each="word, index : ${cardReview.hideTexts}">
-                                <span th:text="${word + (index.index == cardReview.hideTexts.size() - 1 ? '.' : '/')}"></span>
+                                <span th:text="${word + (index.index == cardReview.hideTexts.size() - 1 ? '.' : '/')}">[word]</span>
                                 </span>
                             </div>
                         </div>

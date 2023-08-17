@@ -2,6 +2,7 @@ package com.universityteam.flashmemorizer.strategy.reviewcard;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.MultiChoiceCard;
+import com.universityteam.flashmemorizer.utility.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,35 +27,20 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
      */
     @Override
     public List<MultiChoiceCard> generateTest(List<CardDTO> cards) {
-        List<String> terms = extractTermsFromCards(cards);
+        List<String> terms = extractPlainTermsFromCards(cards);
 
         return cards.stream()
                 .map(card -> {
-                    MultiChoiceCard cardReview = new MultiChoiceCard();
+                    String plainTerm = Utils.htmlToPlainText(card.getTerm());
+                    List<String> options = generateOptions(terms, plainTerm);
 
-                    String term = card.getTerm();
-                    List<String> options = generateOptions(terms, term);
-
-                    cardReview.setQuestion(card.getDesc());
-                    cardReview.setOptions(options);
-                    cardReview.setAnswer(term);
-
-                    return cardReview;
+                    return MultiChoiceCard.builder()
+                            .question(card.getDesc())
+                            .options(options)
+                            .answer(plainTerm)
+                            .build();
                 })
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public String getResult(List<MultiChoiceCard> cardReviews) {
-        int score = 0;
-        for (MultiChoiceCard cardReview : cardReviews) {
-            if (cardReview.getUserChoice() != null && cardReview.getUserChoice().equalsIgnoreCase(cardReview.getAnswer())) {
-                cardReview.setCorrect(true);
-                score++;
-            }
-        }
-
-        return score + "/" + cardReviews.size();
     }
 
     /**
@@ -63,9 +49,9 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
      * @param cards The list of CardDTO objects representing the flashcards.
      * @return A list of terms extracted from the CardDTO objects to be used for generating options.
      */
-    private List<String> extractTermsFromCards(List<CardDTO> cards) {
+    private List<String> extractPlainTermsFromCards(List<CardDTO> cards) {
         return cards.stream()
-                .map(CardDTO::getTerm)
+                .map(card -> Utils.htmlToPlainText(card.getTerm()))
                 .collect(Collectors.toList());
     }
 
@@ -80,14 +66,36 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
      * @return A list of options with the correct term and randomly chosen distractors.
      */
     private List<String> generateOptions(List<String> terms, String term) {
+        final int defaultSizeOfOptions = 3;
+
         List<String> options = new ArrayList<>(terms);
 
         options.removeIf(choice -> choice.equals(term));
         Collections.shuffle(options);
-        options = options.subList(0, Math.min(3, options.size()));
+        options = options.subList(0, Math.min(defaultSizeOfOptions, options.size()));
         options.add(term);
         Collections.shuffle(options);
 
         return options;
+    }
+
+    @Override
+    public String getResult(List<MultiChoiceCard> cardReviews) {
+        int score = 0;
+        for (MultiChoiceCard cardReview : cardReviews) {
+            if (isCorrect(cardReview)) {
+                cardReview.setCorrect(true);
+                score++;
+            }
+        }
+
+        return score + "/" + cardReviews.size();
+    }
+
+    private boolean isCorrect(MultiChoiceCard cardReview) {
+        if (cardReview.getUserChoice() != null && cardReview.getUserChoice().equalsIgnoreCase(cardReview.getAnswer())) {
+            return true;
+        }
+        return false;
     }
 }

@@ -37,7 +37,7 @@
             <p class="text-muted text-center mb-4"><em>Be kind to yourself, and keep practicing!</em></p>
             <!-- Display user's score -->
             <div class="d-flex justify-content-center">
-                <h4>Your score is: <span th:text="${cardReviewForm.result}" class="badge badge-secondary bg-primary"></span></h4>
+                <h4>Your score is: <span th:text="${cardReviewForm.result}" class="badge badge-secondary bg-primary">[result]</span></h4>
             </div>
             <!-- Navigation buttons -->
             <div class="d-flex justify-content-center mt-4">
@@ -63,14 +63,14 @@
                             <!-- Card title: Definition -->
                             <p class="card-title small-title-color lang-vi">Definition</p>
                             <!-- Card subtitle: Review progress indicator -->
-                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviewForm.cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviewForm.cardReviews.size()}"></p>
+                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviewForm.cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviewForm.cardReviews.size()}">[index]</p>
                         </div>
 
                         <!-- Definition content -->
                         <div class="row">
                             <div class="col-md-10 body-color lang-vi">
                                 <!-- Card question -->
-                                <p class="card-text des-height" th:text="${cardReview.question}"></p>
+                                <p class="card-text des-height" th:utext="${cardReview.question}">[Question]</p>
                             </div>
                             <div class="col-md-2 imageWrapper">
                                 <!-- Card image -->
@@ -101,7 +101,7 @@
                                            th:value="${option}" disabled/>
                                     <!-- Label for the radio button -->
                                     <label class="form-check-label btn-wide btn-height btn-content"
-                                           th:text="${option}"></label>
+                                           th:text="${option}">[Option]</label>
                                 </div>
                             </div>
                         </div>

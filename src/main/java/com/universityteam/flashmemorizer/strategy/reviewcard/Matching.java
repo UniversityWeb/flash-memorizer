@@ -28,21 +28,14 @@ public class Matching implements ReviewStrategy<MatchingCard> {
 
         return descAndTerms.stream()
                 .map(word -> {
-                    MatchingCard matchingCard = new MatchingCard();
-
                     String hiddenWord = findHiddenPart(cards, word);
 
-                    matchingCard.setDisplayPart(word);
-                    matchingCard.setHiddenPart(hiddenWord);
-
-                    return matchingCard;
+                    return MatchingCard.builder()
+                            .displayPart(word)
+                            .hiddenPart(hiddenWord)
+                            .build();
                 })
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public String getResult(List<MatchingCard> cardReviews) {
-        return null;
     }
 
     /**
@@ -77,6 +70,11 @@ public class Matching implements ReviewStrategy<MatchingCard> {
             }
         }
 
+        return null;
+    }
+
+    @Override
+    public String getResult(List<MatchingCard> cardReviews) {
         return null;
     }
 }

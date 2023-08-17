@@ -3,6 +3,7 @@ package com.universityteam.flashmemorizer.service;
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.CardReview;
 import com.universityteam.flashmemorizer.enums.EReview;
+import com.universityteam.flashmemorizer.form.CardReviewForm;
 
 import java.util.List;
 

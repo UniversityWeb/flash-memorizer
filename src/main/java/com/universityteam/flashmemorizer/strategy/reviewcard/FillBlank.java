@@ -2,6 +2,9 @@ package com.universityteam.flashmemorizer.strategy.reviewcard;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.FillBlankCard;
+import com.universityteam.flashmemorizer.utility.Utils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,36 +28,18 @@ public class FillBlank implements ReviewStrategy<FillBlankCard> {
     public List<FillBlankCard> generateTest(List<CardDTO> cards) {
         return cards.stream()
                 .map(card -> {
-                    FillBlankCard cardReview = new FillBlankCard();
+                    String plainDesc = Utils.htmlToPlainText(card.getDesc());
+                    List<String> hiddenWords = generateHiddenWords(plainDesc);
+                    String descWithBlanks = generateDescWithBlanks(hiddenWords, plainDesc);
 
-                    String desc = card.getDesc();
-                    List<String> hiddenWords = generateHiddenWords(desc);
-                    String descWithBlanks = generateDescWithBlanks(hiddenWords, desc);
-
-                    cardReview.setTerm(card.getTerm());
-                    cardReview.setDesc(desc);
-                    cardReview.setHideTexts(hiddenWords);
-                    cardReview.setQuestion(descWithBlanks);
-
-                    return cardReview;
+                    return FillBlankCard.builder()
+                            .question(card.getTerm())
+                            .descWithBlanks(descWithBlanks)
+                            .hideTexts(hiddenWords)
+                            .build();
                 })
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public String getResult(List<FillBlankCard> cardReviews) {
-        int score = 0;
-        for (FillBlankCard cardReview : cardReviews) {
-            List<String> userResponses = removeNulls(cardReview.getUserFills());
-            if (compareStringListsIgnoreCase(cardReview.getHideTexts(), userResponses)) {
-                cardReview.setCorrect(true);
-                score++;
-            }
-        }
-
-        return score + "/" + cardReviews.size();
-    }
-
 
     /**
      * Creates a list of words representing hidden words for blanks.
@@ -65,9 +50,11 @@ public class FillBlank implements ReviewStrategy<FillBlankCard> {
      * @return A list of words representing the hidden words.
      */
     private List<String> generateHiddenWords(String desc) {
+        final int defaultSizeOfHiddenWords = 3;
+
         List<String> words = Arrays.asList(desc.split("[\\s.,;!?]+"));
         Collections.shuffle(words);
-        words = words.subList(0, Math.min(3, words.size()));
+        words = words.subList(0, Math.min(defaultSizeOfHiddenWords, words.size()));
 
         List<String> hiddenWords = Arrays.stream(desc.split(" "))
                 .filter(words::contains)
@@ -85,12 +72,28 @@ public class FillBlank implements ReviewStrategy<FillBlankCard> {
      * @return A description with blank placeholders.
      */
     private String generateDescWithBlanks(List<String> hiddenWords, String desc) {
+        final String blankText = "blank-context-for-input";
+
         String descWithBlanks = desc;
         for (String word : hiddenWords) {
-            descWithBlanks = descWithBlanks.replaceAll("(?<!\\S)" + word + "(?!\\S)", "blank-context-for-input");
+            descWithBlanks = descWithBlanks.replaceAll("(?<!\\S)" + word + "(?!\\S)", blankText);
         }
 
         return descWithBlanks;
+    }
+
+    @Override
+    public String getResult(List<FillBlankCard> cardReviews) {
+        int score = 0;
+        for (FillBlankCard cardReview : cardReviews) {
+            List<String> userResponses = removeNulls(cardReview.getUserFills());
+            if (compareStringListsIgnoreCase(cardReview.getHideTexts(), userResponses)) {
+                cardReview.setCorrect(true);
+                score++;
+            }
+        }
+
+        return score + "/" + cardReviews.size();
     }
 
     private List<String> removeNulls(List<String> inputList) {
