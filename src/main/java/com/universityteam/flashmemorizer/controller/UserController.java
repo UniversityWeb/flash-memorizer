@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,7 +93,8 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public String getUserHome(Model model, Authentication authentication) {
+    @PreAuthorize("#id == authentication.principal.userHolder.id")
+    public String getUserHome(@PathVariable("id") Long id, Model model, Authentication authentication) {
         UserHolder userHolder = (UserHolder) authentication.getPrincipal();
         model.addAttribute("fullName", userHolder.getUserHolder().getFullName());
         return "user-home";

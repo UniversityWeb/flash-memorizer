@@ -49,7 +49,7 @@ public class RegistrationCompleteEventListener
         String mailContent = "<p> Hi, " + this.theUser.getFullName() + "</p>"
                 + "<p> Thank you for registering with us, "
                 + "Please, follow the link beloew to complete your registration. </p>"
-                + "<a href =\"" + url + "\"> Verify your email to active your account </a>"
+                + "<a href =\"" + url + "\"> Verify your email to active your account. </a>"
                 + "<p> Thank your <br> Users Registration Portal Service";
         MimeMessage message = mailSender.createMimeMessage();
         var messageHelper = new MimeMessageHelper(message, "UTF-8");

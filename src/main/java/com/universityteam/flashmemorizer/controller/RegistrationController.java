@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 @Controller
@@ -34,7 +33,8 @@ public class RegistrationController {
     @PostMapping
     public String registerUser(@org.jetbrains.annotations.NotNull @ModelAttribute("user") RegistrationRequest registrationRequest,
                                final HttpServletRequest request){
-        System.out.println(registrationRequest);
+        Logger logger = Logger.getLogger(RegistrationController.class.getName());
+        logger.info("Registration Request: " + registrationRequest);
 
         if(userService.isExistsEmail(registrationRequest.email()))
             return "redirect:/home?isExistsEmail";
@@ -47,12 +47,13 @@ public class RegistrationController {
 
         UserDTO user = userService.registerUser(registrationRequest);
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
-        return "registration-susscess";
+        return "registration-success";
     }
 
     @GetMapping("/verifyEmail")
     public String VerifyEmail(@RequestParam("token") String token, Model model){
-        System.out.println(token);
+        Logger logger = Logger.getLogger(RegistrationController.class.getName());
+        logger.info("Token: " + token);
 
         VerificationToken theToken = tokenRepository.findByToken(token);
 

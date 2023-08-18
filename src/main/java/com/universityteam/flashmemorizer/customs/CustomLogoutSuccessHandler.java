@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.handlers;
+package com.universityteam.flashmemorizer.customs;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @Service
 public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler
@@ -26,7 +27,9 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler
         clearAuthenticationData();
 
         String refererUrl = request.getHeader("Referer");
-        System.out.println("Logout from: " + refererUrl);
+
+        Logger logger = Logger.getLogger(CustomLogoutSuccessHandler.class.getName());
+        logger.info("Logout from: " + refererUrl);
 
         super.onLogoutSuccess(request, response, authentication);
     }

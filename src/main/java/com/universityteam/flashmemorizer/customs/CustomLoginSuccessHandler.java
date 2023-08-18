@@ -1,5 +1,6 @@
-package com.universityteam.flashmemorizer.handlers;
+package com.universityteam.flashmemorizer.customs;
 
+import com.universityteam.flashmemorizer.entity.UserHolder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @Service
 public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
@@ -22,12 +24,14 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             Authentication authentication)
             throws IOException, ServletException {
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
+        UserHolder user = (UserHolder) authentication.getPrincipal();
+        String username = user.getUsername();
 
-        System.out.println("The user " + username + " has logged in.");
+        Logger logger = Logger.getLogger(CustomLoginSuccessHandler.class.getName());
+        logger.info("The user " + username + " has logged in.");
 
-        super.onAuthenticationSuccess(request, response, authentication);
+        String redirectUrl = "/user/" + user.getUserHolder().getId();
+        response.sendRedirect(redirectUrl);
     }
 
 
