@@ -2,7 +2,6 @@ package com.universityteam.flashmemorizer.service.impl;
 
 import com.universityteam.flashmemorizer.enums.EReview;
 import com.universityteam.flashmemorizer.form.CardReviewForm;
-import com.universityteam.flashmemorizer.form.MultiChoiceForm;
 import com.universityteam.flashmemorizer.service.CardReviewFormService;
 import com.universityteam.flashmemorizer.strategy.reviewform.ReviewFormStrategy;
 import com.universityteam.flashmemorizer.strategy.reviewform.ReviewFormFactory;
