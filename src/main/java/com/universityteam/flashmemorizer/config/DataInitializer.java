@@ -134,6 +134,8 @@ public class DataInitializer implements CommandLineRunner {
     private List<SharedDeck> initSharedDeck(User recipient, Deck deck) {
         List<SharedDeck> sharedDecks = List.of(
                 SharedDeck.builder()
+                        .recipientId(recipient.getId())
+                        .deckId(deck.getId())
                         .recipient(recipient)
                         .deck(deck)
                         .creation(new Date(2023, 10, 10, 1, 3, 4))
