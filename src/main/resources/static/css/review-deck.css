@@ -1,9 +1,9 @@
 :root{
     --WidthSizeCard: 500px;
     --HeightSizeCard: 400px;
-    --offset = 150px;
-    --abs-offset = 50px;
-    --direction = 100px;
+    --offset: 150px;
+    --abs-offset: 50px;
+    --direction: 100px;
 }
 
 body {
@@ -69,3 +69,80 @@ body {
     padding: 20px;
     transform: rotateY(180deg);
 }
+
+.form__share {
+    width: 650px;
+    height: 600px;
+    margin: auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.users__contain{
+    height: auto;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn__close-modal {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: 4px;
+    width: 4px;
+    margin: 10px;
+}
+
+.btn__close-modal:hover{
+    transform: scale(1.1);
+}
+
+.list__users{
+    width: 100%;
+    position: absolute;
+    display: inline-block;
+}
+
+.user__item{
+    height: 60px;
+    width: 98%;
+    margin-left: -20px;
+    background-color:white;
+    display: inline-block;
+}
+
+.user__item:hover{
+    transform: scale(1.01);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.share__link{
+margin-top: 10px;
+
+}
+
+.user__img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: cover;
+    margin: 5px;
+}
+
+.user__info {
+    display: inline;
+    position: absolute;
+    margin-left: 20px;
+    margin-top: 2px;
+
+}
+
+.user__name{
+    margin-top: 5px;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: -3px;
+}
+
