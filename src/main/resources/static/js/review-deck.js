@@ -14,3 +14,17 @@ carousel.addEventListener('slide.bs.carousel', function (event) {
 function flipCard(card) {
   card.querySelector('.flip-card-inner').classList.toggle('flip-animation');
 }
+
+
+//modal
+// modal for new proj
+var modal_share = document.getElementById("modalshare");
+function openModalShare() {
+    modal_share.style.display = "flex";
+}
+
+function closeModalShare() {
+    modal_share.style.display = "none";
+}
+
+

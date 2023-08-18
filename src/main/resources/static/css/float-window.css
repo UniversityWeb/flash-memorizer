@@ -14,14 +14,14 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 700px;
-    height: 150px;
+    height: auto;
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: none; /* This ensures the floating window is initially hidden */
-    z-index: 1; /* Ensures the window is displayed above other content */
+    z-index: 0; /* Ensures the window is displayed above other content */
 }
 
 /* Additional style for the button */
@@ -48,3 +48,4 @@ body {
 .custom-input {
     background-color: #F6F7FB;
 }
+

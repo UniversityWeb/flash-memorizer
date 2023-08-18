@@ -1,9 +1,9 @@
 :root{
     --WidthSizeCard: 500px;
     --HeightSizeCard: 400px;
-    --offset = 150px;
-    --abs-offset = 50px;
-    --direction = 100px;
+    --offset: 150px;
+    --abs-offset: 50px;
+    --direction: 100px;
 }
 
 body {
