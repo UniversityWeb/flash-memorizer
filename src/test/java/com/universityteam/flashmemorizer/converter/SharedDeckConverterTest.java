@@ -23,7 +23,6 @@ class SharedDeckConverterTest {
     public void testConvertEntityToDto() {
         // Arrange
         SharedDeck sharedDeck = SharedDeck.builder()
-                .id(1L)
                 .recipient(null)
                 .deck(null)
                 .creation(new Date())
@@ -33,7 +32,6 @@ class SharedDeckConverterTest {
         SharedDeckDTO sharedDeckDTO = shardConverter.convertEntityToDto(sharedDeck);
 
         // Assert
-        assertEquals(sharedDeckDTO.getId(), sharedDeck.getId());
         assertNull(sharedDeckDTO.getRecipient().getId());
         assertNull(sharedDeckDTO.getDeck().getId());
         assertEquals(sharedDeckDTO.getCreation(), sharedDeck.getCreation());
@@ -55,7 +53,6 @@ class SharedDeckConverterTest {
     public void testConvertDtoToEntity() {
         // Arrange
         SharedDeckDTO sharedDeckDTO = SharedDeckDTO.builder()
-                .id(1L)
                 .recipient(null)
                 .deck(null)
                 .creation(new Date())
@@ -65,7 +62,6 @@ class SharedDeckConverterTest {
         SharedDeck sharedDeck = shardConverter.convertDtoToEntity(sharedDeckDTO);
 
         // Assert
-        assertEquals(sharedDeckDTO.getId(), sharedDeck.getId());
         assertEquals(sharedDeckDTO.getRecipient(), sharedDeck.getRecipient());
         assertEquals(sharedDeckDTO.getDeck(), sharedDeck.getDeck());
         assertEquals(sharedDeckDTO.getCreation(), sharedDeck.getCreation());

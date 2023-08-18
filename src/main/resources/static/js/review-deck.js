@@ -28,3 +28,60 @@ function closeModalShare() {
 }
 
 
+const inputUserName = document.getElementById('inputUserName');
+const listUsers = document.getElementById('listUsers');
+
+//
+//
+function GetUsers(data,callback){
+    const GetUserNameUrl = 'http://localhost:8000/users/get-by-username';
+    // var options = {
+    //     method: 'GET',
+    //
+    // };
+    // fetch(GetUserNameUrl,options)
+    //     .then(function response (){
+    //         return response.json();
+    //     })
+    //     .then(callback)
+    //     .catch(error => {
+    //         console.log('error');
+    //     });
+
+
+    var options = {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json' // Đảm bảo đặt tiêu đề Content-Type là application/json
+        }
+    };
+
+    fetch(GetUserNameUrl, options)
+        .then(function(response) {
+            return response.json(); // Trả về kết quả từ .json() để đảm bảo kết quả được chuyển tiếp
+        })
+        .then(callback)
+        .catch(function(error) {
+            console.log('Error');
+        });
+}
+
+function  renderUser(user){
+    var li = document.createElement("li");
+    li.className="user__item";
+    li.innerHTML = `
+     <img src="https://trinhvantuyen.com/wp-content/uploads/2022/05/f410c21a9ac9b699e1ed83ff66e24cba.jpg" class="user__img">
+     <div class="user__info">
+     <p class="user__name">${user.username}</p>
+     <p>${user.email}</p> 
+     </div>
+  `;
+    listUsers.appendChild(li);
+}
+
+inputUserName.addEventListener('change', (event) => {
+    listUsers.innerHTML='';
+    const newValue =  event.target.value;
+    GetUsers(newValue,renderUser);
+});

@@ -95,5 +95,17 @@ public class UserController {
         model.addAttribute("getMyDecksLink", "/decks/get-my-decks/" + userHolder.getUserHolder().getId());
         return "user-home";
     }
-}
 
+    @ResponseBody
+    @PostMapping("/get-by-username")
+    public UserDTO getByUsername (@RequestBody String username) {
+        System.out.println("an nè!");
+        try {
+            System.out.println(username);
+           return   userService.getByUsername(username.replaceAll("\"", ""));
+        } catch (UserNotFoundException e) {
+            return null;
+            log.error("User not found with username: {}", username, e);
+        }
+    }
+}

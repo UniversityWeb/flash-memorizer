@@ -218,6 +218,4 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException("Could not find any user with username=" + username));
         return userConverter.convertEntityToDto(user);
     }
-
-
 }
