@@ -1,5 +1,7 @@
 package com.universityteam.flashmemorizer.service;
 
+import lombok.NonNull;
+
 public interface ImageService {
-    byte[] convertPathToByte(String path);
+    byte[] convertPathToByte(@NonNull String path);
 }

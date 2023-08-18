@@ -37,14 +37,9 @@ public class Deck {
     @ToString.Exclude
     private User user;
 
-<<<<<<< HEAD
-
     @OneToMany(mappedBy = "deck", cascade = {CascadeType.ALL, CascadeType.REMOVE}, orphanRemoval = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-=======
-    @OneToMany(mappedBy = "deck", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
->>>>>>> ecca4ca (fix the recursive problem with @ToString.Exclude)
     private List<Card> cards;
 
     @OneToMany(mappedBy = "deck", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)

@@ -3,19 +3,12 @@ package com.universityteam.flashmemorizer.config;
 import com.universityteam.flashmemorizer.entity.*;
 import com.universityteam.flashmemorizer.enums.ERating;
 import com.universityteam.flashmemorizer.repository.*;
-import com.universityteam.flashmemorizer.service.CardService;
 import com.universityteam.flashmemorizer.service.ImageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
@@ -96,7 +89,7 @@ public class DataInitializer implements CommandLineRunner {
 
     private List<Card> initCard(Deck deck) throws IOException {
         String currentFilePath = Paths.get("").toAbsolutePath().toString();
-        String imagePath = currentFilePath +"\\src\\test\\java\\com\\universityteam\\flashmemorizer\\resource\\meo.jpg";
+        String imagePath = currentFilePath +"\\src\\main\\resources\\static\\img\\cat.jpg";
         byte[] imageBytes = imageService.convertPathToByte(imagePath);
         List<Card> cards = List.of(
                 Card.builder()
