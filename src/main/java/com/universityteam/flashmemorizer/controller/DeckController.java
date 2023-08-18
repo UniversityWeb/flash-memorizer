@@ -142,23 +142,4 @@ public class DeckController {
         }
         return "redirect:/decks/get-my-decks?userId=" + userId;
     }
-
-    @GetMapping("/get-decks-by-username")
-    public String getDecksByUsername(@RequestParam String username, Model m) {
-        List<DeckDTO> decks;
-        try {
-            decks = deckService.getByUsername(username);
-            for (DeckDTO deck : decks) {
-                Integer quantity = cardService.countByDeckId(deck.getId());
-                deck.setQuantityOfCards(quantity);
-            }
-            log.info("Decks retrieved successfully for username: {}", username);
-        } catch (DeckNotFoundException e) {
-            log.error("Error while fetching decks with username: {}", username, e);
-            decks = new ArrayList<>();
-        }
-        m.addAttribute("decks", decks);
-        m.addAttribute("username", username);
-        return "edit-decks";
-    }
 }
