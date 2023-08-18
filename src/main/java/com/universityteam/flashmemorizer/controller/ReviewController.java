@@ -4,7 +4,6 @@ import com.universityteam.flashmemorizer.dto.*;
 import com.universityteam.flashmemorizer.enums.EReview;
 import com.universityteam.flashmemorizer.exception.DeckNotFoundException;
 import com.universityteam.flashmemorizer.form.CardReviewForm;
-import com.universityteam.flashmemorizer.service.CardReviewFormService;
 import com.universityteam.flashmemorizer.service.CardReviewService;
 import com.universityteam.flashmemorizer.service.CardService;
 import com.universityteam.flashmemorizer.service.DeckService;
@@ -28,8 +27,6 @@ public class ReviewController {
     private DeckService deckService;
     @Autowired
     private CardReviewService reviewService;
-    @Autowired
-    private CardReviewFormService reviewFormService;
 
     @GetMapping("/get-review")
     public String review(@RequestParam EReview reviewType, @RequestParam Long deckId, Model m
@@ -37,7 +34,7 @@ public class ReviewController {
         DeckDTO deck = deckService.getById(deckId);
         List<CardDTO> cards = cardService.getByDeckId(deckId);
         List<CardReview> cardReviews = reviewService.generateTest(reviewType, cards);
-        CardReviewForm cardReviewForm = reviewFormService.initCardReviewForm(reviewType);
+        CardReviewForm cardReviewForm = new CardReviewForm();
 
         cardReviewForm.setSubmitted(true);
         cardReviewForm.setDeckName(deck.getName());

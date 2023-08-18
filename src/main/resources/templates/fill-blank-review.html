@@ -27,7 +27,7 @@
 
 
         <!-- Loop through each cardReview -->
-        <div th:each="cardReview, cardReviewIndex : ${cardReviews}">
+        <div th:each="cardReview, cardReviewIndex : ${cardReviewForm.cardReviews}">
             <!-- Hidden input for storing answers -->
             <input type="hidden" th:name="|cardReviews[${cardReviewIndex.index}].question|" th:value="${cardReview.question}"/>
             <input type="hidden" th:name="|cardReviews[${cardReviewIndex.index}].descWithBlanks|" th:value="${cardReview.descWithBlanks}"/>
@@ -39,7 +39,7 @@
                             <!-- Card title: Term -->
                             <p class="card-title small-title-color lang-vi">Term</p>
                             <!-- Card subtitle: Review progress indicator -->
-                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviews.size()}">[index]</p>
+                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviewForm.cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviewForm.cardReviews.size()}">[index]</p>
                         </div>
 
                         <!-- Term content -->
@@ -61,7 +61,7 @@
                             <div class="desc-p body-color form-group lang-vi mb-2">
                                 <span th:each="word, index : ${#strings.arraySplit(cardReview.descWithBlanks, ' ')}">
                                         <span th:if="${word == 'blank-context-for-input'}">
-                                            <input type="text" th:field="*{cardReviews[__${cardReviewIndex.index}__].userFills[__${index.index}__]}" class="form-control d-inline w-auto ml-1 word-input"/>
+                                            <input type="text" th:field="*{cardReviewForm.cardReviews[__${cardReviewIndex.index}__].userFills[__${index.index}__]}" class="form-control d-inline w-auto ml-1 word-input"/>
                                         </span>
                                         <span th:unless="${word == 'blank-context-for-input'}" th:text="${word}">[word]</span>
                                     </span>

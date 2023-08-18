@@ -27,7 +27,7 @@
         <input type="hidden" th:name="deckName" th:value="${cardReviewForm.deckName}" th:id="${'deckName'}" />
 
         <!-- Loop through each cardReview -->
-        <div th:each="cardReview, cardReviewIndex : ${cardReviews}">
+        <div th:each="cardReview, cardReviewIndex : ${cardReviewForm.cardReviews}">
             <!-- Hidden input for storing answers-->
             <input type="hidden" th:name="|cardReviews[${cardReviewIndex.index}].question|" th:value="${cardReview.question}"/>
             <input type="hidden" th:name="|cardReviews[${cardReviewIndex.index}].answer|" th:value="${cardReview.answer}"/>
@@ -39,7 +39,7 @@
                             <!-- Card title: Definition -->
                             <p class="card-title small-title-color lang-vi">Definition</p>
                             <!-- Card subtitle: Review progress indicator -->
-                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviews.size()}">[index]</p>
+                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviewForm.cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviewForm.cardReviews.size()}">[index]</p>
                         </div>
 
                         <!-- Definition content -->
