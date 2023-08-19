@@ -3,76 +3,66 @@ package com.universityteam.flashmemorizer.strategy.reviewcard;
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.MatchingCard;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * Matching - Review Strategy for Matching Card
- * This class implements the ReviewStrategy interface for Matching cards.
- * It generates test cards by creating matching pairs based on the provided cards' terms and descriptions.
- * Each card's term or description is displayed, and the corresponding term or description is hidden.
+ * The Matching class implements the ReviewStrategy interface for generating
+ * and managing matching cards for reviewing.
  */
 public class Matching implements ReviewStrategy<MatchingCard> {
 
     /**
-     * Generates a list of MatchingCard instances based on a list of CardDTO instances.
+     * Generates a list of MatchingCard objects for review based on the provided list of CardDTO objects.
      *
-     * @param cards List of CardDTO instances to generate MatchingCard instances from.
-     * @return List of MatchingCard instances.
+     * @param cards List of CardDTO objects containing term and description.
+     * @return List of generated MatchingCard objects for review.
      */
     @Override
     public List<MatchingCard> generateTest(List<CardDTO> cards) {
         List<String> descAndTerms = generateListOfDescAndTerm(cards);
 
-        return descAndTerms.stream()
-                .map(word -> {
-                    String hiddenWord = findHiddenPart(cards, word);
+        List<MatchingCard> matchingCards = IntStream.range(0, descAndTerms.size())
+                .mapToObj(i -> {
+                    String word = descAndTerms.get(i);
+                    int curOrder = i;
+                    int answerOrder = i % 2 == 0 ? i + 1 : i - 1;
 
                     return MatchingCard.builder()
-                            .displayPart(word)
-                            .hiddenPart(hiddenWord)
+                            .question(word)
+                            .curOrder(curOrder)
+                            .answerOrder(answerOrder)
                             .build();
                 })
                 .collect(Collectors.toList());
+
+        Collections.shuffle(matchingCards);
+
+        return matchingCards;
     }
 
     /**
-     * Generates a shuffled list of term and description strings from a list of CardDTO instances.
+     * Generates a list of terms and descriptions from the provided list of CardDTO objects.
      *
-     * @param cards List of CardDTO instances.
-     * @return Shuffled list of term and description strings.
+     * @param cards List of CardDTO objects containing term and description.
+     * @return List of terms and descriptions as strings.
      */
     private List<String> generateListOfDescAndTerm(List<CardDTO> cards) {
         List<String> words = cards.stream()
                 .flatMap(card -> Stream.of(card.getTerm(), card.getDesc()))
                 .collect(Collectors.toList());
 
-        Collections.shuffle(words);
-
         return words;
     }
 
     /**
-     * Finds the hidden part (term or description) corresponding to a given word.
+     * Generates a review result string based on the list of MatchingCard objects.
      *
-     * @param cards List of CardDTO instances.
-     * @param word  The word for which to find the hidden part.
-     * @return The hidden part (term or description) corresponding to the given word.
+     * @param cardReviews List of MatchingCard objects containing review information.
+     * @return Review result as a string.
      */
-    private String findHiddenPart(List<CardDTO> cards, String word) {
-        for (CardDTO card : cards) {
-            if (word.equals(card.getTerm())) {
-                return card.getDesc();
-            } else if (word.equals(card.getDesc())) {
-                return card.getTerm();
-            }
-        }
-
-        return null;
-    }
-
     @Override
     public String getResult(List<MatchingCard> cardReviews) {
         return null;

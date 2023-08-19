@@ -6,13 +6,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MatchingCard extends CardReview {
-    private String displayPart;
-    private String hiddenPart;
+    private int curOrder;
+    private int answerOrder;
 
     @Builder
-    public MatchingCard(String question, boolean isCorrect, String displayPart, String hiddenPart) {
+    public MatchingCard(String question, boolean isCorrect, int curOrder, int answerOrder) {
         super(question, isCorrect);
-        this.displayPart = displayPart;
-        this.hiddenPart = hiddenPart;
+        this.curOrder = curOrder;
+        this.answerOrder = answerOrder;
     }
 }

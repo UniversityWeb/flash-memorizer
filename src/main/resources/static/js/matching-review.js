@@ -89,11 +89,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Check if two cards are clicked
             if (clickedCards.length === 2) {
-                const displayPart1 = clickedCards[0].getAttribute("data-displayPart");
-                const hiddenPart2 = clickedCards[1].getAttribute("data-hiddenPart");
+                const curOrder1 = clickedCards[0].getAttribute("data-curOrder");
+                const answerOrder2 = clickedCards[1].getAttribute("data-answerOrder");
 
                 // Check if parts match
-                if (displayPart1 === hiddenPart2) {
+                if (curOrder1 === answerOrder2) {
                     // Add an effect to change the border color to green
                     clickedCards.forEach(matchedCard => {
                         matchedCard.style.border = "3px solid green";
