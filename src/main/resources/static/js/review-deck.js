@@ -30,25 +30,13 @@ function closeModalShare() {
 
 const inputUserName = document.getElementById('inputUserName');
 const listUsers = document.getElementById('listUsers');
-
+var currentURL = window.location.href;
+var matches = currentURL.match(/\/(\d+)$/);
+var deck_ID = matches[1];
 //
 //
 function GetUsers(data,callback){
     const GetUserNameUrl = 'http://localhost:8000/users/get-by-username';
-    // var options = {
-    //     method: 'GET',
-    //
-    // };
-    // fetch(GetUserNameUrl,options)
-    //     .then(function response (){
-    //         return response.json();
-    //     })
-    //     .then(callback)
-    //     .catch(error => {
-    //         console.log('error');
-    //     });
-
-
     var options = {
         method: 'POST',
         body: JSON.stringify(data),
@@ -78,6 +66,17 @@ function  renderUser(user){
      </div>
   `;
     listUsers.appendChild(li);
+    li.addEventListener('click',function (){
+        var data= {
+            deck:{
+                id:deck_ID
+            },
+            recipient:{
+                id:user.id
+            },
+        }
+        shareDeck(data);
+    });
 }
 
 inputUserName.addEventListener('change', (event) => {
@@ -85,3 +84,23 @@ inputUserName.addEventListener('change', (event) => {
     const newValue =  event.target.value;
     GetUsers(newValue,renderUser);
 });
+
+//
+function shareDeck(data,callback){
+    const ShareDeckUrl = 'http://localhost:8000/sharedDecks/add';
+    var options = {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json' // Đảm bảo đặt tiêu đề Content-Type là application/json
+        }
+    };
+    fetch(ShareDeckUrl, options)
+        .then(function(response) {
+            return response.json(); // Trả về kết quả từ .json() để đảm bảo kết quả được chuyển tiếp
+        })
+        .then(callback)
+        .catch(function(error) {
+            console.log('Error');
+        });
+}
