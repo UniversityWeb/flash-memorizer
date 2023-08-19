@@ -32,15 +32,13 @@ private UserService  userService;
 
     @Autowired
     private DeckService deckService;
-
     @PostMapping("/add")
-    public String add(@ModelAttribute SharedDeckDTO sharedDeck, @RequestParam Long deckId, @RequestParam Long recipientId, RedirectAttributes ra) throws DeckNotFoundException {
-
-        UserDTO userDTO = userService.getById(recipientId);
-        DeckDTO deckDTO = deckService.getById(deckId);
+    public String add(@RequestBody SharedDeckDTO sharedDeck, RedirectAttributes ra) throws DeckNotFoundException {
+       UserDTO userDTO = userService.getById(sharedDeck.getRecipient().getId());
+        DeckDTO deckDTO = deckService.getById(sharedDeck.getDeck().getId());
         sharedDeck.setCreation(new Date());
         sharedDeck.setDeck(deckDTO);
-        sharedDeck.setRecipient(userDTO);
+      sharedDeck.setRecipient(userDTO);
         try {
             SharedDeckDTO added = sharedDeckService.add(sharedDeck);
             log.info("Shared deck added successfully!");
