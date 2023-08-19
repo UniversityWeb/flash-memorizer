@@ -23,9 +23,7 @@ function openModalShare() {
     modal_share.style.display = "flex";
 }
 
-function closeModalShare() {
-    modal_share.style.display = "none";
-}
+
 
 
 const inputUserName = document.getElementById('inputUserName');
@@ -35,6 +33,12 @@ var matches = currentURL.match(/\/(\d+)$/);
 var deck_ID = matches[1];
 //
 //
+function closeModalShare() {
+    modal_share.style.display = "none";
+    inputUserName.value = '';
+    listUsers.innerHTML='';
+    document.getElementById('notifyNone').style.display = 'flex';
+}
 function GetUsers(data,callback){
     const GetUserNameUrl = 'http://localhost:8000/users/get-by-username';
     var options = {
@@ -83,6 +87,7 @@ inputUserName.addEventListener('change', (event) => {
     listUsers.innerHTML='';
     const newValue =  event.target.value;
     GetUsers(newValue,renderUser);
+    document.getElementById('notifyNone').style.display = 'none';
 });
 
 //
