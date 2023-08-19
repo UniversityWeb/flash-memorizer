@@ -28,22 +28,23 @@ public class SharedDeckController {
     private SharedDeckService sharedDeckService;
 
     @Autowired
-private UserService  userService;
+    private UserService  userService;
 
     @Autowired
     private DeckService deckService;
+
     @PostMapping("/add")
     public String add(@RequestBody SharedDeckDTO sharedDeck, RedirectAttributes ra) throws DeckNotFoundException {
-       UserDTO userDTO = userService.getById(sharedDeck.getRecipient().getId());
+        UserDTO userDTO = userService.getById(sharedDeck.getRecipient().getId());
         DeckDTO deckDTO = deckService.getById(sharedDeck.getDeck().getId());
         sharedDeck.setCreation(new Date());
         sharedDeck.setDeck(deckDTO);
-      sharedDeck.setRecipient(userDTO);
+        sharedDeck.setRecipient(userDTO);
         try {
             SharedDeckDTO added = sharedDeckService.add(sharedDeck);
             log.info("Shared deck added successfully!");
             ra.addFlashAttribute("successMsg", "Shared deck added successfully!");
-            return "redirect:/decks/review/" + deckDTO.getId();
+            return "Shared successfully!!!";
         } catch (Exception e) {
             log.error(e.getMessage());
             ra.addFlashAttribute("errorMsg", "Shared deck added unsuccessfully!");
