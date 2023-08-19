@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.records;
+package com.universityteam.flashmemorizer.record;
 
 public record LoginRequest(
         String username,

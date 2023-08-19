@@ -1,7 +1,7 @@
 package com.universityteam.flashmemorizer.service.impl;
 
 import com.universityteam.flashmemorizer.entity.User;
-import com.universityteam.flashmemorizer.entity.UserHolder;
+import com.universityteam.flashmemorizer.dto.UserHolder;
 import com.universityteam.flashmemorizer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @Service

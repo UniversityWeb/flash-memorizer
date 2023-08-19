@@ -1,7 +1,7 @@
 package com.universityteam.flashmemorizer.config;
 
-import com.universityteam.flashmemorizer.customs.CustomLoginSuccessHandler;
-import com.universityteam.flashmemorizer.customs.CustomLogoutSuccessHandler;
+import com.universityteam.flashmemorizer.handler.CustomLoginSuccessHandler;
+import com.universityteam.flashmemorizer.handler.CustomLogoutSuccessHandler;
 import com.universityteam.flashmemorizer.service.impl.CustomUserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +32,7 @@ public class SecurityConfig {
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new CustomLogoutSuccessHandler();
     }
+
     public AuthenticationSuccessHandler loginSuccessHandler() {
         return new CustomLoginSuccessHandler();
     }
@@ -45,7 +46,6 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
 
     @Bean
     AuthenticationProvider authenticationProvider() {
@@ -89,6 +89,7 @@ public class SecurityConfig {
                 .exceptionHandling(except -> except.accessDeniedPage("/access-denied"))
                 .build();
     }
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web

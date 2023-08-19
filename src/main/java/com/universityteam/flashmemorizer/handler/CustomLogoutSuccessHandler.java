@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.customs;
+package com.universityteam.flashmemorizer.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

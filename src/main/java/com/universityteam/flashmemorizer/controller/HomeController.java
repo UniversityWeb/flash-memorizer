@@ -1,6 +1,6 @@
 package com.universityteam.flashmemorizer.controller;
 
-import com.universityteam.flashmemorizer.entity.UserHolder;
+import com.universityteam.flashmemorizer.dto.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

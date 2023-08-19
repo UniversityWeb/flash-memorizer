@@ -1,5 +1,6 @@
-package com.universityteam.flashmemorizer.entity;
+package com.universityteam.flashmemorizer.dto;
 
+import com.universityteam.flashmemorizer.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

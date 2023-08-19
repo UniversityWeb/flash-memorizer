@@ -2,7 +2,7 @@ package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
 import com.universityteam.flashmemorizer.entity.User;
-import com.universityteam.flashmemorizer.records.RegistrationRequest;
+import com.universityteam.flashmemorizer.record.RegistrationRequest;
 import com.universityteam.flashmemorizer.listener.RegistrationCompleteEventListener;
 import com.universityteam.flashmemorizer.entity.VerificationToken;
 import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;

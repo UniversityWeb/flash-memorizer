@@ -1,11 +1,10 @@
 package com.universityteam.flashmemorizer.service;
 
 import com.universityteam.flashmemorizer.dto.UserDTO;
-import com.universityteam.flashmemorizer.entity.User;
 import com.universityteam.flashmemorizer.exception.PasswordMismatchException;
 import com.universityteam.flashmemorizer.form.ChangePassForm;
-import com.universityteam.flashmemorizer.records.LoginRequest;
-import com.universityteam.flashmemorizer.records.RegistrationRequest;
+import com.universityteam.flashmemorizer.record.LoginRequest;
+import com.universityteam.flashmemorizer.record.RegistrationRequest;
 import com.universityteam.flashmemorizer.entity.VerificationToken;
 import com.universityteam.flashmemorizer.exception.UserNotFoundException;
 
