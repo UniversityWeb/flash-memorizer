@@ -1,7 +1,8 @@
 package com.universityteam.flashmemorizer.strategy.reviewcard;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
-import com.universityteam.flashmemorizer.dto.MatchingCard;
+import com.universityteam.flashmemorizer.dto.review.MatchingCard;
+import com.universityteam.flashmemorizer.exception.NotImplementedException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,22 +26,24 @@ public class Matching implements ReviewStrategy<MatchingCard> {
         List<String> descAndTerms = generateListOfDescAndTerm(cards);
 
         List<MatchingCard> matchingCards = IntStream.range(0, descAndTerms.size())
-                .mapToObj(i -> {
-                    String word = descAndTerms.get(i);
-                    int curOrder = i;
-                    int answerOrder = i % 2 == 0 ? i + 1 : i - 1;
-
-                    return MatchingCard.builder()
-                            .question(word)
-                            .curOrder(curOrder)
-                            .answerOrder(answerOrder)
-                            .build();
-                })
+                .mapToObj(i -> mapToMatchingCard(i, descAndTerms))
                 .collect(Collectors.toList());
 
         Collections.shuffle(matchingCards);
 
         return matchingCards;
+    }
+
+    private MatchingCard mapToMatchingCard(int index, List<String> descAndTerms) {
+        String word = descAndTerms.get(index);
+        int curOrder = index;
+        int answerOrder = index % 2 == 0 ? index + 1 : index - 1;
+
+        return MatchingCard.builder()
+                .question(word)
+                .curOrder(curOrder)
+                .answerOrder(answerOrder)
+                .build();
     }
 
     /**
@@ -57,14 +60,8 @@ public class Matching implements ReviewStrategy<MatchingCard> {
         return words;
     }
 
-    /**
-     * Generates a review result string based on the list of MatchingCard objects.
-     *
-     * @param cardReviews List of MatchingCard objects containing review information.
-     * @return Review result as a string.
-     */
     @Override
     public String getResult(List<MatchingCard> cardReviews) {
-        return null;
+        throw new NotImplementedException("This method is not yet implemented");
     }
 }

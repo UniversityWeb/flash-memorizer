@@ -1,6 +1,6 @@
 package com.universityteam.flashmemorizer.form;
 
-import com.universityteam.flashmemorizer.dto.FillBlankCard;
+import com.universityteam.flashmemorizer.dto.review.FillBlankCard;
 import lombok.Data;
 
 import java.util.List;

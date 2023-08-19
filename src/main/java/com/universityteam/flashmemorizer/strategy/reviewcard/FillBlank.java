@@ -1,10 +1,8 @@
 package com.universityteam.flashmemorizer.strategy.reviewcard;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
-import com.universityteam.flashmemorizer.dto.FillBlankCard;
+import com.universityteam.flashmemorizer.dto.review.FillBlankCard;
 import com.universityteam.flashmemorizer.utility.Utils;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,18 +25,24 @@ public class FillBlank implements ReviewStrategy<FillBlankCard> {
     @Override
     public List<FillBlankCard> generateTest(List<CardDTO> cards) {
         return cards.stream()
-                .map(card -> {
-                    String plainDesc = Utils.htmlToPlainText(card.getDesc());
-                    List<String> hiddenWords = generateHiddenWords(plainDesc);
-                    String descWithBlanks = generateDescWithBlanks(hiddenWords, plainDesc);
-
-                    return FillBlankCard.builder()
-                            .question(card.getTerm())
-                            .descWithBlanks(descWithBlanks)
-                            .hideTexts(hiddenWords)
-                            .build();
-                })
+                .map(this::mapToFillBlankCard)
                 .collect(Collectors.toList());
+    }
+
+    private FillBlankCard mapToFillBlankCard(CardDTO card) {
+        String plainDesc = extractPlainDescFromCard(card);
+        List<String> hiddenWords = generateHiddenWords(plainDesc);
+        String descWithBlanks = generateDescWithBlanks(hiddenWords, plainDesc);
+
+        return FillBlankCard.builder()
+                .question(card.getTerm())
+                .descWithBlanks(descWithBlanks)
+                .hideTexts(hiddenWords)
+                .build();
+    }
+
+    private String extractPlainDescFromCard(CardDTO card) {
+        return Utils.htmlToPlainText(card.getDesc());
     }
 
     /**

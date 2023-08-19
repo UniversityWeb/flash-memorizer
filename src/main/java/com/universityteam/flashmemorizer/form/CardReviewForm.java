@@ -1,6 +1,6 @@
 package com.universityteam.flashmemorizer.form;
 
-import com.universityteam.flashmemorizer.dto.CardReview;
+import com.universityteam.flashmemorizer.dto.review.CardReview;
 import com.universityteam.flashmemorizer.enums.EReview;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

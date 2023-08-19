@@ -1,4 +1,4 @@
-package com.universityteam.flashmemorizer.dto;
+package com.universityteam.flashmemorizer.dto.review;
 
 import lombok.*;
 
