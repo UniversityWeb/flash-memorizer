@@ -32,16 +32,4 @@ public class Utils {
         }
         return plainText.toString();
     }
-
-    public static <T, O> List<T> castList(List<O> inputList, Class<T> targetType) {
-        List<T> outputList = new ArrayList<>();
-
-        for (O item : inputList) {
-            if (targetType.isInstance(item)) {
-                outputList.add(targetType.cast(item));
-            }
-        }
-
-        return outputList;
-    }
 }
