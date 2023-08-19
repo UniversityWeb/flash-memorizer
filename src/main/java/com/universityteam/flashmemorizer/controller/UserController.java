@@ -41,18 +41,13 @@ public class UserController {
 
     @GetMapping("/user/edit/{id}")
     @PreAuthorize("#id == authentication.principal.userHolder.id")
-    public String getDetails(@PathVariable("id") Long id, Model m) {
-        try {
-            UserDTO user = userService.getById(id);
-            ChangePassForm passForm = ChangePassForm.builder().userId(id).build();
-            log.info("Users retrieved successfully for userId: {}", id);
-            m.addAttribute("passForm", passForm);
-            m.addAttribute("user", user);
-            return "user-profile";
-        } catch (UserNotFoundException e) {
-            log.error("Error while fetching users with userId: {}", id, e);
-            return "redirect:/login";
-        }
+    public String getDetails(@PathVariable("id") Long id, Model m,  Authentication authentication) {
+        UserHolder userHolder = (UserHolder) authentication.getPrincipal();
+        ChangePassForm passForm = ChangePassForm.builder().userId(id).build();
+        log.info("Users retrieved successfully for userId: {}", id);
+        m.addAttribute("passForm", passForm);
+        m.addAttribute("user", userHolder.getUserHolder());
+        return "user-profile";
     }
 
     @PostMapping("/update")
@@ -100,6 +95,7 @@ public class UserController {
         model.addAttribute("fullName", userHolder.getUserHolder().getFullName());
         model.addAttribute("returnUserHomeLink", "/user/" + userHolder.getUserHolder().getId());
         model.addAttribute("editUserProfileLink", "/user/edit/" + userHolder.getUserHolder().getId());
+        model.addAttribute("getMyDecksLink", "/decks/get-my-decks/" + userHolder.getUserHolder().getId());
         return "user-home";
     }
 }
