@@ -1,12 +1,17 @@
 package com.universityteam.flashmemorizer.controller;
 
 import com.universityteam.flashmemorizer.dto.*;
+import com.universityteam.flashmemorizer.entity.Deck;
 import com.universityteam.flashmemorizer.enums.EReview;
 import com.universityteam.flashmemorizer.exception.DeckNotFoundException;
 import com.universityteam.flashmemorizer.form.CardReviewForm;
+import com.universityteam.flashmemorizer.form.FillBlankForm;
+import com.universityteam.flashmemorizer.form.MultiChoiceForm;
 import com.universityteam.flashmemorizer.service.CardReviewService;
 import com.universityteam.flashmemorizer.service.CardService;
 import com.universityteam.flashmemorizer.service.DeckService;
+import com.universityteam.flashmemorizer.strategy.reviewcard.Matching;
+import com.universityteam.flashmemorizer.utility.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +38,15 @@ public class ReviewController {
     ) throws DeckNotFoundException {
         DeckDTO deck = deckService.getById(deckId);
         List<CardDTO> cards = cardService.getByDeckId(deckId);
-        List<CardReview> cardReviews = reviewService.generateTest(reviewType, cards);
-        CardReviewForm cardReviewForm = new CardReviewForm();
+        var cardReviews = reviewService.generateTest(reviewType, cards);
 
-        cardReviewForm.setSubmitted(true);
-        cardReviewForm.setDeckName(deck.getName());
-        cardReviewForm.setDeckId(deck.getId());
-        cardReviewForm.setReviewType(reviewType);
-        cardReviewForm.setCardReviews(cardReviews);
+        CardReviewForm cardReviewForm = CardReviewForm.builder()
+                .deckId(deckId)
+                .deckName(deck.getName())
+                .reviewType(reviewType)
+                .isSubmitted(false)
+                .cardReviews(cardReviews)
+                .build();
 
         m.addAttribute("cardReviewForm", cardReviewForm);
 
@@ -48,30 +54,30 @@ public class ReviewController {
     }
 
     @PostMapping("/submit-multi-choice")
-    public String submitMultiChoice(@ModelAttribute("cardReviewForm") CardReviewForm<MultiChoiceCard> cardReviewForm, Model m) {
-        if (!cardReviewForm.isSubmitted()) {
-            cardReviewForm.setSubmitted(true);
-            String result = reviewService.getResult(cardReviewForm.getReviewType(), cardReviewForm.getCardReviews());
-            cardReviewForm.setResult(result);
-
-            m.addAttribute("cardReviewForm", cardReviewForm);
-
-            return "multi-choice-result";
+    public String submitMultiChoice(@ModelAttribute("cardReviewForm") MultiChoiceForm cardReviewForm, Model m) {
+        if (cardReviewForm.isSubmitted()) {
+            return "review-result-error";
         }
-        return "review-result-error";
+        cardReviewForm.setSubmitted(true);
+        String result = reviewService.getResult(cardReviewForm.getReviewType(), cardReviewForm.getCardReviews());
+        cardReviewForm.setResult(result);
+
+        m.addAttribute("cardReviewForm", cardReviewForm);
+
+        return "multi-choice-result";
     }
 
     @PostMapping("/submit-fill-blank")
-    public String submitFillBlank(@ModelAttribute("cardReviewForm") CardReviewForm<FillBlankCard> cardReviewForm, Model m) {
-        if (!cardReviewForm.isSubmitted()) {
-            cardReviewForm.setSubmitted(true);
-            String result = reviewService.getResult(cardReviewForm.getReviewType(), cardReviewForm.getCardReviews());
-            cardReviewForm.setResult(result);
-
-            m.addAttribute("cardReviewForm", cardReviewForm);
-
-            return "fill-blank-result";
+    public String submitFillBlank(@ModelAttribute("cardReviewForm") FillBlankForm cardReviewForm, Model m) {
+        if (cardReviewForm.isSubmitted()) {
+            return "review-result-error";
         }
-        return "review-result-error";
+        cardReviewForm.setSubmitted(true);
+        String result = reviewService.getResult(cardReviewForm.getReviewType(), cardReviewForm.getCardReviews());
+        cardReviewForm.setResult(result);
+
+        m.addAttribute("cardReviewForm", cardReviewForm);
+
+        return "fill-blank-result";
     }
 }

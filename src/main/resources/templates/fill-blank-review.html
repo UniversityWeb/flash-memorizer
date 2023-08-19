@@ -61,7 +61,7 @@
                             <div class="desc-p body-color form-group lang-vi mb-2">
                                 <span th:each="word, index : ${#strings.arraySplit(cardReview.descWithBlanks, ' ')}">
                                         <span th:if="${word == 'blank-context-for-input'}">
-                                            <input type="text" th:field="*{cardReviewForm.cardReviews[__${cardReviewIndex.index}__].userFills[__${index.index}__]}" class="form-control d-inline w-auto ml-1 word-input"/>
+                                            <input type="text" th:field="${cardReviewForm.cardReviews[__${cardReviewIndex.index}__].userFills[__${index.index}__]}" class="form-control d-inline w-auto ml-1 word-input"/>
                                         </span>
                                         <span th:unless="${word == 'blank-context-for-input'}" th:text="${word}">[word]</span>
                                     </span>

@@ -82,7 +82,8 @@ public class MultiChoice implements ReviewStrategy<MultiChoiceCard> {
     @Override
     public String getResult(List<MultiChoiceCard> cardReviews) {
         int score = 0;
-        for (MultiChoiceCard cardReview : cardReviews) {
+        List<MultiChoiceCard> multiChoiceCards = Utils.castList(cardReviews, MultiChoiceCard.class);
+        for (MultiChoiceCard cardReview : multiChoiceCards) {
             if (isCorrect(cardReview)) {
                 cardReview.setCorrect(true);
                 score++;
