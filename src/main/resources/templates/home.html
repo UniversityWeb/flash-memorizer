@@ -21,29 +21,29 @@
 
     <div class="message-error" th:if="${param.loginFailed}">
         <div class="message-content">
-            <span class="message-close">&times;</span>
             <p>Tài khoản hoặc mật khẩu không chính xác</p>
+            <span class="message-close">&times;</span>
         </div>
     </div>
 
     <div class="message-error" th:if="${param.isExistsEmail}">
         <div class="message-content">
-            <span class="message-close">&times;</span>
             <p>Email đã tồn tại!</p>
+            <span class="message-close">&times;</span>
         </div>
     </div>
 
     <div class="message-error" th:if="${param.isExistsUsername}">
         <div class="message-content">
-            <span class="message-close">&times;</span>
             <p>Tên tài khoản đã tồn tại!</p>
+            <span class="message-close">&times;</span>
         </div>
     </div>
 
     <div class="message-error" th:if="${param.passwordNotMatch}">
         <div class="message-content">
-            <span class="message-close">&times;</span>
             <p>Mật khẩu không khớp!</p>
+            <span class="message-close">&times;</span>
         </div>
     </div>
 
