@@ -101,7 +101,7 @@ public class UserController {
     public UserDTO getByUsername (@RequestBody String username) {
         try {
             var user = userService.getByUsername(username.replaceAll("\"", ""));
-           return user;
+            return user;
         } catch (UserNotFoundException e) {
             return null;
             log.error("User not found with username: {}", username, e);
