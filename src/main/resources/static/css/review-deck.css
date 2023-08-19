@@ -146,3 +146,12 @@ margin-top: 10px;
     margin-bottom: -3px;
 }
 
+.notify__none-User{
+    display: flex;
+    color: gray;
+    font-size: 15px;
+    font-weight: 600;
+    margin-left: 40%;
+    font-style: italic;
+    transform: skew(15deg, 0deg);
+}

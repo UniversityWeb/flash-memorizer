@@ -99,10 +99,9 @@ public class UserController {
     @ResponseBody
     @PostMapping("/get-by-username")
     public UserDTO getByUsername (@RequestBody String username) {
-        System.out.println("an nè!");
         try {
-            System.out.println(username);
-           return   userService.getByUsername(username.replaceAll("\"", ""));
+            var user = userService.getByUsername(username.replaceAll("\"", ""));
+           return user;
         } catch (UserNotFoundException e) {
             return null;
             log.error("User not found with username: {}", username, e);
