@@ -29,7 +29,7 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         Logger logger = Logger.getLogger(CustomLoginSuccessHandler.class.getName());
         logger.info("The user " + username + " has logged in.");
 
-        String redirectUrl = "/user/" + user.getUserHolder().getId();
+        String redirectUrl = "/decks/get-my-decks/" + user.getUserHolder().getId();
         response.sendRedirect(redirectUrl);
     }
 

@@ -28,7 +28,7 @@ public class LoginController{
         if(Objects.isNull(oauthUser))
             return "redirect:/home?loginFailed";
 
-        return "redirect:/user/" + oauthUser.getId();
+        return "redirect:/decks/get-my-decks/" + oauthUser.getId();
     }
 
 }

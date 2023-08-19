@@ -66,7 +66,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/logout").permitAll())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/register-process").permitAll())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/register-process/verifyEmail").permitAll())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/user/{id}").hasAnyRole("USERS", "ADMIN"))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/user/edit/{id}").hasAnyRole("USERS", "ADMIN"))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/decks/get-my-decks/{id}").hasAnyRole("USERS", "ADMIN"))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/admin").hasRole("ADMIN"))
