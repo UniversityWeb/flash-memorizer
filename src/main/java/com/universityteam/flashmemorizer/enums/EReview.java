@@ -5,16 +5,14 @@ public enum EReview {
     MATCHING("matching-review", "Matching"),
     MULTI_CHOICE("multi-choice-review", "Multi Choice");
 
-    String htmlFile;
+    String reviewFile;
     String displayName;
 
     EReview(String htmlFile, String displayName) {
-        this.htmlFile = htmlFile;
+        this.reviewFile = htmlFile;
         this.displayName = displayName;
     }
 
-    public String getHtmlFile() {
-        return htmlFile;
-    }
+    public String getReviewFile() { return reviewFile; }
     public String getDisplayName() { return displayName; }
 }
