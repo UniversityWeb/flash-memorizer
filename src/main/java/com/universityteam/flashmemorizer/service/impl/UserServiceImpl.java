@@ -12,15 +12,12 @@ import com.universityteam.flashmemorizer.record.RegistrationRequest;
 import com.universityteam.flashmemorizer.repository.UserRepository;
 import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
 import com.universityteam.flashmemorizer.service.UserService;
-
 import lombok.RequiredArgsConstructor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Calendar;
 import java.util.List;
@@ -209,13 +206,5 @@ public class UserServiceImpl implements UserService {
             log.error(e.getMessage());
             return false;
         }
-    }
-
-    @Override
-    public UserDTO getByUsername(String username) throws UserNotFoundException {
-        User user = userRepo
-                .findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("Could not find any user with username=" + username));
-        return userConverter.convertEntityToDto(user);
     }
 }
