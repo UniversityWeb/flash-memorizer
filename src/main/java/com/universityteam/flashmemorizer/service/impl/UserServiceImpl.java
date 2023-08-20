@@ -12,9 +12,7 @@ import com.universityteam.flashmemorizer.record.RegistrationRequest;
 import com.universityteam.flashmemorizer.repository.UserRepository;
 import com.universityteam.flashmemorizer.repository.VerificationTokenRepository;
 import com.universityteam.flashmemorizer.service.UserService;
-
 import lombok.RequiredArgsConstructor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

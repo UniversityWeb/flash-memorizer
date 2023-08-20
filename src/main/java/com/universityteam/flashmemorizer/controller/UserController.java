@@ -95,5 +95,11 @@ public class UserController {
         model.addAttribute("getMyDecksLink", "/decks/get-my-decks/" + userHolder.getUserHolder().getId());
         return "user-home";
     }
-}
 
+    @ResponseBody
+    @PostMapping("/get-by-username")
+    public UserDTO getByUsername (@RequestBody String username) {
+        var user = userService.findByUsername(username.replaceAll("\"", ""));
+        return user;
+    }
+}

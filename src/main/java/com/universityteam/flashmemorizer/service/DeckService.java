@@ -11,4 +11,5 @@ public interface DeckService {
     DeckDTO update(DeckDTO deckDTO) throws DeckNotFoundException;
     List<DeckDTO> getByUser(Long userId) throws DeckNotFoundException;
     DeckDTO getById(Long id) throws DeckNotFoundException;
+    List<DeckDTO> getByUsername(String username) throws DeckNotFoundException;
 }

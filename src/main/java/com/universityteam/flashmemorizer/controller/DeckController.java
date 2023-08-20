@@ -77,8 +77,20 @@ public class DeckController {
         }
     }
 
+    @GetMapping("/review/{deckId}")
+    public String getDeckToReview(@PathVariable Long deckId, Model m) {
+        getDeckDetails(deckId, m);
+        m.addAttribute("shareUrl", "HIHIHIHI");
+        return "review-deck";
+    }
+
     @GetMapping("/edit/{deckId}")
-    public String getDeckDetails(@PathVariable("deckId") Long deckId, Model m) {
+    public String getDeckToEdit(@PathVariable("deckId") Long deckId, Model m) {
+        getDeckDetails(deckId, m);
+        return "edit-deck";
+    }
+
+    public void getDeckDetails(Long deckId, Model m) {
         DeckForm deckForm = new DeckForm();
         DeckDTO deck = getDeckById(deckId);
         if (deck == null) {
@@ -92,7 +104,6 @@ public class DeckController {
         }
         deckForm.setDeck(deck);
         m.addAttribute("deckForm", deckForm);
-        return "edit-deck";
     }
 
     private DeckDTO getDeckById(Long deckId) {
@@ -116,7 +127,7 @@ public class DeckController {
             log.error("Error updating deckForm with Id {}: {}", deckId, e.getMessage());
             ra.addFlashAttribute("errorMsg", e.getMessage());
         }
-        return "redirect:/cards/review/" + deckId;
+        return "redirect:/decks/review/" + deckId;
     }
 
     @GetMapping("/delete")
