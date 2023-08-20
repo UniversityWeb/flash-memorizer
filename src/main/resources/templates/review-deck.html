@@ -11,8 +11,14 @@
     <link href="../static/css/modal.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/modal.css}" type="text/css"/>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.17.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- share card feature -->
     <link rel="stylesheet" th:href="@{/css/float-window.css}">
@@ -38,12 +44,20 @@
             <button class="btn btn-secondary m-2 w-25" type="button">
                 <i class="fas fa-book"></i> Learn
             </button>
-            <button class="btn btn-secondary m-2 w-25" type="button">
-                <i class="fas fa-check"></i> Test
-            </button>
-            <button class="btn btn-secondary m-2 w-25" type="button">
-                <i class="fas fa-puzzle-piece"></i> Match
-            </button>
+            <div class="dropdown w-25">
+                <button class="btn btn-secondary w-100 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-check"></i> Test
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" th:href="@{/review/get-review(reviewType=MULTI_CHOICE,deckId=${deckForm.deck.id})}">Multi Choice</a>
+                    <a class="dropdown-item" th:href="@{/review/get-review(reviewType=FILL_BLANK,deckId=${deckForm.deck.id})}">Fill Blank</a>
+                </div>
+            </div>
+            <a th:href="@{/review/get-review(reviewType=MATCHING,deckId=${deckForm.deck.id})}" class="m-2 w-25">
+                <button type="button" class="btn btn-secondary m-2 w-100">
+                    <i class="fas fa-puzzle-piece"></i> Match
+                </button>
+            </a>
             <button class="btn btn-secondary m-2 w-25" type="button" onclick="openModalShare()">
                 <i class="bi bi-share"></i> Share
             </button>
