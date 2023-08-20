@@ -91,28 +91,33 @@ public class DataInitializer implements CommandLineRunner {
     private List<Card> initCard(Deck deck) {
         List<Card> cards = List.of(
                 Card.builder()
-                        .term("Term 1")
-                        .desc("Description 1")
+                        .term("Term <b>1</b>")
+                        .desc("Description 1; this is a long description to test for our flashcards project.")
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 2")
-                        .desc("Description 2")
+                        .desc("Description 2; this i<b>s a long description to test for our flashcard</b>s project.")
                         .deck(deck)
                         .build(),
                 Card.builder()
-                        .term("Term 3")
-                        .desc("Description 3")
+                        .term("<i>Term 3</i>")
+                        .desc("Description 3; this is a long description to test for our flashcards project.")
                         .deck(deck)
                         .build(),
                 Card.builder()
-                        .term("Term 4")
-                        .desc("Description 4")
+                        .term("<b>Term 4</b>")
+                        .desc("Descrip<em>tion 4;  this is a</em> short description.")
                         .deck(deck)
                         .build(),
                 Card.builder()
                         .term("Term 5")
-                        .desc("Description 5")
+                        .desc("D<i>escription 5; a short description</i>.")
+                        .deck(deck)
+                        .build(),
+                Card.builder()
+                        .term("Term 6")
+                        .desc("Description 6;")
                         .deck(deck)
                         .build()
         );

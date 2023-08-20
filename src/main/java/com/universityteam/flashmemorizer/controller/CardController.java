@@ -4,6 +4,7 @@ import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.dto.DeckDTO;
 import com.universityteam.flashmemorizer.exception.CardNotFoundException;
 import com.universityteam.flashmemorizer.service.CardService;
+import com.universityteam.flashmemorizer.service.DeckService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,14 @@ public class CardController {
 
     @Autowired
     private CardService cardService;
+    @Autowired
+    private DeckService deckService;
 
-    @GetMapping("/review/{deckId}")
-    public String getCardsToReview(@PathVariable Long deckId, Model m) {
+    @GetMapping("/{deckId}")
+    public String getByDeckId(@PathVariable Long deckId, Model m) {
         List<CardDTO> cards = cardService.getByDeckId(deckId);
         m.addAttribute("cards", cards);
+        m.addAttribute("deckId", deckId);
         return "review-card";
     }
 
