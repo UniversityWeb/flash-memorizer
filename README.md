@@ -13,6 +13,7 @@
 - [Clone repository](#clone-repository)
 - [Access Path (URL)](#access-path-url)
 - [Run Database in Docker](#run-database-in-docker)
+- [Environment variable](#environment-variable)
 - [Documentation](#documentation)
 
 ## **Clone repository**
@@ -46,6 +47,15 @@ docker-compose up -d
 #### Remove container without deleting MySQL data
 ```
 docker-compose down
+```
+
+## Environment variable
+``` properties 
+PROD_DB_HOST=containers-us-west-94.railway.app
+PROD_DB_PORT=8054
+PROD_DB_NAME=railway
+PROD_DB_PASSWORD=r6KRegMsyRmNwx9jEyd8
+PROD_DB_USERNAME=root
 ```
 
 ## **Documentations**

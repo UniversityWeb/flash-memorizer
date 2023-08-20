@@ -9,9 +9,10 @@ spring:
     livereload:
       enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3307/FlashMemorizer?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://containers-us-west-94.railway.app:8054/railway
     username: root
-    password: root
+    password: r6KRegMsyRmNwx9jEyd8
+    driverClassName: com.mysql.cj.jdbc.Driver
   sql:
     init:
       mode: always
