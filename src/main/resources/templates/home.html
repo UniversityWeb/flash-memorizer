@@ -11,35 +11,35 @@
     <header>
         <h2 class="logo" href="/home" style="text-decoration: none">Flash Memorizer</h2>
         <nav class="navigation">
-            <a href="/home">Trang Chủ</a>
-            <button class="btnLogin-popup">Đăng nhập</button>
+            <a href="/home">Home</a>
+            <button class="btnLogin-popup">Login</button>
         </nav>
     </header>
 
     <div class="message-error" th:if="${param.loginFailed}">
         <div class="message-content">
-            <p>Tài khoản hoặc mật khẩu không chính xác</p>
+            <p>Incorrect account or password!</p>
             <span class="message-close">&times;</span>
         </div>
     </div>
 
     <div class="message-error" th:if="${param.isExistsEmail}">
         <div class="message-content">
-            <p>Email đã tồn tại!</p>
+            <p>Email already exists!</p>
             <span class="message-close">&times;</span>
         </div>
     </div>
 
     <div class="message-error" th:if="${param.isExistsUsername}">
         <div class="message-content">
-            <p>Tên tài khoản đã tồn tại!</p>
+            <p>The username already exists!</p>
             <span class="message-close">&times;</span>
         </div>
     </div>
 
     <div class="message-error" th:if="${param.passwordNotMatch}">
         <div class="message-content">
-            <p>Mật khẩu không khớp!</p>
+            <p>Passwords do not match!</p>
             <span class="message-close">&times;</span>
         </div>
     </div>
@@ -47,14 +47,14 @@
     <div class="wrapper">
         <span class="icon-close"><ion-icon name="close-outline"/></span>
         <div class="form-box login">
-            <h2>Đăng Nhập</h2>
+            <h2>Login</h2>
             <form action="#" th:action="@{/login-process}" th:object="${user}" method="post">
                 <div class="input-box" name="username">
                             <span class="icon">
                                 <ion-icon name="person-circle-outline"></ion-icon>
                             </span>
                     <input type="text" name="username" required>
-                    <label>Tên tài khoản</label>
+                    <label>Username</label>
                 </div>
 
                 <div class="input-box" name="password">
@@ -62,26 +62,26 @@
                                 <ion-icon name="key-outline"></ion-icon>
                             </span>
                     <input type="password" name="password" required>
-                    <label>Mật Khẩu</label>
+                    <label>Password</label>
                 </div>
 
                 <div class="remember-forgot">
-                    <label><input type="checkbox">Nhớ mật khẩu</input></label>
-                    <a href="#">Quên mật khẩu</a>
+                    <label><input type="checkbox">Remember password</input></label>
+                    <a href="#">Forgot password?</a>
                 </div>
 
-                <button type="submit" class="btnLogin" value="login">Đăng nhập</button>
+                <button type="submit" class="btnLogin" value="login">Login</button>
 
                 <div class="login-register">
-                    <p> Bạn chưa có tài khoản?
-                        <a href="#" class="register-link">Tạo tài khoản</a>
+                    <p> Don't have an account yet?
+                        <a href="#" class="register-link">Register.</a>
                     </p>
                 </div>
             </form>
         </div>
 
         <div class="form-box register">
-            <h2>Đăng Ký</h2>
+            <h2>Register</h2>
             <form action="#" th:action="@{/register-process}" th:object="${user}" method="post">
 
                 <div class="input-box" name="fullname">
@@ -89,7 +89,7 @@
                                 <ion-icon name="pricetags-outline"></ion-icon>
                             </span>
                     <input type="text" name="fullname" required>
-                    <label>Họ và tên</label>
+                    <label>Full name</label>
                 </div>
 
                 <div class="input-box" name="email">
@@ -105,7 +105,7 @@
                                 <ion-icon name="person-circle-outline"></ion-icon>
                             </span>
                     <input type="text" name="username" required>
-                    <label>Tên Tài Khoản</label>
+                    <label>Username</label>
                 </div>
 
                 <div class="input-box" name="password">
@@ -113,7 +113,7 @@
                                 <ion-icon name="key-outline"></ion-icon>
                             </span>
                     <input type="password" name="password" required>
-                    <label>Mật Khẩu</label>
+                    <label>Password</label>
                 </div>
 
 
@@ -122,18 +122,18 @@
                                 <ion-icon name="key-outline"></ion-icon>
                             </span>
                     <input type="password" name="passwordConfirm" required>
-                    <label>Xác Nhận Mật Khẩu</label>
+                    <label>Confirm Password</label>
                 </div>
 
                 <div class="remember-forgot">
-                    <label><input type="checkbox"></input>Tôi đồng ý với các chính sách & điều khoản</label>
+                    <label><input type="checkbox"></input>I agree with the policies & conditions.</label>
                 </div>
 
                 <button type="submit" class="btnLogin" value="register">Đăng Ký</button>
 
                 <div class="login-register">
-                    <p> Bạn đã có tài khoản?
-                        <a href="#" class="login-link">Đăng Nhập</a>
+                    <p> Do you already have an account?
+                        <a href="#" class="login-link">Login</a>
                     </p>
                 </div>
             </form>
