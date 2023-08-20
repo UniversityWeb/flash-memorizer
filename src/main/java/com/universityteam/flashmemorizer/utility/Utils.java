@@ -17,19 +17,8 @@ public class Utils {
 
     public static String htmlToPlainText(String html) {
         Document document = Jsoup.parse(html);
-        return getPlainText(document.body());
-    }
+        document.outputSettings(new Document.OutputSettings().prettyPrint(false));
 
-    private static String getPlainText(Element element) {
-        StringBuilder plainText = new StringBuilder();
-        for (Element child : element.children()) {
-            String childText = getPlainText(child);
-            plainText.append(childText);
-        }
-        String ownText = element.ownText();
-        if (!ownText.isEmpty()) {
-            plainText.append(ownText).append(" ");
-        }
-        return plainText.toString();
+        return document.text();
     }
 }
