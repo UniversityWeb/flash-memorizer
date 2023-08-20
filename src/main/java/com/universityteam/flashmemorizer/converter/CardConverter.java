@@ -2,36 +2,23 @@ package com.universityteam.flashmemorizer.converter;
 
 import com.universityteam.flashmemorizer.dto.CardDTO;
 import com.universityteam.flashmemorizer.entity.Card;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
-public class CardConverter {
+public class CardConverter extends BaseConverter<Card, CardDTO> {
 
-    @Autowired
-    private ModelMapper mapper;
-
-    public List<CardDTO> convertEntityToDto(List<Card> cards) {
-        return cards.stream()
-                .map(this::convertEntityToDto)
-                .collect(Collectors.toList());
+    @Override
+    protected Class<CardDTO> getDtoClass() {
+        return CardDTO.class;
     }
 
-    public CardDTO convertEntityToDto(Card card) {
-        return (card == null) ? null : mapper.map(card, CardDTO.class);
+    @Override
+    protected Class<Card> getEntityClass() {
+        return Card.class;
     }
 
-    public List<Card> convertDtoToEntity(List<CardDTO> cardDTOs) {
-        return cardDTOs.stream()
-                .map(this::convertDtoToEntity)
-                .collect(Collectors.toList());
-    }
+    @Override
+    protected void configuration() {
 
-    public Card convertDtoToEntity(CardDTO cardDTO) {
-        return (cardDTO == null) ? null : mapper.map(cardDTO, Card.class);
     }
 }

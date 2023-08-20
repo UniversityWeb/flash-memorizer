@@ -5,11 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class UserDTO {
     private Long id;
@@ -19,4 +20,6 @@ public class UserDTO {
     private String fullName;
     private Date registration = new Date();
     private Date lastLogin = new Date();
+    private boolean isEnabled = false;
+    private String role;
 }

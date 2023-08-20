@@ -5,6 +5,7 @@ import com.universityteam.flashmemorizer.enums.ERating;
 import com.universityteam.flashmemorizer.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -19,6 +20,7 @@ public class DataInitializer implements CommandLineRunner {
     private final UserRepository userRepo;
     private final UserCardRepository userCardRepo;
     private final SharedDeckRepository sharedDeckRepo;
+    private final PasswordEncoder encoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -46,19 +48,21 @@ public class DataInitializer implements CommandLineRunner {
         List<User> users = List.of(
                 User.builder()
                         .username("username1")
-                        .pass("pass2")
+                        .pass( encoder.encode("pass2") )
                         .email("user1@gmail.com")
                         .fullName("User One")
                         .registration(new Date(2023, 1, 1, 12, 12, 12))
                         .lastLogin(new Date(2023, 1, 2, 4, 12, 12))
+                        .role("ADMIN")
                         .build(),
                 User.builder()
                         .username("username2")
-                        .pass("pass2")
+                        .pass( encoder.encode("pass2") )
                         .email("user2@gamil.com")
                         .fullName("User Two")
                         .registration(new Date(2023, 4, 4, 5, 5, 5))
                         .lastLogin(new Date(2023, 3, 1, 4, 5, 6))
+                        .role("USERS")
                         .build()
         );
         return userRepo.saveAll(users);
