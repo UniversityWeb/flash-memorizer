@@ -71,8 +71,8 @@ class UtilsTest {
 
     @Test
     public void testHtmlToPlainText_SimpleHtml() {
-        final String html = "<html><body><h1>Hello</h1><p>Testing Jsoup</p></body></html>";
-        final String expected = "Hello Testing Jsoup ";
+        final String html = "<p>This is <strong>bold</strong> text and <em>italic</em> text.</p>";
+        final String expected = "This is bold text and italic text.";
 
         String result = Utils.htmlToPlainText(html);
 
@@ -80,9 +80,19 @@ class UtilsTest {
     }
 
     @Test
-    public void testHtmlToPlainText_MultipleParagraphs() {
-        final String html = "<div><p>Paragraph 1</p><p>Paragraph 2</p></div>";
-        final String expected = "Paragraph 1 Paragraph 2 ";
+    public void testHtmlToPlainText_ListItems() {
+        final String html = "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>";
+        final String expected = "Item 1 Item 2 Item 3";
+
+        String result = Utils.htmlToPlainText(html);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testHtmlToPlainText_Heading() {
+        final String html = "<h1>Welcome to My Website</h1>";
+        final String expected = "Welcome to My Website";
 
         String result = Utils.htmlToPlainText(html);
 
