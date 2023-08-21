@@ -18,7 +18,7 @@
 
 ## **Clone repository**
 ```terminal
-git clone https://github.com/AnhAnNek/flash-memorizer.git
+git clone https://github.com/UniversityWeb/flash-memorizer.git
 ```
 
 ## **[Access Path (URL)](http://localhost:8001/)**
