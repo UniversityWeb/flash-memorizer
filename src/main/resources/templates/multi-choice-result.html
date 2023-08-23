@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Meta information -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Custom CSS files -->
+    <link rel="stylesheet" th:href="@{/css/review-result.css}">
+    <link rel="stylesheet" href="../static/css/review-result.css">
+    <link rel="stylesheet" th:href="@{/css/multi-choice-review.css}">
+    <link rel="stylesheet" href="../static/css/multi-choice-review.css">
+    <link rel="stylesheet" th:href="@{/css/review-navbar.css}">
+    <link rel="stylesheet" href="../static/css/review-navbar.css">
+
+    <!-- Title -->
+    <title>Review Result</title>
+</head>
+
+<body>
+<div class="container-fluid">
+    <!-- Include the review-navbar.html -->
+    <nav th:replace="~{review-navbar.html::(~{::navbar})}"></nav>
+
+    <div class="main-container container py-5 px-4">
+        <!-- Result card container -->
+        <div class="card result-card custom-border py-5 px-4 mx-auto">
+            <!-- Result image -->
+            <img th:src="@{/images/result.svg}" src="../static/images/result.svg" alt="image">
+            <!-- Result header -->
+            <h3 class="bg-primary text-light text-center mb-4 p-3 custom-border">Test Results</h3>
+            <p class="text-muted text-center mb-4"><em>Be kind to yourself, and keep practicing!</em></p>
+            <!-- Display user's score -->
+            <div class="d-flex justify-content-center">
+                <h4>Your score is: <span th:text="${cardReviewForm.result}" class="badge badge-secondary bg-primary">[result]</span></h4>
+            </div>
+            <!-- Navigation buttons -->
+            <div class="d-flex justify-content-center mt-4">
+                <a th:href="@{/cards/{deckId}(deckId=${cardReviewForm.deckId})}" class="link-nav">
+                    <button type="button" class="btn btn-outline-primary  mx-auto btn-nav">Back to learning</button>
+                </a>
+                <a th:href="@{/review/get-review(reviewType=${cardReviewForm.reviewType},deckId=${cardReviewForm.deckId})}" class="link-nav">
+                    <button type="button" class="btn btn-outline-primary mx-auto btn-nav">Take a new test</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div>
+
+        <!-- Loop through card reviews -->
+        <div th:each="cardReview, cardReviewIndex : ${cardReviewForm.cardReviews}">
+
+            <!-- Outer card container -->
+            <div class="outer-card bg-light text-dark">
+                <div class="card custom-border d-flex align-items-center justify-content-center mx-auto">
+                    <div class="card-body m-3 card-height">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <!-- Card title: Definition -->
+                            <p class="card-title small-title-color lang-vi">Definition</p>
+                            <!-- Card subtitle: Review progress indicator -->
+                            <p class="card-subtitle text-muted small-title-color lang-vi" th:text="${cardReviewForm.cardReviews.indexOf(cardReview) + 1 + ' of ' + cardReviewForm.cardReviews.size()}">[index]</p>
+                        </div>
+
+                        <!-- Definition content -->
+                        <div class="row">
+                            <div class="col-md-10 body-color lang-vi">
+                                <!-- Card question -->
+                                <p class="card-text des-height" th:utext="${cardReview.question}">[Question]</p>
+                            </div>
+                            <div class="col-md-2 imageWrapper">
+                                <!-- Card image -->
+                                <img th:src="@{/images/result.svg}" src="../static/images/result.svg" alt="image" class="img-fluid rounded">
+                            </div>
+                        </div>
+
+                        <!-- Matching terms section -->
+                        <div class="mt-4">
+                            <!-- Correct or wrong answer indication -->
+                            <h5 th:if="${cardReview.isCorrect == true}" class="text-right card-title mb-4 lang-vi font-weight-bold">Nice work!</h5>
+                            <h5 th:unless="${cardReview.isCorrect == true}" class="text-wrong card-title mb-4 lang-vi font-weight-bold">Wrong answer!</h5>
+                            <div class="row btn-group radio-group">
+                                <!-- Loop through options -->
+                                <div th:each="option, index : ${cardReview.options}" class="form-check col-sm-12 col-md-6 mb-2">
+                                    <!-- Radio buttons for options -->
+                                    <input th:if="${option == cardReview.userChoice and option != cardReview.answer}"
+                                           type="radio" class="wrong form-check-input"
+                                           autocomplete="off"
+                                           th:value="${option}" checked disabled/>
+                                    <input th:if="${option == cardReview.answer}"
+                                           type="radio" class="right form-check-input"
+                                           autocomplete="off"
+                                           th:value="${option}" checked/>
+                                    <input th:if="${option != cardReview.answer and option != cardReview.userChoice}"
+                                           type="radio" class="form-check-input"
+                                           autocomplete="off"
+                                           th:value="${option}" disabled/>
+                                    <!-- Label for the radio button -->
+                                    <label class="form-check-label btn-wide btn-height btn-content"
+                                           th:text="${option}">[Option]</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complete review button -->
+        <div class="text-center mt-4 mb-4 p-5">
+            <a href="#" class="link-nav">
+                <button type="button" class="btn btn-primary btn-lg btn-block btn-submit">Complete the review</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

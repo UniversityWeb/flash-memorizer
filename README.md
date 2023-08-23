@@ -1,29 +1,62 @@
 # **Flash memorizer**
 *This application provides an immersive learning experience, allowing users to enhance their English language skills effortlessly.*
 
+## Contributors
+- [Văn An](https://github.com/AnhAnNek)
+- [Thanh Tuyền](https://github.com/ngthtuyen9823)
+- [Văn Hoàng](https://github.com/NbDev82)
+- [Quỳnh Giao](https://github.com/ZaoQuynh)
+- [Trường An](https://github.com/TruongAnn2003)
+- [Anh Khoa](https://github.com/MarkjoinedGit)
+
+### Sections
+- [Clone repository](#clone-repository)
+- [Access Path (URL)](#access-path-url)
+- [Run Database in Docker](#run-database-in-docker)
+- [Environment variable](#environment-variable)
+- [Documentation](#documentation)
+
 ## **Clone repository**
 ```terminal
-git clone https://github.com/AnhAnNek/flash-memorizer.git
+git clone https://github.com/UniversityWeb/flash-memorizer.git
 ```
 
-## **Access Path (URL)**
-```
-..comming soon..
-```
+## **[Access Path (URL)](http://localhost:8001/)**
 
 ## **Features**
-1. Show Review Cards.
-2. Flashcard Repetition Method.
-3. Pronunciation Cards.
-4. Apply Format Text for Each Card.
-5. Auto-generate Multiple-Choice Questions with a Single Answer.
+2. Show Review Cards.
+3. Flashcard Repetition Method.
+4. Pronunciation Cards.
+5. Apply Format Text for Each Card.
+6. Auto-generate Multiple-Choice Questions with a Single Answer.
 
 ## **Technical**
-1. Tools: IntelliJ IDE, Docker, MySQL Workbench.
-2. SQL: MySql.
-3. Framework: spring boot.
-4. UI: bootstrap.
-5. Concepts: JPA, MVC, S and O in SOLID, Design pattern.
+2. Tools: IntelliJ IDE, Docker, MySQL Workbench.
+3. SQL: MySql.
+4. Framework: spring boot.
+5. UI: bootstrap.
+6. Concepts: JPA, Spring Security, MVC, SOLID, Design pattern.
 
-## **Reference Documentation**
-...comming soon...
+## **Run Database in Docker**
+
+### To Run
+```
+docker-compose up -d 
+```
+
+#### Remove container without deleting MySQL data
+```
+docker-compose down
+```
+
+## Environment variable
+``` properties 
+PROD_DB_HOST=containers-us-west-94.railway.app
+PROD_DB_PORT=8054
+PROD_DB_NAME=railway
+PROD_DB_PASSWORD=r6KRegMsyRmNwx9jEyd8
+PROD_DB_USERNAME=root
+```
+
+## **Documentations**
+...coming soon...

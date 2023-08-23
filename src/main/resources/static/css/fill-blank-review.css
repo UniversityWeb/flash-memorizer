@@ -1,0 +1,93 @@
+.imageWrapper {
+    display: none;
+}
+
+#reviewForm {
+    margin-top: 150px;
+}
+
+.outer-card {
+    margin-bottom: 50px;
+}
+
+.term-height {
+    height: 160px;
+}
+
+.word-input {
+    text-align: center;
+}
+
+.btn-next {
+    float: right;
+}
+
+.btn-submit {
+    width: 15%;
+    height: 100px;
+}
+
+.custom-border {
+    border: 1px solid #dfe6e9!important;
+    border-radius: 15px!important;
+}
+
+.form-group input.form-control {
+    border: none;
+    border-bottom: 2px solid #dfe6e9;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+}
+
+.form-group p {
+    line-height: 2.1!important;
+}
+
+.form-control {
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.desc-p {
+    line-height: 3rem;
+}
+
+.big-title-color {
+    color: #586380!important;
+}
+
+.small-title-color {
+    color: #939BB4!important;
+}
+
+.body-color {
+    color: #2E3856!important;
+}
+
+.lang-vi {
+    font-family: Lucida Grande,Arial,sans-serif!important;
+    font-size: 1.1em;
+}
+
+.lang-en {
+    font-family: Arial,Helvetica,sans-serif!important;
+    font-size: 1.1em;
+}
+
+.text-end {
+    text-align: right;
+}
+
+.card {
+    max-width: 1100px;
+}
+
+@media (min-width: 1024px) {
+}
+
+@media (max-width: 1023px) {
+    .btn-submit {
+        width: 100%;
+    }
+}

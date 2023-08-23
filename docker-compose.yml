@@ -1,0 +1,16 @@
+version: '3'
+services:
+  flash-memorizer-db:
+    container_name: flash-memorizer-db
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=FlashMemorizer
+      - MYSQL_ROOT_HOST=%
+    ports:
+      - "3307:3306"
+    volumes:
+      - flash-memorizer-data:/var/lib/mysql
+
+volumes:
+  flash-memorizer-data:

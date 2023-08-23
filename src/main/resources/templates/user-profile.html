@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          rel="stylesheet" crossorigin="anonymous">
+
+    <title>User Profile</title>
+</head>
+<body>
+
+<div th:if="${successMsg}" class="alert alert-success mt-3">
+    <span th:text="${successMsg}">Notify the success message!</span>
+</div>
+
+<div th:if="${errorMsg}" class="alert alert-danger mt-3">
+    <span th:text="${errorMsg}">An error occurred.</span>
+</div>
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Basic information
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="card">
+                    <div class="card-body">
+                        <form th:action="@{/users/update}" method="post" id="userForm" th:object="${user}" class="row g-3">
+                            <input type="hidden" th:field="*{id}" />
+                            <div class="col-md-6">
+                                <label for="inputFullName" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="inputFullName" placeholder="A B C" th:field="*{fullName}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="username" th:field="*{username}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputEmail">Current password</label>
+                                <div class="input-group">
+                                    <input type="email" class="form-control" id="inputEmail" th:field="*{email}"/>
+                                    <button type="button" id="verifyEmail" class="btn btn-secondary">Verify Email</button>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-outline-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Change Password
+            </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Your password must be at least 6 characters and should include
+                            a combination of numbers, letters and special characters (!$@%).</p>
+                        <form th:action="@{/users/change-password}" method="post" id="changePassForm" th:object="${passForm}" class="row g-3">
+                            <input type="hidden" th:field="*{userId}" />
+                            <div class="col-md-7">
+                                <label for="inputCurPassword">Current password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="inputCurPassword" name="curPass" th:value="${passForm.curPass}"/>
+                                    <button type="button" id="toggleCurPassword" class="btn btn-secondary" onclick="toggleCurPasswordVisibility()">Show/Hide</button>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <label for="inputNewPassword">New password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="inputNewPassword" name="newPass" th:value="${passForm.newPass}"/>
+                                    <button type="button" id="toggleNewPassword" class="btn btn-secondary" onclick="toggleNewPasswordVisibility()">Show/Hide</button>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <label for="inputReTypeNewPassword">Re-type new password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="inputReTypeNewPassword" name="reTypeNewPass" th:value="${passForm.reTypeNewPass}"/>
+                                    <button type="button" id="toggleReTypeNewPassword" class="btn btn-secondary" onclick="toggleReTypeNewPasswordVisibility()">Show/Hide</button>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-1">
+                                <a th:href="@{/login}" href="#">Forgot your password?</a>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-outline-success">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingtwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsetwo" aria-expanded="false" aria-controls="collapsetwo">
+                Account deletion
+            </button>
+        </h2>
+        <div id="collapsetwo" class="accordion-collapse collapse" aria-labelledby="headingtwo" data-bs-parent="#accordionexample">
+            <div class="accordion-body">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Account Deletion</h5>
+                        <p class="card-text">Warning: Deleting your account is irreversible. All your data will be permanently deleted.</p>
+                        <form th:action="@{/users/delete}" method="post" id="deleteForm" th:object="${user}">
+                            <input type="hidden" th:field="*{id}" />
+                            <button type="submit" class="btn btn-outline-danger">Delete Account</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript">
+    function toggleCurPasswordVisibility() {
+        var inputCurPassword = document.getElementById("inputCurPassword");
+        if (inputCurPassword.type === "password") {
+            inputCurPassword.type = "text";
+        } else {
+            inputCurPassword.type = "password";
+        }
+    }
+
+    function toggleNewPasswordVisibility() {
+        var inputNewPassword = document.getElementById("inputNewPassword");
+        if (inputNewPassword.type === "password") {
+            inputNewPassword.type = "text";
+        } else {
+            inputNewPassword.type = "password";
+        }
+    }
+
+    function toggleReTypeNewPasswordVisibility() {
+        var inputReTypeNewPassword = document.getElementById("inputReTypeNewPassword");
+        if (inputReTypeNewPassword.type === "password") {
+            inputReTypeNewPassword.type = "text";
+        } else {
+            inputReTypeNewPassword.type = "password";
+        }
+    }
+</script>
+</body>
+</html>
