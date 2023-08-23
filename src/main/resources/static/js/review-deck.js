@@ -109,3 +109,22 @@ function shareDeck(data,callback){
             console.log('Error');
         });
 }
+
+function playSound(button) {
+    const term = button.nextElementSibling.textContent; // Get the term from the sibling <h3> element
+
+    fetch(`/play-audio?text=${encodeURIComponent(term)}`)
+        .then(response => response.arrayBuffer())
+        .then(async audioData => {
+            const audioContext = new AudioContext();
+            const audioBuffer = await audioContext.decodeAudioData(audioData);
+
+            const source = audioContext.createBufferSource();
+            source.buffer = audioBuffer;
+            source.connect(audioContext.destination);
+            source.start();
+        })
+        .catch(error => {
+            console.error("Error playing audio:", error);
+        });
+}

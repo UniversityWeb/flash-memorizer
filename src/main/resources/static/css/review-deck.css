@@ -155,3 +155,8 @@ margin-top: 10px;
     font-style: italic;
     transform: skew(15deg, 0deg);
 }
+
+.sound-button {
+    border: none;
+    background-color: transparent;
+}
