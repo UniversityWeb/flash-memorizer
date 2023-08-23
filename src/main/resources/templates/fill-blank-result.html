@@ -41,7 +41,7 @@
             </div>
             <!-- Navigation buttons -->
             <div class="d-flex justify-content-center mt-4">
-                <a th:href="@{/cards/{deckId}(deckId=${cardReviewForm.deckId})}" class="link-nav">
+                <a th:href="@{/decks/review/{deckId}(deckId=${cardReviewForm.deckId})}" class="link-nav">
                     <button type="button" class="btn btn-outline-primary  mx-auto btn-nav">Back to learning</button>
                 </a>
                 <a th:href="@{/review/get-review(reviewType=${cardReviewForm.reviewType},deckId=${cardReviewForm.deckId})}" class="link-nav">
