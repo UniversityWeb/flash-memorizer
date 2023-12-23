@@ -1,162 +1,332 @@
-:root{
-    --WidthSizeCard: 500px;
-    --HeightSizeCard: 400px;
-    --offset: 150px;
-    --abs-offset: 50px;
-    --direction: 100px;
+*{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body {
+body{
+    color: #586380;
+    margin: 0;
+    min-height: 100vh;
+    background-color: rgb(233, 233, 233);
+}
+
+header{
+    height: 70px;
     width: 100%;
-    height: 100%;
-    background-color: #0a092d;
-    color: #f5f6fb;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    box-shadow: 0px 5px 7px #cdcfd6;
 }
 
-.carousel-container {
-  position: relative;
-}
-
-.carousel-controls {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.flip-card {
-    width: var(--WidthSizeCard);
-    height: var(--HeightSizeCard);
-    text-align: center;
-    border: 1px solid #f1f1f1;
-    perspective: 1000px;
-    border-radius: 10px;
-    padding: 2px;
-    cursor: pointer;
-}
-.flip-card:hover{
-    cursor: pointer;
-}
-
-.flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-}
-
-.flip-card:active .flip-card-inner {
-    transform: rotateY(180deg);
-}
-
-.flip-card-front, .flip-card-back {
+header h1{
+    color: #4255FF;
     position: absolute;
+}
+
+header .button_back{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 10px;
+    margin-right: auto;
+}
+
+.button_back ion-icon{
+    width: 30px;
+    height: 30px;
+    color: #4255FF;
+}
+
+.button_back:hover ion-icon{
+    width: 35px;
+    height: 35px;
+}
+
+section{
     width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tools_content{
+    margin-top: 20px;
+    width: 1000px;
+    height: 70px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.tools_content .tool_item{
+    color: black;
+    width: 255px;
     height: 100%;
-    backface-visibility: hidden;
-}
-
-.flip-card-front {
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.flip-card-back {
-    border-radius: 10px;
-    padding: 20px;
-    transform: rotateY(180deg);
-}
-
-.form__share {
-    width: 650px;
-    height: 600px;
-    margin: auto;
     background-color: white;
     border-radius: 10px;
-    padding: 15px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex-direction: row;
+    box-shadow: 5px 5px 10px #cdcfd6;
 }
 
-.users__contain{
+.tool_item ion-icon{
+    width: 25%;
+    height: 25px;
+    color: #4255FF;
+}
+.tool_item h3{
+    width: 50%;
+    text-align: center;
+}
+
+.tool_item:hover{
+    background-color: #4255FF;
+    color: #fff;
+}
+
+.tool_item:hover ion-icon{
+    color: #fff;
+}
+
+.tool_item .dropdown_menu{
+    display: none;
+    position: absolute;
+    background-color: #4255FF;
+    min-width: 255px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    margin-top: 185px;
+}
+
+.dropdown:hover {
+    border-radius: 10px 10px 0px 0px;
+}
+
+.dropdown:hover .dropdown_menu{
+    display: block;
+}
+
+.dropdown_menu a{
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown_menu a:hover{
+    background-color: #ddd;
+}
+
+.flip_cards_content{
+    margin-top: -80px;
     height: auto;
     width: 100%;
-    margin-top: 20px;
-}
-
-.btn__close-modal {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    height: 4px;
-    width: 4px;
-    margin: 10px;
-}
-
-.btn__close-modal:hover{
-    transform: scale(1.1);
-}
-
-.list__users{
-    width: 100%;
-    position: absolute;
-    display: inline-block;
-}
-
-.user__item{
-    height: 60px;
-    width: 98%;
-    margin-left: -20px;
-    background-color:white;
-    display: inline-block;
-}
-
-.user__item:hover{
-    transform: scale(1.01);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.share__link{
-margin-top: 10px;
-
-}
-
-.user__img{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-    object-fit: cover;
-    margin: 5px;
-}
-
-.user__info {
-    display: inline;
-    position: absolute;
-    margin-left: 20px;
-    margin-top: 2px;
-
-}
-
-.user__name{
-    margin-top: 5px;
-    font-weight: 600;
-    font-size: 15px;
-    margin-bottom: -3px;
-}
-
-.notify__none-User{
     display: flex;
-    color: gray;
-    font-size: 15px;
-    font-weight: 600;
-    margin-left: 40%;
-    font-style: italic;
-    transform: skew(15deg, 0deg);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.sound-button {
-    border: none;
+.wrapper{
+    display: flex;
+    max-width: 1000px;
+    width: 100%;
+    height: 700px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.flip_cards-container{
+    height: 700px;
+    width: 100%;
+    max-width: 1000px;
+    overflow: hidden;
+}
+.flip_cards-container .flip_cards{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    transition: all 0.4s;
+}
+
+.flip_cards .flip_card_frame{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.flip_cards .flip_card_frame-empty{
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    transform: translateX(6%) translateY(20%);
+}
+
+.flip_cards .flip_card_frame,
+.flip_cards .flip_card_frame-empty{
+    border-radius: 18px;
     background-color: transparent;
+}
+
+.flip_card_inner {
+    position: relative;
+    width: 1000px;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    padding: 100px;
+}
+
+.flip_card_frame.flipped .flip_card_inner {
+    transform: rotateX(180deg);
+}
+
+.flip_card_front,
+.flip_card_back {
+    position: absolute;
+    width: 80%;
+    height: 500px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.flip_card_back {
+    transform: rotateX(180deg);
+}
+
+.flip_card_text{
+    height: auto;
+    max-height: 80%;
+    overflow: auto;
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.flip_card_front .button_read,
+.flip_card_back .button_read{
+    position: absolute;
+    background: #fff;
+    border: none;
+    width: 44px;
+    height: 44px;
+    font-size: 30px;
+    transform: translateY(-210px) translateX(710px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button_read:hover{
+    border-radius: 50%;
+    background-color: #4255FF;
+    color: #fff;
+}
+
+.empty{
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    user-select: none;
+    opacity: 0.5;
+}
+
+.flip_card_controls{
+    margin-top: -100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    z-index: 100;
+}
+
+.flip_card_controls ion-icon.flip_cards_button{
+    height: 36px;
+    width: 36px;
+    background-color: rgb(233, 233, 233);
+    border: 1px solid #7c7c7c4b;
+    color: rgb(144, 144, 144)c8c;
+    border-radius: 50%;
+    font-size: 10px;
+    transition: all 0.3s linear;
+}
+
+.flip_card_controls ion-icon:active{
+    transform: scale(0.94) translateY(-50%);
+}
+
+.flip_card_count{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 20px;
+}
+
+.flip_card_count *{
+    color: #586380;
+    font-size: 24px;
+    margin: 0px 5px;
+}
+
+.process_bar_container{
+    height: 3px;
+    width: 775px;
+    background-color: #bbb;
+    display: flex;
+    justify-content: left;
+    z-index: 100;
+}
+
+.process_bar{
+    height: 100%;
+    width: 50%;
+    background-color: rgb(47, 47, 47);
+}
+
+.alert {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }

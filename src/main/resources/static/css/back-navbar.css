@@ -1,0 +1,49 @@
+body{
+    color: #586380;
+    margin: 0;
+    min-height: 100vh;
+    background-color: rgb(233, 233, 233);
+}
+
+header{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 70px;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    box-shadow: 0 5px 7px #cdcfd6;
+}
+
+header h1{
+    color: #4255FF;
+    position: absolute;
+}
+
+header .button_back{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 10px;
+    margin-right: auto;
+}
+
+.button_back ion-icon{
+    width: 30px;
+    height: 30px;
+    color: #4255FF;
+}
+
+.button_back:hover ion-icon{
+    width: 35px;
+    height: 35px;
+}
+
+.content_sec{
+    margin-top: 25px;
+}

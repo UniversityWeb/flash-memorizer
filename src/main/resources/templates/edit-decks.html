@@ -4,84 +4,117 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link rel="icon" type="image/x-icon" th:href="@{/images/page-icon.svg}">
     <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           rel="stylesheet">
 
+    <link rel="stylesheet" href="../static/css/edit-deck.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/edit-decks.css}"/>
+    <style>
+        *{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
     <title>Edit Decks</title>
 </head>
 <body>
 
-<div th:if="${successMsg}" class="alert alert-success mt-3">
-    <span th:text="${successMsg}">Notify the success message!</span>
-</div>
+<header>
+    <h1 class="logo">Flash Card</h1>
+    <a class="search_box">
+    </a>
+    <div class="control">
+        <div class="avartar_user-frame">
+            <ion-icon name="person-outline"></ion-icon>
+        </div>
+        <div class="control-menu">
+            <a class="control-item" th:href="@{/user/edit}">Information</a>
+            <a class="control-item" th:href="@{/decks/get-my-decks}">My Deck</a>
+            <a class="control-item" onclick="submitLogoutForm()">Log out</a>
+            <form id="logoutForm" th:action="@{/logout}" method="post"></form>
+        </div>
+    </div>
+</header>
 
-<div th:if="${errorMsg}" class="alert alert-danger mt-3">
-    <span th:text="${errorMsg}">An error occurred.</span>
-</div>
+<section>
+    <div th:if="${successMsg}" class="alert alert-success mt-3">
+        <span th:text="${successMsg}">Notify the success message!</span>
+    </div>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-10 offset-md-1">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="text-center text-primary">Decks</h4>
+    <div th:if="${errorMsg}" class="alert alert-danger mt-3">
+        <span th:text="${errorMsg}">An error occurred.</span>
+    </div>
 
-                    <div th:if="${decks.isEmpty()}" class="alert alert-info text-center">
-                        <p class="lead mb-0">You haven't created any decks</p>
-                    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="text-center text-primary">Decks</h4>
 
-                    <div th:if="${not decks.isEmpty()}">
-                        <ul class="list-group" id="deckList">
-                            <li class="list-group-item" th:each="curDeck, stat : ${decks}">
-                                <div class="card-body mb-3 position-relative">
-                                    <div class="badge rounded-pill bg-success" style="color: #ffffff;">
-                                        <span th:text="${curDeck.quantityOfCards + ' items'}">[Quantity] items</span>
-                                    </div>
-                                    <div class="format-bar d-flex justify-content-end">
-                                        <a class="btn btn-outline-primary btn-sm edit-button mr-2"
-                                           th:href="@{/decks/review/{deckId}(deckId=${curDeck.id})}">
-                                            <i class="fas fa-eye"></i> Review
-                                        </a>
+                        <div th:if="${decks.isEmpty()}" class="alert alert-info text-center">
+                            <p class="lead mb-0">You haven't created any decks</p>
+                        </div>
 
-                                        <a class="btn btn-outline-danger btn-sm delete-button"
-                                           th:href="@{/decks/delete(userId=${curDeck.user.id}, deckId=${curDeck.id})}">
-                                            <i class="fas fa-trash"></i> Delete
-                                        </a>
-                                    </div>
+                        <div th:if="${not decks.isEmpty()}">
+                            <ul class="list-group" id="deckList">
+                                <li class="list-group-item" th:each="curDeck, stat : ${decks}">
+                                    <div class="card-body mb-3 position-relative">
+                                        <div class="badge rounded-pill bg-success" style="color: #ffffff;">
+                                            <span th:text="${curDeck.quantityOfCards + ' items'}">[Quantity] items</span>
+                                        </div>
+                                        <div class="format-bar d-flex justify-content-end">
+                                            <a class="btn btn-outline-primary btn-sm edit-button mr-2"
+                                               th:href="@{/decks/review/{deckId}(deckId=${curDeck.id})}">
+                                                <i class="fas fa-eye"></i> Review
+                                            </a>
 
-                                    <input th:value="${curDeck.id}" type="hidden"/>
+                                            <a class="btn btn-outline-danger btn-sm delete-button"
+                                               th:href="@{/decks/delete?deckId={deckId}(deckId=${curDeck.id})}">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                        </div>
 
-                                    <div class="form-row mt-3">
-                                        <div class="col">
-                                            <label>Name</label>
-                                            <div class="card">
-                                                <div class="card-body border font-monospace"
-                                                     th:utext="*{decks[__${stat.index}__].name}">[Term]</div>
+                                        <input th:value="${curDeck.id}" type="hidden"/>
+
+                                        <div class="form-row mt-3">
+                                            <div class="col">
+                                                <label>Name</label>
+                                                <div class="card">
+                                                    <div class="card-body border font-monospace"
+                                                         th:utext="*{decks[__${stat.index}__].name}">[Term]</div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label>Description</label>
+                                                <div class="card">
+                                                    <div class="card-body border font-monospace"
+                                                         th:utext="*{decks[__${stat.index}__].desc}">[Desc]</div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <label>Description</label>
-                                            <div class="card">
-                                                <div class="card-body border font-monospace"
-                                                     th:utext="*{decks[__${stat.index}__].desc}">[Desc]</div>
-                                            </div>
-                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                                </li>
+                            </ul>
+                        </div>
 
-                    <div class="d-flex justify-content-center mt-2 mb-3">
-                        <a class="btn btn-outline-success" th:href="@{/decks/input(userId=${userId})}">
-                            <i class="fas fa-plus"></i> Add Another Deck
-                        </a>
+                        <div class="d-flex justify-content-center mt-2 mb-3">
+                            <a class="btn btn-outline-success" th:href="@{/decks/input}">
+                                <i class="fas fa-plus"></i> Add Another Deck
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+<script th:src="@{/js/logout.js}" src="../static/js/review-deck.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

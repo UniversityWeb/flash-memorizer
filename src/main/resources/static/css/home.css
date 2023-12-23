@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('../images/background.jpg') no-repeat;
+    background: url('../images/background.png') no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -26,12 +26,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: rgb(255, 255, 255, 0.8);
     z-index: 99;
 }
 
 .logo{
     font-size: 2em;
-    color: white;
+    color: #007BFF;
     user-select: none;
 }
 
@@ -45,7 +46,7 @@ header {
 .navigation a {
     position: relative;
     font-size: 1.1em;
-    color: white;
+    color: #007BFF;
     text-decoration: none;
     font-weight: 500;
     margin-left: 40px;
@@ -58,7 +59,7 @@ header {
     bottom: -6px;
     width: 100%;
     height: 3px;
-    background: white;
+    background: #007BFF;
     border-radius: 5px;
     transform-origin: right;
     transform: scaleX(0);
@@ -73,30 +74,40 @@ header {
     width: 130px;
     height: 50px;
     background: transparent;
-    border: 2px solid white;
+    border: 2px solid #007BFF;
     outline: none;
     border-radius: 6px;
     cursor: pointer;
-    color: white;
+    color: #007BFF;
     font-weight: 500;
     margin-left: 40px;
     transition: .5s;
 }
 
 .navigation .btnLogin-popup:hover{
-    background: #b6c4d2;
-    color: #000f1a;
+    border: 2px solid #65b7ff;
+    background: #007BFF;
+    color: #FFFFFF;
+}
+
+section{
+    width: 100%;
+    margin-top: 70px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .wrapper{
     position: relative;
     width: 400px;
     height: 400px;
-    background: transparent;
+    background: rgb(255, 255, 255, .5);
     border: 2px solid rgb(255, 255, 255, .5);
     border-radius: 20px;
     backdrop-filter: blur(20px);
-    box-shadow: 0 0 30px rgb(0, 0, 0, .5);
+    box-shadow: 0 0 30px rgb(255, 255, 255, .5);
     display: flex;
     justify-content: center;
     align-items: center ;
@@ -146,16 +157,20 @@ header {
     width: 40px;
     height: 40px;
     font-size: 2em;
-    color: #000f1a;
+    color: #FFFFFF;
     justify-content: center;
     text-align: center;
     cursor: pointer;
     z-index: 1;
 }
 
+.icon-close:hover{
+    color: #007BFF;
+}
+
 .form-box h2{
     font-size:  2em;
-    color: #000f1a;
+    color: #FFFFFF;
     text-align: center;
 }
 
@@ -163,8 +178,9 @@ header {
     position: relative;
     width: 100%;
     height: 45px;
-    border-bottom: 2px solid #000f1a;
+    border-bottom: 2px solid #FFFFFF;
     margin: 30px 0;
+    outline: none;
 }
 
 .input-box label {
@@ -173,7 +189,7 @@ header {
     left: 5px;
     transform: translateY(-50%);
     font-size: 1em;
-    color: #000f1a;
+    color: #FFFFFF;
     font-weight: 500;
     pointer-events: none;
     transition: .5s;
@@ -190,7 +206,7 @@ header {
     background: transparent;
     border: none;
     outline: none;
-    color: white;
+    color: #FFFFFF;
     font-weight: 600;
     padding: 0 35px 0 5px;
 }
@@ -199,13 +215,13 @@ header {
     position: absolute;
     right: 8px;
     font-size: 1.2em;
-    color: #000f1a;
+    color: #FFFFFF;
     line-height: 57px;
 }
 
 .remember-forgot {
     font-size: .9em;
-    color: #000f1a;
+    color: #FFFFFF;
     font-weight: 500;
     margin: -15px 0 15px;
     display: flex;
@@ -213,12 +229,12 @@ header {
 }
 
 .remember-forgot label input{
-    accent-color: #000f1a;
+    accent-color: #FFFFFF;
     margin-right: 3px;
 }
 
 .remember-forgot a{
-    color: #000f1a;
+    color: #FFFFFF;
     text-decoration: none;
 }
 
@@ -229,25 +245,31 @@ header {
 .btnLogin {
     width: 100%;
     height: 45px;
-    background: #000f1a;
+    background: #FFFFFF;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 1em;
-    color: white;
+    color: #007BFF;
     font-weight: 500;
+    transition: color 0.5s ease-in-out, background 0.5s ease-in-out;
+}
+
+.btnLogin:hover{
+    background: #007BFF;
+    color: #FFFFFF;
 }
 
 .login_register{
     font-size: .9em;
-    color: #000f1a;
+    color: #FFFFFF;
     text-align: center;
     font-weight: 500;
     margin: 25px 0 10px;
 }
 
 .login_register p a{
-    color: #000f1a;
+    color: #FFFFFF;
     text-decoration: none;
     font-weight: 600;
 }
@@ -272,7 +294,7 @@ header {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #ffffff;
     border-radius: 10px;
     width: 50%;
     display: flex;

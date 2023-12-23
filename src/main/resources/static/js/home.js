@@ -23,24 +23,6 @@ iconClose.addEventListener('click', ()=>{
     wrapper.classList.remove('active-popup');
 })
 
-//
-//document.addEventListener("DOMContentLoaded", () => {
-//    if (registerFailedParam && wrapper) {
-//        if (registerFailedParam === "true") {
-//            wrapper.classList.add("active-popup");
-//            wrapper.classList.add("active");
-//        }
-//    }
-//});
-//
-//document.addEventListener("DOMContentLoaded", () => {
-//    if (loginFailedParam && wrapper) {
-//        if (loginFailedParam === "true") {
-//            wrapper.classList.add("active-popup");
-//        }
-//    }
-//});
-
 messageClose.addEventListener("click", () => {
     messageError.style.display = "none";
 });
