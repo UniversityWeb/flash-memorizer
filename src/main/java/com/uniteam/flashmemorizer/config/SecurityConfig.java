@@ -59,7 +59,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors(withDefaults())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/css/**", "/js/**", "/images/**").permitAll())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/css/**", "/js/**", "/images/**", "/richtext/**").permitAll())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/home").permitAll())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/logout").permitAll())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/login-process").permitAll())
