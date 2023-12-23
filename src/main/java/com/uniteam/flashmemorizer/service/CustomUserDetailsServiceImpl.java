@@ -31,7 +31,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Unverified account");
         }
 
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USERS"));
+        List<GrantedAuthority> authorities = Collections.emptyList();
 
         return new UserHolder(user, authorities);}
     }

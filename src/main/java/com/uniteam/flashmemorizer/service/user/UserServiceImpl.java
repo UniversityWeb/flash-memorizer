@@ -118,7 +118,6 @@ public class UserServiceImpl implements UserService {
         newUser.setPass(passwordEncoder.encode(request.password()));
         newUser.setFullName(request.fullName());
         newUser.setEmail(request.email());
-        newUser.setRole("USERS");
         return add(newUser);
     }
 

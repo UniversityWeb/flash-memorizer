@@ -52,7 +52,6 @@ public class RegistrationCompleteEventListener
         MimeMessage message = mailSender.createMimeMessage();
         var messageHelper = new MimeMessageHelper(message, "UTF-8");
 
-        //Fill In Mail Source
         messageHelper.setFrom("vanantran009@gmail.com", senderName);
         messageHelper.setTo(this.theUser.getEmail());
         messageHelper.setSubject(subject);

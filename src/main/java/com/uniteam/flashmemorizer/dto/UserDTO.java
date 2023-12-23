@@ -18,5 +18,4 @@ public class UserDTO {
     private String email;
     private String fullName;
     private boolean isEnabled = false;
-    private String role;
 }

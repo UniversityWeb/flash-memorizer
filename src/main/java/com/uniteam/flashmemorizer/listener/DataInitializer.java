@@ -1,4 +1,4 @@
-package com.uniteam.flashmemorizer.config;
+package com.uniteam.flashmemorizer.listener;
 
 import com.uniteam.flashmemorizer.controller.CardController;
 import com.uniteam.flashmemorizer.entity.Card;
@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -31,13 +30,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        clearAllData();
         initData();
-    }
-
-    private void clearAllData() {
-        cardRepo.deleteAll();
-        deckRepo.deleteAll();
     }
 
     private void initData() {

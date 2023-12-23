@@ -52,7 +52,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider provider
                 = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService());
-        provider.setPasswordEncoder(new BCryptPasswordEncoder());
+        provider.setPasswordEncoder(passwordEncoder());
         return  provider;
     }
 
@@ -65,11 +65,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/login-process").permitAll())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/register-process").permitAll())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/register-process/verifyEmail").permitAll())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/user/edit/{id}").hasAnyRole("USERS", "ADMIN"))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/decks/get-my-decks").hasAnyRole("USERS", "ADMIN"))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/admin").hasRole("ADMIN"))
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/user/edit/{id}").authenticated())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/decks/get-my-decks").authenticated())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/decks/**").authenticated())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/**").authenticated())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/decks/**").permitAll())
                 .formLogin(in -> in
                         .loginPage("/home")
                         .loginProcessingUrl("/login-process")
