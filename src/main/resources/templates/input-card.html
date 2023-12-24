@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link rel="icon" type="image/x-icon" th:href="@{/images/page-icon.svg}">
 
     <link crossorigin="anonymous"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/richtext/richtext.min.css">
+    <link rel="stylesheet" th:href="@{/css/back-navbar.css}">
     <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}">
-
-    <link rel="stylesheet" href="../static/richtext/richtext.scss">
-    <link rel="stylesheet" th:href="@{/richText/richtext.scss}">
+    <link rel="stylesheet" th:href="@{/richtext/richtext.scss}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
@@ -23,7 +22,14 @@
 </head>
 <body>
 
-<div class="container">
+<header>
+    <a class="button_back" th:href="@{/decks/edit/{deckId}(deckId=${card.deck.id})}">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+    </a>
+    <h1>Flash Memorizer</h1>
+</header>
+
+<section class="container content_sec">
     <div class="row">
         <div class="col-md-10 offset-md-1">
             <div class="card">
@@ -35,11 +41,11 @@
 
                         <div class="form-group">
                             <label>Term</label>
-                            <input class="cardTermEditor" th:field="*{term}" type="text" maxlength="100">
+                            <textarea class="cardTermEditor" th:field="*{term}" maxlength="100"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <input class="cardDescEditor" th:field="*{desc}" type="text" maxlength="1000">
+                            <textarea class="cardDescEditor" th:field="*{desc}" maxlength="1000"></textarea>
                         </div>
 
                         <button class="btn btn-primary btn-block">Submit</button>
@@ -50,18 +56,17 @@
         </div>
     </div>
 
-</div>
+</section>
 
-<script th:src="@{/richText/jquery.richtext.js}"></script>
-<script src="../static/richText/jquery.richtext.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-<script th:src="@{/richText/jquery.richtext.min.js}"></script>
-<script src="../static/richText/jquery.richtext.min.js"></script>
-
+<script th:src="@{/richtext/jquery.richtext.min.js}"></script>
+<script th:src="@{/js/custom-richtext.js}"></script>
 <script>
     $(document).ready(function() {
-        $('.cardTermEditor').richText();
-        $('.cardDescEditor').richText();
+        $('.cardTermEditor').richText(customEditor);
+        $('.cardDescEditor').richText(customEditor);
     });
 </script>
 

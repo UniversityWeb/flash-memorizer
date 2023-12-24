@@ -1,62 +1,69 @@
 # **Flash memorizer**
-*This application provides an immersive learning experience, allowing users to enhance their English language skills effortlessly.*
 
-## Contributors
-- [Văn An](https://github.com/AnhAnNek)
-- [Thanh Tuyền](https://github.com/ngthtuyen9823)
-- [Văn Hoàng](https://github.com/NbDev82)
-- [Quỳnh Giao](https://github.com/ZaoQuynh)
-- [Trường An](https://github.com/TruongAnn2003)
-- [Anh Khoa](https://github.com/MarkjoinedGit)
+_This application provides an immersive learning experience, allowing users to enhance their English language skills effortlessly. Furthermore, It also simplifies the memorization of challenging material, leading to time-saving and enhanced productivity._
 
 ### Sections
+
 - [Clone repository](#clone-repository)
 - [Access Path (URL)](#access-path-url)
 - [Run Database in Docker](#run-database-in-docker)
-- [Environment variable](#environment-variable)
 - [Documentation](#documentation)
 
 ## **Clone repository**
+
 ```terminal
-git clone https://github.com/UniversityWeb/flash-memorizer.git
+git clone https://github.com/UniversityWeb/flash-memorizer-it-proj.git
 ```
 
 ## **[Access Path (URL)](http://localhost:8001/)**
 
+- localhost:8001
+
 ## **Features**
-2. Show Review Cards.
-3. Flashcard Repetition Method.
-4. Pronunciation Cards.
-5. Apply Format Text for Each Card.
-6. Auto-generate Multiple-Choice Questions with a Single Answer.
+
+1. Show Review Cards.
+2. Flashcard Repetition Method.
+3. Pronunciation Cards.
+4. Apply Format Text for Each Card.
+5. Auto-generate Multiple-Choice Questions with a Single Answer.
 
 ## **Technical**
-2. Tools: IntelliJ IDE, Docker, MySQL Workbench.
-3. SQL: MySql.
-4. Framework: spring boot.
-5. UI: bootstrap.
-6. Concepts: JPA, Spring Security, MVC, SOLID, Design pattern.
+
+1. Tools: IntelliJ IDE (Free Edition), Docker, MySQL Workbench.
+2. SQL: MySQL.
+3. Backend framework: Spring boot.
+4. UI: Bootstrap.
+5. Concepts: JPA, Spring Security, MVC, SOLID, Design pattern.
 
 ## **Run Database in Docker**
 
+Please note: You must be in the source code folder. The database will be opened on port `3307`.
+
 ### To Run
+
 ```
-docker-compose up -d 
+docker-compose up -d
 ```
 
+![Alt text](run-db-on-docker.png)
+
 #### Remove container without deleting MySQL data
+
 ```
 docker-compose down
 ```
 
-## Environment variable
-``` properties 
-PROD_DB_HOST=containers-us-west-94.railway.app
-PROD_DB_PORT=8054
-PROD_DB_NAME=railway
-PROD_DB_PASSWORD=r6KRegMsyRmNwx9jEyd8
-PROD_DB_USERNAME=root
-```
+### Connect Database with MySQL Workbench
+
+- Connection Name: `Docker Provider`
+- Hostname: `localhost`
+- Port: `3307`
+- Username: `root`
+- Password: `root`
+
+![Alt text](config-workbench.png)
+
 
 ## **Documentations**
+
 ...coming soon...

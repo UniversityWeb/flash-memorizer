@@ -1,4 +1,3 @@
-// Wait for the DOM content to load before executing the script
 document.addEventListener("DOMContentLoaded", function () {
 
     var nextButtons = document.querySelectorAll('.btn-next');

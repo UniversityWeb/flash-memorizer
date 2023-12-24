@@ -1,21 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
- * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-     font-family: 'Poppins', sans-serif;
- }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
 
- body {
-     display: flex;
-     background: linear-gradient(-45deg, #6c7ee1, #92b9e3, #ffc4a4, #fba2d0, #c688eb);
-     place-items: center;
-     justify-content: center;
-     align-items: center;
-     min-height: 100vh;
-     animation: animation 15s ease infinite;
- }
+body {
+    display: flex;
+    background: linear-gradient(-45deg, #6c7ee1, #92b9e3, #ffc4a4, #fba2d0, #c688eb);
+    place-items: center;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    animation: animation 15s ease infinite;
+}
 
 @keyframes animation{
     0%{
