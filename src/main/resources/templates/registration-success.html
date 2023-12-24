@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>Registration Response</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" th:href="@{/images/page-icon.svg}">
     <title>Registration Success</title>
     <link rel="stylesheet" th:href="@{/css/registration-success.css}" href="../static/css/registration-success.css">
-  </head>
-  <body>
-    <div class="container">
-      <ion-icon name="mail-outline" class="icon-mail"></ion-icon>
-      <h1>Registration Successful</h1>
-      <br>
-      <p>Thank you for registering!</p>
-      <p>Please check your email to complete the registration process.</p>
-      <div th:if="${successMessage}">
+</head>
+<body>
+<div class="container">
+    <ion-icon name="mail-outline" class="icon-mail"></ion-icon>
+    <h1>Registration Successful</h1>
+    <br>
+    <p>Thank you for registering!</p>
+    <p>Please check your email to complete the registration process.</p>
+    <div th:if="${successMessage}">
         <p th:text="${successMessage}" class="success-message"></p>
-      </div>
     </div>
+</div>
 
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  </body>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
 </html>
