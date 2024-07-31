@@ -7,7 +7,7 @@ _This application provides an immersive learning experience, allowing users to e
 - [Clone repository](#clone-repository)
 - [Access Path (URL)](#access-path-url)
 - [Run Database in Docker](#run-database-in-docker)
-- [Documentation](#documentation)
+- [Run the Application in Docker](#run-the-application-in-docker)
 
 ## **Clone repository**
 
@@ -37,7 +37,7 @@ git clone https://github.com/UniversityWeb/flash-memorizer-it-proj.git
 
 ## **Run Database in Docker**
 
-Please note: You must be in the source code folder. The database will be opened on port `3307`.
+Please note: You must be in the `docker-db` folder. The database will be opened on port `3307`.
 
 ### To Run
 
@@ -45,7 +45,7 @@ Please note: You must be in the source code folder. The database will be opened 
 docker-compose up -d
 ```
 
-![Alt text](run-db-on-docker.png)
+![Alt text](images-of-readme-file/run-db-on-docker.png)
 
 #### Remove container without deleting MySQL data
 
@@ -61,9 +61,22 @@ docker-compose down
 - Username: `root`
 - Password: `root`
 
-![Alt text](config-workbench.png)
+![Alt text](images-of-readme-file/config-workbench.png)
 
+## **Run The Application in Docker**
 
-## **Documentations**
+Please note: You must be in the `docker-app` folder. The database and the application will be opened on ports `3307` and `8001`, respectively.
 
-...coming soon...
+### To Run
+
+```
+docker-compose up -d
+```
+
+![img.png](images-of-readme-file/run-app-on-docker.png)
+
+#### Remove container without deleting MySQL data
+
+```
+docker-compose down
+```
