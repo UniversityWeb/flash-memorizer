@@ -23,8 +23,7 @@ public class Deck {
     @Column(name = "deck_name", length = 50)
     private String name;
 
-    @Lob
-    @Column(name = "deck_desc", columnDefinition = "LONGTEXT")
+    @Column(name = "deck_desc", columnDefinition = "text")
     private String desc;
 
     @ManyToOne(fetch = FetchType.LAZY)

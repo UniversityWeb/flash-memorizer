@@ -85,3 +85,5 @@ local.properties
 .scala_dependencies
 .worksheet
 # End of https://www.gitignore.io/api/eclipse
+
+.env

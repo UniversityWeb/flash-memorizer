@@ -19,12 +19,10 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
-    @Column(name = "card_term", columnDefinition = "LONGTEXT")
+    @Column(name = "card_term", columnDefinition = "text")
     private String term;
 
-    @Lob
-    @Column(name = "card_desc", columnDefinition = "LONGTEXT")
+    @Column(name = "card_desc", columnDefinition = "text")
     private String desc;
 
     @ManyToOne(fetch = FetchType.LAZY)
