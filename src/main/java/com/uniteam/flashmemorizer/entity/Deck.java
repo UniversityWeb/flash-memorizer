@@ -23,7 +23,7 @@ public class Deck {
     @Column(name = "deck_name", length = 50)
     private String name;
 
-    @Column(name = "deck_desc", columnDefinition = "text")
+    @Column(name = "deck_desc")
     private String desc;
 
     @ManyToOne(fetch = FetchType.LAZY)

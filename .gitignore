@@ -86,4 +86,6 @@ local.properties
 .worksheet
 # End of https://www.gitignore.io/api/eclipse
 
+logs/**
+
 .env

@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "FlashMemorizerDB",
+      "Group": "Servers",
+      "Host": "flash-memorizer-db",
+      "Port": 5432,
+      "MaintenanceDB": "FlashMemorizer",
+      "Username": "root",
+      "Password": "root",
+      "SSLMode": "prefer"
+    }
+  }
+}
