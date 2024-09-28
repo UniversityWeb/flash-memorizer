@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM --platform=linux/amd64 maven:3.8.3-openjdk-17 AS build
+FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /flash-memorizer
 
 # Copy only the project definition files
@@ -12,7 +12,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Set up the runtime environment
-FROM --platform=linux/amd64 openjdk:17-jdk-slim AS runtime
+FROM openjdk:17-jdk-slim AS runtime
 WORKDIR /flash-memorizer
 
 # Copy the built JAR file from the previous stage

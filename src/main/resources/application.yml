@@ -1,32 +1,37 @@
 server:
-    port: 8001
+  port: 8001
 
 spring:
-    application:
-        name: flash-memorizer-app
+  application:
+    name: flash-memorizer-app
 
-    devtools:
-        livereload:
-            enabled: true
-    datasource:
-        url: ${PROD_DB_URL}
-        username: ${PROD_DB_USER}
-        password: ${PROD_DB_PASSWORD}
-    sql:
-        init:
-            mode: always
-    jpa:
-        hibernate:
-            ddl-auto: update
-        show-sql: true
-        open-in-view: true
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.MySQLDialect
-    thymeleaf:
-        prefix: classpath:/templates/
-        suffix: .html
+  devtools:
+    livereload:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://${PROD_DB_URL}
+    username: ${PROD_DB_USER}
+    password: ${PROD_DB_PASSWORD}
+    driverClassName: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: true
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+
+logging:
+  file:
+    name: mylog.log
+  level:
+    root: info
 
 mail:
-    email: ${PROD_MAIL_EMAIL}
-    password: ${PROD_MAIL_PASSWORD}
+  email: ${PROD_MAIL_EMAIL}
+  password: ${PROD_MAIL_PASSWORD}
