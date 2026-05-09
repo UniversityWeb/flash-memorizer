@@ -1,0 +1,39 @@
+services:
+  flash-memorizer-db:
+    container_name: flash-memorizer-db
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - flash-memorizer-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB} || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - flash-memorizer-net
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "83:80"
+    depends_on:
+      - flash-memorizer-db
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+    networks:
+      - flash-memorizer-net
+
+volumes:
+  flash-memorizer-data:
+
+networks:
+  flash-memorizer-net:
+    driver: bridge
