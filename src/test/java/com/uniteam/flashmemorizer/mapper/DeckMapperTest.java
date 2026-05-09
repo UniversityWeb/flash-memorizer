@@ -36,7 +36,7 @@ class DeckMapperTest {
         assertEquals(deckDTO.getId(), deck.getId());
         assertEquals(deckDTO.getName(), deck.getName());
         assertEquals(deckDTO.getDesc(), deck.getDesc());
-        assertNull(deckDTO.getUser().getId());
+        assertNull(deckDTO.getUser());
     }
 
     @Test
@@ -65,10 +65,10 @@ class DeckMapperTest {
         Deck deck = deckMapper.toEntity(deckDTO);
 
         // Assert
-        assertEquals(deck.getId(), deckDTO.getId());
-        assertEquals(deck.getName(), deckDTO.getName());
-        assertEquals(deck.getDesc(), deckDTO.getDesc());
-        assertEquals(deck.getUser(), deckDTO.getUser());
+        assertEquals(deckDTO.getId(), deck.getId());
+        assertEquals(deckDTO.getName(), deck.getName());
+        assertEquals(deckDTO.getDesc(), deck.getDesc());
+        assertNull(deck.getUser());
     }
 
     @Test
