@@ -1,0 +1,12 @@
+{
+  "name": "flash-memorizer",
+  "version": "1.0.0",
+  "description": "Flash Memorizer - Learning application with Tailwind CSS",
+  "scripts": {
+    "tailwind": "tailwindcss -i ./src/main/resources/css/input.css -o ./src/main/resources/static/css/tailwind.css",
+    "tailwind:watch": "tailwindcss -i ./src/main/resources/css/input.css -o ./src/main/resources/static/css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.0"
+  }
+}

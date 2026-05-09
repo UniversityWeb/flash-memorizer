@@ -4,23 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" th:href="@{/images/page-icon.svg}">
+    <link rel="stylesheet" th:href="@{/css/tailwind.css}">
     <title>Review Decks</title>
     <meta name="description" content="">
     <link rel="stylesheet" th:href="@{/css/review-deck.css}">
-<body>
-<header style="display: flex; align-items: center;">
-    <a class="button_back" th:href="@{/decks/get-my-decks}">
-        <ion-icon name="chevron-back-outline"></ion-icon>
+<body class="bg-gray-50">
+<header class="flex items-center bg-white shadow p-4">
+    <a class="button_back text-indigo-600 hover:text-indigo-800 mr-4" th:href="@{/decks/get-my-decks}">
+        <ion-icon name="chevron-back-outline" class="text-2xl"></ion-icon>
     </a>
-    <h1>FlashCard</h1>
+    <h1 class="text-3xl font-bold">FlashCard</h1>
 </header>
 
 <section id="notificationSec">
-    <div class="alert alert-success" id="successMessage" th:if="${successMsg}">
+    <div class="alert-success" id="successMessage" th:if="${successMsg}">
         <span th:text="${successMsg}">Notify the success message!</span>
     </div>
 
-    <div class="alert alert-danger" id="errorMessage" th:if="${errorMsg}">
+    <div class="alert-error" id="errorMessage" th:if="${errorMsg}">
         <span th:text="${errorMsg}">An error occurred.</span>
     </div>
 </section>

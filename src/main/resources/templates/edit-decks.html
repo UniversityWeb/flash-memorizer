@@ -5,56 +5,109 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <link rel="icon" type="image/x-icon" th:href="@{/images/page-icon.svg}">
-    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          rel="stylesheet">
-
+    <link rel="stylesheet" th:href="@{/css/tailwind.css}">
     <link rel="stylesheet" href="../static/css/edit-deck.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/edit-decks.css}"/>
-    <style>
-        *{
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-    </style>
     <title>Edit Decks</title>
 </head>
-<body>
+<body class="bg-gray-50">
 
-<header>
-    <h1 class="logo">Flash Card</h1>
-    <a class="search_box">
-    </a>
-    <div class="control">
-        <div class="avartar_user-frame">
-            <ion-icon name="person-outline"></ion-icon>
-        </div>
-        <div class="control-menu">
-            <a class="control-item" th:href="@{/user/edit}">Information</a>
-            <a class="control-item" th:href="@{/decks/get-my-decks}">My Deck</a>
-            <a class="control-item" onclick="submitLogoutForm()">Log out</a>
-            <form id="logoutForm" th:action="@{/logout}" method="post"></form>
+<header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-3xl font-bold">Flash Card</h1>
+    <div class="flex items-center gap-4">
+        <div class="relative group">
+            <div class="avatar-user-frame cursor-pointer">
+                <ion-icon name="person-outline" class="text-2xl"></ion-icon>
+            </div>
+            <div class="control-menu absolute right-0 mt-2 bg-white shadow rounded hidden group-hover:block">
+                <a class="control-item block px-4 py-2 hover:bg-gray-100" th:href="@{/user/edit}">Information</a>
+                <a class="control-item block px-4 py-2 hover:bg-gray-100" th:href="@{/decks/get-my-decks}">My Deck</a>
+                <a class="control-item block px-4 py-2 hover:bg-gray-100" onclick="submitLogoutForm()">Log out</a>
+                <form id="logoutForm" th:action="@{/logout}" method="post"></form>
+            </div>
         </div>
     </div>
 </header>
 
-<section>
-    <div th:if="${successMsg}" class="alert alert-success mt-3">
+<section class="px-6 py-8">
+    <div th:if="${successMsg}" class="alert-success mb-4">
         <span th:text="${successMsg}">Notify the success message!</span>
     </div>
 
-    <div th:if="${errorMsg}" class="alert alert-danger mt-3">
+    <div th:if="${errorMsg}" class="alert-error mb-4">
         <span th:text="${errorMsg}">An error occurred.</span>
     </div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-10 offset-md-1">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="text-center text-primary">Decks</h4>
+    <div class="w-full">
+        <div class="max-w-4xl mx-auto">
+            <div class="card">
+                <div class="p-6">
+                    <h4 class="text-center text-indigo-600 text-xl font-bold mb-6">Decks</h4>
+
+                    <div th:if="${decks.isEmpty()}" class="bg-blue-100 border border-blue-400 text-blue-700 p-4 rounded text-center">
+                        <p class="text-lg font-semibold mb-0">You haven't created any decks</p>
+                    </div>
+
+                    <div th:if="${not decks.isEmpty()}">
+                        <ul class="space-y-4" id="deckList">
+                            <li class="border rounded p-4 bg-white shadow" th:each="curDeck, stat : ${decks}">
+                                <div class="mb-3 relative">
+                                    <div class="bg-green-500 text-white rounded-full px-3 py-1 inline-block mb-2">
+                                        <span th:text="${curDeck.quantityOfCards + ' items'}">[Quantity] items</span>
+                                    </div>
+                                    <div class="flex justify-end gap-2">
+                                        <a class="border border-indigo-600 text-indigo-600 hover:bg-indigo-100 px-3 py-2 rounded text-sm"
+                                           th:href="@{/decks/review/{deckId}(deckId=${curDeck.id})}">
+                                            👁️ Review
+                                        </a>
+
+                                        <a class="border border-red-600 text-red-600 hover:bg-red-100 px-3 py-2 rounded text-sm"
+                                           th:href="@{/decks/delete?deckId={deckId}(deckId=${curDeck.id})}">
+                                            🗑️ Delete
+                                        </a>
+                                    </div>
+
+                                    <input th:value="${curDeck.id}" type="hidden"/>
+
+                                    <div class="grid grid-cols-2 gap-4 mt-4">
+                                        <div>
+                                            <label class="block font-semibold mb-2">Name</label>
+                                            <div class="bg-white rounded border p-4 font-mono"
+                                                 th:utext="*{decks[__${stat.index}__].name}">[Term]</div>
+                                        </div>
+                                        <div>
+                                            <label class="block font-semibold mb-2">Description</label>
+                                            <div class="bg-white rounded border p-4 font-mono"
+                                                 th:utext="*{decks[__${stat.index}__].desc}">[Desc]</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="text-center mt-6">
+                        <a class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700" th:href="@{/decks/input}">
+                            ➕ Create New Deck
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+<script>
+    function submitLogoutForm() {
+        document.getElementById('logoutForm').submit();
+    }
+</script>
+
+</body>
+</html>
 
                         <div th:if="${decks.isEmpty()}" class="alert alert-info text-center">
                             <p class="lead mb-0">You haven't created any decks</p>
