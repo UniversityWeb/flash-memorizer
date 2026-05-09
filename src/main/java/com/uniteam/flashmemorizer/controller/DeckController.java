@@ -10,29 +10,24 @@ import com.uniteam.flashmemorizer.service.deck.DeckService;
 import com.uniteam.flashmemorizer.service.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/decks")
+@RequiredArgsConstructor
 public class DeckController {
 
     private final Logger log = LogManager.getLogger(DeckController.class);
-
-    @Autowired
-    private DeckService deckService;
-
-    @Autowired
-    private CardService cardService;
-
-    @Autowired
-    private UserService userService;
+    private final DeckService deckService;
+    private final CardService cardService;
+    private final UserService userService;
 
     @GetMapping("/get-my-decks")
     public String getDecksByUserId(Model m) {
