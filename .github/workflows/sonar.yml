@@ -33,14 +33,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Make Maven wrapper executable
-        run: chmod +x ./mvnw
-
       - name: Build and test
-        run: ./mvnw -B clean verify
+        run: mvn -B clean verify
 
       - name: Run SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: ./mvnw -B sonar:sonar
+        run: mvn -B sonar:sonar
