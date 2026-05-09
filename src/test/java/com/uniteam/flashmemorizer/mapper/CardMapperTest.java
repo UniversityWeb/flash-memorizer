@@ -34,7 +34,7 @@ class CardMapperTest {
         assertEquals(cardDTO.getId(), card.getId());
         assertEquals(cardDTO.getTerm(), card.getTerm());
         assertEquals(cardDTO.getDesc(), card.getDesc());
-        assertEquals(cardDTO.getDeck(), card.getDeck());
+        assertNull(cardDTO.getDeck());
     }
 
     @Test
@@ -66,7 +66,7 @@ class CardMapperTest {
         assertEquals(cardDTO.getId(), card.getId());
         assertEquals(cardDTO.getTerm(), card.getTerm());
         assertEquals(cardDTO.getDesc(), card.getDesc());
-        assertEquals(cardDTO.getDeck(), card.getDeck());
+        assertNull(card.getDeck());
     }
 
     @Test

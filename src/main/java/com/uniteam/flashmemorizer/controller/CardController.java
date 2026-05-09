@@ -6,20 +6,19 @@ import com.uniteam.flashmemorizer.exception.CardNotFoundException;
 import com.uniteam.flashmemorizer.service.card.CardService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/cards")
+@RequiredArgsConstructor
 public class CardController {
 
     private final Logger log = LogManager.getLogger(CardController.class);
-
-    @Autowired
-    private CardService cardService;
+    private final CardService cardService;
 
     @GetMapping("/edit")
     public String getCardsToEdit(@RequestParam Long cardId, Model m) {
