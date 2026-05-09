@@ -1,6 +1,9 @@
 # **Flash memorizer**
 
+[![SonarQube](https://sonar.vanannek.blog/dashboard?id=com.uniteam%3Aflash-memorizer&codeScope=overall)](https://sonar.vanannek.blog/dashboard?id=com.uniteam%3Aflash-memorizer&codeScope=overall)
+
 _This application provides an immersive learning experience, allowing users to enhance their English language skills effortlessly. Furthermore, It also simplifies the memorization of challenging material, leading to time-saving and enhanced productivity._
+
 
 ## **Table of Contents**
 
