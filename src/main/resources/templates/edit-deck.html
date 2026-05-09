@@ -4,116 +4,106 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" th:href="@{/images/page-icon.svg}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
-
+    <link rel="stylesheet" th:href="@{/css/tailwind.css}">
     <link rel="stylesheet" th:href="@{/css/back-navbar.css}">
     <link rel="stylesheet" th:href="@{/css/edit-deck.css}"/>
     <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}">
     <link rel="stylesheet" th:href="@{/richtext/richtext.scss}">
-
     <title>Edit Deck</title>
 </head>
-<body>
+<body class="bg-gray-50">
 
-<header style="display: flex; align-items: center;">
-    <a class="button_back" th:href="@{/decks/review/{deckId}(deckId=${deckForm.deck.id})}">
-        <ion-icon name="chevron-back-outline"></ion-icon>
+<header class="flex items-center bg-white shadow p-4">
+    <a class="button_back text-indigo-600 hover:text-indigo-800 mr-4" th:href="@{/decks/review/{deckId}(deckId=${deckForm.deck.id})}">
+        <ion-icon name="chevron-back-outline" class="text-2xl"></ion-icon>
     </a>
-    <h1>Flash Memorizer</h1>
+    <h1 class="text-3xl font-bold">Flash Memorizer</h1>
 </header>
 
-<section id="notificationSec">
-    <div class="alert alert-success" id="successMessage" th:if="${successMsg}">
+<section id="notificationSec" class="px-6 py-4">
+    <div class="alert-success" id="successMessage" th:if="${successMsg}">
         <span th:text="${successMsg}">Notify the success message!</span>
     </div>
 
-    <div class="alert alert-danger" id="errorMessage" th:if="${errorMsg}">
+    <div class="alert-error" id="errorMessage" th:if="${errorMsg}">
         <span th:text="${errorMsg}">An error occurred.</span>
     </div>
 </section>
 
-<section class="container-fluid content_sec">
-    <div class="row">
-        <div class="col-md-10 offset-md-1">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="text-center text-primary">Deck Form</h4>
+<section class="w-full px-6 py-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="card">
+            <div class="p-6">
+                <h4 class="text-center text-indigo-600 text-xl font-bold mb-6">Deck Form</h4>
 
-                    <form th:action="@{/decks/update}" method="post" id="deckForm" th:object="${deckForm}">
-                        <input type="hidden" th:field="*{deck.id}" />
+                <form th:action="@{/decks/update}" method="post" id="deckForm" th:object="${deckForm}">
+                    <input type="hidden" th:field="*{deck.id}" />
 
-                        <div class="form-group flex-box">
-                            <label>Name</label>
-                            <input type="text" class="form-control" th:field="*{deck.name}" maxlength="50"/>
-                        </div>
-                        <div class="form-group flex-box">
-                            <label>Description</label>
-                            <textarea class="deckDescEditor" th:field="*{deck.desc}" maxlength="500"></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label class="block font-semibold mb-2">Name</label>
+                        <input type="text" class="input-field" th:field="*{deck.name}" maxlength="50"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="block font-semibold mb-2">Description</label>
+                        <textarea class="deckDescEditor input-field" th:field="*{deck.desc}" maxlength="500"></textarea>
+                    </div>
 
-                        <!-- Add card details -->
-                        <h4 class="text-center text-primary mt-5">Cards</h4>
+                    <!-- Add card details -->
+                    <h4 class="text-center text-indigo-600 text-xl font-bold mt-8 mb-6">Cards</h4>
 
-                        <div th:if="${deckForm.cards.isEmpty()}" class="alert alert-info text-center">
-                            <p class="lead mb-0">You haven't created any cards</p>
-                        </div>
+                    <div th:if="${deckForm.cards.isEmpty()}" class="bg-blue-100 border border-blue-400 text-blue-700 p-4 rounded text-center">
+                        <p class="text-lg font-semibold mb-0">You haven't created any cards</p>
+                    </div>
 
-                        <div th:if="${not deckForm.cards.isEmpty()}">
-                            <ul id="cardList" class="list-group">
-                                <li class="list-group-item" th:each="curCard, stat : ${deckForm.cards}">
-                                    <div class="card-body mb-3 position-relative">
-                                        <div class="format-bar d-flex justify-content-end">
-                                            <a class="btn btn-outline-primary btn-sm edit-button mr-2"
-                                               th:href="@{/cards/edit(cardId=${curCard.id})}">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </a>
+                    <div th:if="${not deckForm.cards.isEmpty()}">
+                        <ul id="cardList" class="space-y-4">
+                            <li class="border rounded p-4 bg-white shadow" th:each="curCard, stat : ${deckForm.cards}">
+                                <div class="mb-3 relative">
+                                    <div class="flex justify-end gap-2">
+                                        <a class="border border-indigo-600 text-indigo-600 hover:bg-indigo-100 px-3 py-2 rounded text-sm edit-button"
+                                           th:href="@{/cards/edit(cardId=${curCard.id})}">
+                                            ✏️ Edit
+                                        </a>
 
-                                            <a class="btn btn-outline-danger btn-sm delete-button"
-                                               th:href="@{/cards/delete(cardId=${curCard.id}, deckId=${deckForm.deck.id})}">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </a>
-                                        </div>
+                                        <a class="border border-red-600 text-red-600 hover:bg-red-100 px-3 py-2 rounded text-sm delete-button"
+                                           th:href="@{/cards/delete(cardId=${curCard.id}, deckId=${deckForm.deck.id})}">
+                                            🗑️ Delete
+                                        </a>
+                                    </div>
 
-                                        <!-- Use th:field for the hidden input field -->
-                                        <input type="hidden" th:field="*{cards[__${stat.index}__].id}" />
+                                    <!-- Use th:field for the hidden input field -->
+                                    <input type="hidden" th:field="*{cards[__${stat.index}__].id}" />
 
-                                        <div class="form-row mt-3">
-                                            <div class="col">
-                                                <label>Term</label>
-                                                <div class="card">
-                                                    <div class="card-body border font-monospace"
-                                                         th:utext="*{cards[__${stat.index}__].term}">
-                                                        [Term]
-                                                    </div>
-                                                </div>
+                                    <div class="grid grid-cols-2 gap-4 mt-4">
+                                        <div>
+                                            <label class="block font-semibold mb-2">Term</label>
+                                            <div class="bg-white rounded border p-4 font-mono"
+                                                 th:utext="*{cards[__${stat.index}__].term}">
+                                                [Term]
                                             </div>
-                                            <div class="col">
-                                                <label>Description</label>
-                                                <div class="card">
-                                                    <div class="card-body border font-monospace"
-                                                         th:utext="*{cards[__${stat.index}__].desc}">
-                                                        [Desc]
-                                                    </div>
-                                                </div>
+                                        </div>
+                                        <div>
+                                            <label class="block font-semibold mb-2">Description</label>
+                                            <div class="bg-white rounded border p-4 font-mono"
+                                                 th:utext="*{cards[__${stat.index}__].desc}">
+                                                [Desc]
                                             </div>
                                         </div>
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
 
-                        <div class="d-flex justify-content-center mt-2 mb-3">
-                            <a class="btn btn-outline-success"
-                               th:href="@{/cards/input/{deckId}(deckId=${deckForm.deck.id})}">
-                                <i class="fas fa-plus"></i> Add Another Card
-                            </a>
-                        </div>
+                    <div class="flex justify-center mt-6 mb-4">
+                        <a class="border border-green-600 text-green-600 hover:bg-green-100 px-4 py-2 rounded"
+                           th:href="@{/cards/input/{deckId}(deckId=${deckForm.deck.id})}">
+                            ➕ Add Another Card
+                        </a>
+                    </div>
 
-                        <button type="submit" class="btn btn-primary btn-block">Save Deck And Return</button>
-                    </form>
-                </div>
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-4 rounded hover:bg-indigo-700 font-bold">Save Deck And Return</button>
+                </form>
             </div>
         </div>
     </div>

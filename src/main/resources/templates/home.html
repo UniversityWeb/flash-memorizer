@@ -6,114 +6,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" th:href="@{/images/page-icon.svg}">
     <title>Home Flash Memorizer</title>
+    <link rel="stylesheet" th:href="@{/css/tailwind.css}">
     <link rel="stylesheet" th:href="@{/css/home.css}" href="../static/css/home.css">
 </head>
-<body>
-<header>
-    <h2 class="logo" th:href="@{/home}" style="text-decoration: none">Flash Memorizer</h2>
-    <nav class="navigation">
-        <a href="/home">Home</a>
-        <button class="btnLogin-popup">Login</button>
+<body class="bg-gray-900 text-white">
+<header class="bg-gray-800 py-4 px-6 flex justify-between items-center">
+    <h2 class="text-2xl font-bold cursor-pointer hover:text-indigo-400">Flash Memorizer</h2>
+    <nav class="flex gap-6 items-center">
+        <a href="/home" class="hover:text-indigo-400 transition">Home</a>
+        <button class="btnLogin-popup bg-indigo-600 px-4 py-2 rounded hover:bg-indigo-700 transition">Login</button>
     </nav>
 </header>
 
-<div class="message-error" th:if="${param.loginFailed} or ${param.passwordNotMatch} or ${param.isExistsUsername} or ${param.isExistsEmail}">
+<div class="message-error fixed top-4 right-4 bg-red-600 p-4 rounded shadow-lg" th:if="${param.loginFailed} or ${param.passwordNotMatch} or ${param.isExistsUsername} or ${param.isExistsEmail}">
     <div class="message-content">
         <p th:if="${param.loginFailed}">Incorrect account or password!</p>
         <p th:if="${param.passwordNotMatch}">Passwords do not match!</p>
         <p th:if="${param.isExistsUsername}">The username already exists!</p>
         <p th:if="${param.isExistsEmail}">Email already exists!</p>
-        <span class="message-close">&times;</span>
+        <span class="message-close cursor-pointer text-xl float-right">&times;</span>
     </div>
 </div>
-<section>
-    <div class="wrapper">
-        <span class="icon-close"><ion-icon name="close-outline"/></span>
-        <div class="form-box login">
-            <h2>Login</h2>
-            <form action="#" th:action="@{/login-process}" th:object="${user}" method="post">
-                <div class="input-box" name="username">
-                                <span class="icon">
-                                    <ion-icon name="person-circle-outline"></ion-icon>
-                                </span>
-                    <input type="text" name="username" required>
-                    <label>Username</label>
+
+<section class="min-h-screen flex items-center justify-center">
+    <div class="wrapper w-96 max-w-md">
+        <span class="icon-close cursor-pointer text-2xl absolute top-4 right-4"><ion-icon name="close-outline"/></span>
+        
+        <div class="form-box login bg-gray-800 p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+            <form action="#" th:action="@{/login-process}" th:object="${user}" method="post" class="space-y-4">
+                <div class="input-box flex items-center border-b-2 border-gray-600 py-2">
+                    <span class="icon"><ion-icon name="person-circle-outline" class="text-2xl"></ion-icon></span>
+                    <input type="text" name="username" required class="flex-1 ml-2 bg-transparent outline-none">
+                    <label class="absolute text-gray-400">Username</label>
                 </div>
 
-                <div class="input-box" name="password">
-                                <span class="icon">
-                                    <ion-icon name="key-outline"></ion-icon>
-                                </span>
-                    <input type="password" name="password" required>
-                    <label>Password</label>
+                <div class="input-box flex items-center border-b-2 border-gray-600 py-2">
+                    <span class="icon"><ion-icon name="key-outline" class="text-2xl"></ion-icon></span>
+                    <input type="password" name="password" required class="flex-1 ml-2 bg-transparent outline-none">
+                    <label class="absolute text-gray-400">Password</label>
                 </div>
 
-                <button type="submit" class="btnLogin" value="login">Login</button>
+                <button type="submit" class="btnLogin w-full bg-indigo-600 py-2 rounded font-bold hover:bg-indigo-700 transition">Login</button>
 
-                <div class="login-register">
-                    <p style="color: #FFFFFF"> Don't have an account yet?
-                        <a href="#" class="register-link">Register.</a>
+                <div class="login-register text-center mt-4">
+                    <p>Don't have an account yet?
+                        <a href="#" class="register-link text-indigo-400 hover:underline">Register.</a>
                     </p>
                 </div>
             </form>
         </div>
 
-        <div class="form-box register">
-            <h2>Register</h2>
-            <form action="#" th:action="@{/register-process}" th:object="${user}" method="post">
+        <div class="form-box register bg-gray-800 p-8 rounded-lg shadow-lg hidden">
+            <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
+            <form action="#" th:action="@{/register-process}" th:object="${user}" method="post" class="space-y-4">
 
-                <div class="input-box" name="fullName">
-                                <span class="icon">
-                                    <ion-icon name="pricetags-outline"></ion-icon>
-                                </span>
-                    <input type="text" name="fullName" required>
-                    <label>Full name</label>
+                <div class="input-box flex items-center border-b-2 border-gray-600 py-2">
+                    <span class="icon"><ion-icon name="pricetags-outline" class="text-2xl"></ion-icon></span>
+                    <input type="text" name="fullName" required class="flex-1 ml-2 bg-transparent outline-none">
+                    <label class="absolute text-gray-400">Full name</label>
                 </div>
 
-                <div class="input-box" name="email">
-                                <span class="icon">
-                                    <ion-icon name="mail-outline"></ion-icon>
-                                </span>
-                    <input type="email" name="email" required>
-                    <label>Email</label>
+                <div class="input-box flex items-center border-b-2 border-gray-600 py-2">
+                    <span class="icon"><ion-icon name="mail-outline" class="text-2xl"></ion-icon></span>
+                    <input type="email" name="email" required class="flex-1 ml-2 bg-transparent outline-none">
+                    <label class="absolute text-gray-400">Email</label>
                 </div>
 
-                <div class="input-box" name="username">
-                                <span class="icon">
-                                    <ion-icon name="person-circle-outline"></ion-icon>
-                                </span>
-                    <input type="text" name="username" required>
-                    <label>Username</label>
+                <div class="input-box flex items-center border-b-2 border-gray-600 py-2">
+                    <span class="icon"><ion-icon name="person-circle-outline" class="text-2xl"></ion-icon></span>
+                    <input type="text" name="username" required class="flex-1 ml-2 bg-transparent outline-none">
+                    <label class="absolute text-gray-400">Username</label>
                 </div>
 
-                <div class="input-box" name="password">
-                                <span class="icon">
-                                    <ion-icon name="key-outline"></ion-icon>
-                                </span>
-                    <input type="password" name="password" required>
-                    <label>Password</label>
+                <div class="input-box flex items-center border-b-2 border-gray-600 py-2">
+                    <span class="icon"><ion-icon name="key-outline" class="text-2xl"></ion-icon></span>
+                    <input type="password" name="password" required class="flex-1 ml-2 bg-transparent outline-none">
+                    <label class="absolute text-gray-400">Password</label>
                 </div>
 
-
-                <div class="input-box" name="passwordConfirm">
-                                <span class="icon">
-                                    <ion-icon name="key-outline"></ion-icon>
-                                </span>
-                    <input type="password" name="passwordConfirm" required>
-                    <label>Confirm Password</label>
+                <div class="input-box flex items-center border-b-2 border-gray-600 py-2">
+                    <span class="icon"><ion-icon name="key-outline" class="text-2xl"></ion-icon></span>
+                    <input type="password" name="passwordConfirm" required class="flex-1 ml-2 bg-transparent outline-none">
+                    <label class="absolute text-gray-400">Confirm Password</label>
                 </div>
 
-                <button type="submit" class="btnLogin" value="register">Register</button>
+                <button type="submit" class="btnLogin w-full bg-indigo-600 py-2 rounded font-bold hover:bg-indigo-700 transition">Register</button>
 
-                <div class="login-register">
-                    <p style="color: #FFFFFF"> Do you already have an account?
-                        <a href="#" class="login-link">Login</a>
+                <div class="login-register text-center mt-4">
+                    <p>Do you already have an account?
+                        <a href="#" class="login-link text-indigo-400 hover:underline">Login</a>
                     </p>
                 </div>
             </form>
         </div>
     </div>
 </section>
+
 <script th:src="@{/js/home.js}" src="../static/js/home.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

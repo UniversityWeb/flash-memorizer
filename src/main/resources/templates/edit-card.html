@@ -5,60 +5,62 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <link rel="icon" type="image/x-icon" th:href="@{/images/page-icon.svg}">
-
-    <link crossorigin="anonymous"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          rel="stylesheet">
-
+    <link rel="stylesheet" th:href="@{/css/tailwind.css}">
     <link rel="stylesheet" th:href="@{/css/back-navbar.css}">
     <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}">
     <link rel="stylesheet" th:href="@{/richtext/richtext.scss}">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-
     <title>Edit Card</title>
 </head>
-<body>
+<body class="bg-gray-50">
 
-<header>
-    <a class="button_back" th:href="@{/decks/edit/{deckId}(deckId=${card.deck.id})}">
-        <ion-icon name="chevron-back-outline"></ion-icon>
+<header class="flex items-center bg-white shadow p-4">
+    <a class="button_back text-indigo-600 hover:text-indigo-800 mr-4" th:href="@{/decks/edit/{deckId}(deckId=${card.deck.id})}">
+        <ion-icon name="chevron-back-outline" class="text-2xl"></ion-icon>
     </a>
-    <h1>Flash Memorizer</h1>
+    <h1 class="text-3xl font-bold">Flash Memorizer</h1>
 </header>
 
-<section class="container content_sec">
-    <div class="row">
-        <div class="col-md-10 offset-md-1">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="text-center text-primary">Edit Card</h4>
+<section class="w-full px-6 py-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="card">
+            <div class="p-6">
+                <h4 class="text-center text-indigo-600 text-xl font-bold mb-6">Edit Card</h4>
 
-                    <form method="post" th:action="@{/cards/update}" th:object="${card}">
-                        <input name="id" th:field="*{id}" type="hidden">
-                        <input name="deckId" th:field="*{deck.id}" type="hidden">
+                <form method="post" th:action="@{/cards/update}" th:object="${card}">
+                    <input name="id" th:field="*{id}" type="hidden">
+                    <input name="deckId" th:field="*{deck.id}" type="hidden">
 
-                        <div class="form-group flex-box">
-                            <label>Term</label>
-                            <textarea class="cardTermEditor" th:field="*{term}" maxlength="100"></textarea>
-                        </div>
-                        <div class="form-group flex-box">
-                            <label>Description</label>
-                            <textarea class="cardDescEditor" th:field="*{desc}" maxlength="1000"></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label class="block font-semibold mb-2">Term</label>
+                        <textarea class="cardTermEditor input-field" th:field="*{term}" maxlength="100"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="block font-semibold mb-2">Description</label>
+                        <textarea class="cardDescEditor input-field" th:field="*{desc}" maxlength="1000"></textarea>
+                    </div>
 
-                        <button class="btn btn-primary btn-block">Submit</button>
-                    </form>
-                </div>
+                    <button class="w-full bg-indigo-600 text-white py-3 px-4 rounded hover:bg-indigo-700 font-bold">Submit</button>
+                </form>
             </div>
-
         </div>
     </div>
 </section>
 
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+<script th:src="@{/richtext/jquery.richtext.min.js}"></script>
+<script th:src="@{/js/custom-richtext.js}"></script>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $('.cardTermEditor').richText(customEditor);
+        $('.cardDescEditor').richText(customEditor);
+    });
+</script>
+
+</body>
+</html>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 <script th:src="@{/richtext/jquery.richtext.js}"></script>

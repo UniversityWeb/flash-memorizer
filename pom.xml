@@ -18,6 +18,8 @@
         <modelmapper.version>2.4.5</modelmapper.version>
         <jetbrains.annotations.version>24.0.1</jetbrains.annotations.version>
         <jsoup.version>1.16.2</jsoup.version>
+        <node.version>v18.17.0</node.version>
+        <npm.version>9.6.7</npm.version>
     </properties>
     <dependencies>
         <dependency>
@@ -90,6 +92,45 @@
 
     <build>
         <plugins>
+            <!-- Frontend Maven Plugin for Tailwind CSS build -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.14.0</version>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <nodeVersion>${node.version}</nodeVersion>
+                            <npmVersion>${npm.version}</npmVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>tailwind build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>run tailwind</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
