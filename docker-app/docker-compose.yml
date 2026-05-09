@@ -3,7 +3,7 @@ services:
     container_name: flash-memorizer-app
     build:
       context: ..
-      dockerfile: Dockerfile
+      dockerfile: docker-app/Dockerfile
     environment:
       SERVER_PORT: ${SERVER_PORT}
       PROD_DB_URL: ${PROD_DB_URL}
@@ -11,11 +11,13 @@ services:
       PROD_DB_PASSWORD: ${PROD_DB_PASSWORD}
       PROD_MAIL_EMAIL: ${PROD_MAIL_EMAIL}
       PROD_MAIL_PASSWORD: ${PROD_MAIL_PASSWORD}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
     ports:
       - "8005:8080"
     volumes:
       - ..:/flash-memorizer
       - ~/.m2:/root/.m2
+      - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh:ro
     networks:
       - flash-memorizer-net
     depends_on:

@@ -11,13 +11,13 @@ _This application provides an immersive learning experience, allowing users to e
 - [Access Path (URL)](#access-path-url)
 - [Features](#features)
 - [Technical](#technical)
-- [Run Database in Docker](#run-database-in-docker)
-    - [To Run](#to-run)
-    - [Remove Container Without Deleting PostgreSQL Data](#remove-container-without-deleting-postgresql-data)
+- [Run Project with Docker](#run-project-with-docker)
+    - [Prepare Environment Variables](#prepare-environment-variables)
+    - [Run Database Only](#run-database-only)
+    - [Run Full Stack (App + DB)](#run-full-stack-app--db)
+    - [Stop Containers](#stop-containers)
     - [Accessing pgAdmin4 (Web Version)](#accessing-pgadmin4-web-version)
-- [Run The Application in Docker](#run-the-application-in-docker)
-    - [To Run](#to-run-1)
-    - [Remove Container Without Deleting PostgreSQL Data](#remove-container-without-deleting-postgresql-data-1)
+- [Auto Reload (Java/HTML)](#auto-reload-javahtml)
 - [Testing Accounts](#testing-accounts)
 
 ## **Clone repository**
@@ -26,9 +26,9 @@ _This application provides an immersive learning experience, allowing users to e
 git clone https://github.com/UniversityWeb/flash-memorizer.git
 ```
 
-## **[Access Path (URL)](http://localhost:8001/)**
+## **[Access Path (URL)](http://localhost:8005/)**
 
-- localhost:8001
+- localhost:8005
 
 ## **Features**
 
@@ -46,22 +46,50 @@ git clone https://github.com/UniversityWeb/flash-memorizer.git
 4. UI: Bootstrap.
 5. Concepts: JPA, Spring Security, MVC, SOLID, Design pattern.
 
-## **Run Database in Docker**
+## **Run Project with Docker**
 
-Please note: You must be in the `docker-db` folder. The database will be opened on port `5432`.
+Please note: Run commands from the project root folder.
 
-### To Run
+### Prepare Environment Variables
 
+Create environment file for Docker app:
+
+```terminal
+copy docker-app\.env.example docker-app\.env
 ```
-docker-compose up -d
+
+or (WSL/Linux):
+
+```terminal
+cp docker-app/.env.example docker-app/.env
+```
+
+Then update values inside `docker-app/.env`.
+
+### Run Database Only
+
+Database will be opened on port `5432` and pgAdmin on `83`.
+
+```terminal
+docker compose -f docker-app/docker-compose.db.yml up -d
 ```
 
 ![Alt text](images-of-readme-file/run-db-on-docker.png)
 
-#### Remove container without deleting PostgreSQL data
+### Run Full Stack (App + DB)
 
+Application is exposed at `http://localhost:8005`.
+
+```terminal
+docker compose -f docker-app/docker-compose.yml -f docker-app/docker-compose.db.yml up -d --build
 ```
-docker-compose down
+
+![img.png](images-of-readme-file/run-app-on-docker.png)
+
+### Stop Containers
+
+```terminal
+docker compose -f docker-app/docker-compose.yml -f docker-app/docker-compose.db.yml down
 ```
 
 ### Accessing pgAdmin4 (Web version)
@@ -77,25 +105,35 @@ Detail specs of PostgreSQL
 - Connection Name: `Docker Provider`
 - Hostname: `localhost`
 - Port: `5432`
-- Username: `root`
+- Username: `flashuser`
 - Password: `root`
 
-## **Run The Application in Docker**
+## **Auto Reload (Java/HTML)**
 
-Please note: You must be in the `docker-app` folder. The database and the application will be opened on ports `5432`, `83`, and `8001`, respectively.
+The app container includes a watcher (`docker-app/docker-entrypoint.sh`) that compiles when source files change.
 
-### To Run
+To check reload:
 
+1. Start stack:
+
+```terminal
+docker compose -f docker-app/docker-compose.yml -f docker-app/docker-compose.db.yml up --build
 ```
-docker-compose up -d
+
+2. In another terminal, watch app logs:
+
+```terminal
+docker compose -f docker-app/docker-compose.yml -f docker-app/docker-compose.db.yml logs -f flash-memorizer-app
 ```
 
-![img.png](images-of-readme-file/run-app-on-docker.png)
+3. Save a `.java` or `.html` file in `src/main`, then refresh browser at `http://localhost:8005`.
 
-#### Remove container without deleting PostgreSQL data
+Expected logs: `Change detected, running mvn compile` and Spring Boot restart messages.
 
-```
-docker-compose down
+If needed, apply latest Docker changes to app container:
+
+```terminal
+docker compose -f docker-app/docker-compose.yml -f docker-app/docker-compose.db.yml up -d --build --force-recreate flash-memorizer-app
 ```
 
 ## **Testing Accounts**
